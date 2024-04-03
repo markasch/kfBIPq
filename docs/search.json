@@ -2,11 +2,11 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "KFbip",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.",
+    "text": "Welcome to “Kalman Filters: from Bayes to Inverse Problems”\nThis book contains a presentation of Kalman filters, from basics to ensemble filters. A large number of examples are provided in the form of jupyter notebooks. Then the notion of Bayesian inverse problems (BIP) is introduced. Finally, there is a detailed presentation of the use of the ensemble Kalman filter as a basis for the solution of inverse problems. This is denoted EKI, or ensemble Kalman inversion, following the magnificent work of Andrew Stuart and his collaborators.\nThis book is based upon a number of sources. The original Bayesian formulation for inverse problems (Dashti and Stuart 2015) was the basis for the later ensemble Kalman inversion, presented in a series of papers (Iglesias, Law, and Stuart 2013; Calvello, Reich, and Stuart 2022; Huang et al. 2022).\nIn (Asch, Bocquet, and Nodet 2016) and (Law, Stuart, and Zygalakis 2015) the reader can find detailed presentations of Kalman filters approaches for data assimilation. In (Asch 2022) there are basic explanations of uncertainty quantification, inverse problems and their use for digital twins.",
     "crumbs": [
-      "Preface"
+      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
     ]
   },
   {
@@ -14,8 +14,9 @@
     "href": "intro.html",
     "title": "1  Introduction",
     "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "text": "This is a book created from markdown and executable code.\nSee (knuth84?) for additional discussion of literate programming.",
     "crumbs": [
+      "Kalman Filters",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
@@ -26,6 +27,7 @@
     "section": "",
     "text": "In summary, this book has no content whatsoever.",
     "crumbs": [
+      "Kalman Filters",
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Summary</span>"
     ]
   },
@@ -37,6 +39,631 @@
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
     "crumbs": [
       "References"
+    ]
+  },
+  {
+    "objectID": "index.html#table-of-contents",
+    "href": "index.html#table-of-contents",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
+    "section": "1.1 Table of Contents",
+    "text": "1.1 Table of Contents",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "index.html#references",
+    "href": "index.html#references",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
+    "section": "References",
+    "text": "References\n\n\nAsch, Mark. 2022. A Toolbox for Digital\nTwins: From\nModel-Based to\nData-Driven. Philadelphia, PA: Society\nfor Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data\nAssimilation: Methods,\nAlgorithms, and Applications.\nPhiladelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.\n“Ensemble Kalman Methods: A\nMean Field Perspective.”\narXiv. http://arxiv.org/abs/2209.11371.\n\n\nDashti, Masoumeh, and Andrew M. Stuart. 2015. “The\nBayesian Approach to Inverse\nProblems.” In Handbook of\nUncertainty Quantification, edited by\nRoger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-319-11259-6_7-1.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M.\nStuart. 2022. “Efficient Derivative-Free\nBayesian Inference for\nLarge-Scale Inverse\nProblems.” arXiv. http://arxiv.org/abs/2204.04386.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.\n“Ensemble Kalman Methods for Inverse\nProblems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data\nAssimilation: A Mathematical\nIntroduction. Vol. 62. Texts in Applied\nMathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "crumbs": [
+      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+    ]
+  },
+  {
+    "objectID": "011BayesTheory.html",
+    "href": "011BayesTheory.html",
+    "title": "1  Bayes’ Theorem",
+    "section": "",
+    "text": "1.1 Introduction\nBayes’ theorem is at the core of modern uncertainty quantification.\nSee Theorem 1.1.",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "011BayesTheory.html#theory",
+    "href": "011BayesTheory.html#theory",
+    "title": "1  Bayes’ Theorem",
+    "section": "1.2 Theory",
+    "text": "1.2 Theory\nStill to come…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "011BayesTheory.html#some-examples",
+    "href": "011BayesTheory.html#some-examples",
+    "title": "1  Bayes’ Theorem",
+    "section": "1.3 Some Examples",
+    "text": "1.3 Some Examples\nComing soon…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "011BayesTheory.html#introduction",
+    "href": "011BayesTheory.html#introduction",
+    "title": "1  Bayes’ Theorem",
+    "section": "",
+    "text": "Theorem 1.1 (Bayes Theorem) \\[\nP(b \\vert a) = \\frac{P(a\\vert b) P(b)}{P(a)},\n\\] where \\(P(a \\vert b)\\) is the conditional probability of \\(a\\) given \\(b.\\)",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "021BasicKF.html",
+    "href": "021BasicKF.html",
+    "title": "3  Kalman Filters",
+    "section": "",
+    "text": "3.1 Introduction\nThe Kalman filter can be used for\nKalman filters are linear (and Gaussian) or nonlinear. Among the nonlinear approaches, the Ensemble Kalman filter (EnKF) provides a derivative-free approach to the solution of inverse problems.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "021BasicKF.html#introduction",
+    "href": "021BasicKF.html#introduction",
+    "title": "3  Kalman Filters",
+    "section": "",
+    "text": "state estimation—this is the direct filtering (or smoothing) problem\nparameter estimation—this is the inverse problem based on filtering with a pseudo-time",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "021BasicKF.html#kalman-filter-problem---general-formulation",
+    "href": "021BasicKF.html#kalman-filter-problem---general-formulation",
+    "title": "3  Kalman Filters",
+    "section": "3.2 Kalman filter problem - General formulation",
+    "text": "3.2 Kalman filter problem - General formulation\nWe present a very general formulation that will later be convenient for joint state and parameter estimation problems.\nWe consider a discrete-time dynamical system with noisy state transitions and noisy observations.\n\nDynamics:\n\\[v_{j+1} = \\Psi(v_j) + \\xi_j, \\quad j \\in \\mathbb{Z}^+\\]\nObservations:\n\\[y_{j+1} = h (v_{j+1}) + \\eta_{j+1}, \\quad j \\in \\mathbb{Z}^+\\]\nProbability (densities):\n\\[v_0 \\sim \\mathcal{N}(m_0,C_0), \\quad \\xi_j \\sim \\mathcal{N}(0,\\Sigma), \\quad \\eta_j \\sim \\mathcal{N}(0,\\Gamma)\\]\nProbability (independence):\n\\[v_0 \\perp {\\xi_j} \\perp {\\eta_j}\\]\nOperators:\n\\[\\begin{eqnarray}\n    \\Psi \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_s, \\\\\n    h  \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_o,\n   \\end{eqnarray}\\] where \\(v_j \\in \\mathcal{H}_s,\\) \\(y_j \\in \\mathcal{H}_o\\) and \\(\\mathcal{H}\\) is a finite-dimensional Hilbert space.\n\nFiltering problem: estimate (optimally) the state \\(v_j\\) of the dynamical system at time \\(j,\\) given the data \\(Y_j = \\{y_i\\}_{i=1}^{j}\\) up to time \\(j.\\) This is achieved by using a two-step predictor-corrector method. We will use the more general notation of (Law, Stuart, and Zygalakis 2015) instead of the usual, classical state-space formulation that is used in (Asch, Bocquet, and Nodet 2016) and (Asch 2022).\nThe objective is to update the filtering distribution \\(\\mathbb{P}(v_j \\vert Y_j),\\) from time \\(j\\) to time \\(j+1,\\) in the linear, Gaussian case, where - \\(\\Psi\\) and \\(h\\) are linear maps - all distributions are Gaussian.\nSuppose \\[\\begin{eqnarray}\n   \\Psi(v) &= Mv \\\\\n   h(v) &= Hv,\n\\end{eqnarray}\\] where the matrices \\(M \\in \\mathbb{R}^{n \\times n},\\) \\(H \\in \\mathbb{R}^{m \\times n},\\) with \\(m \\le n\\) and \\(\\mathrm{rank}(H)=m.\\)\n\nLet \\((m_j, C_j)\\) denote the mean and covariance of \\(v_j \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nLet \\((\\hat{m}_{j+1}, \\hat{C}_{j+1})\\) denote the mean and covariance of \\(v_{j+1} \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nDerive the map \\((m_j, C_j) \\mapsto (m_{j+1}, C_{j+1})\\) using the previous step.\n\n\n3.2.1 Prediction/Forecast\n\\[ \\mathbb{P}(v_n \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\]\n\nP0: initialize \\((m_0, C_0)\\) and compute \\(v_0\\)\nP1: predict the state, measurement\n\\[\\begin{align}\n   v_{j+1} &= M v_j + \\xi_j \\\\\n   y_{j+1} &= H v_{j+1} + \\eta_{j+1}\n   \\end{align}\\]\nP2: predict the mean and covariance\n\\[\\begin{align}\n   \\hat{m}_{j+1}  &= M m_j \\\\\n   \\hat{C}_{j+1}  &= M C_j M^{\\mathrm{T}} + \\Sigma\n   \\end{align}\\]\n\n\n\n3.2.2 Correction/Analysis\n\\[ \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_{n+1}) \\]\n\nC1: compute the innovation\n\\[ d_{j+1} = y_{j+1} - H \\hat{m}_{j+1} \\]\nC2: compute the measurement covariance\n\\[ S_{j+1} = H \\hat{C}_{j+1}  H^{\\mathrm{T}} + \\Gamma \\]\nC3: compute the (optimal) Kalman gain\n\\[ K_{j+1} = \\hat{C}_{j+1} H^{\\mathrm{T}}  S_{j+1}^{-1} \\]\nC4: update/correct the mean and covariance\n\\[\\begin{align}\n   {m}_{j+1}  &= \\hat{m}_{j+1} + K_{j+1} d_{j+1}, \\\\\n   {C}_{j+1}  &= \\hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\\mathrm{T}}.\n   \\end{align}\\]\n\n\n\n3.2.3 Loop over time\n\nset \\(j = j+1\\)\ngo to step P1",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "021BasicKF.html#state-space-formulation",
+    "href": "021BasicKF.html#state-space-formulation",
+    "title": "3  Kalman Filters",
+    "section": "3.3 State-space formulation",
+    "text": "3.3 State-space formulation\nIn classical (linear) filter theory, a state space formulation is usually used.\n\\[\\begin{eqnarray}\n&& x_{k+1}  = F x_k + B u_k + w_k \\\\\n&& y_{k+1}  = H x_k + v_k,\n\\end{eqnarray}\\] where \\(u\\) is a control input, and \\(w_k \\sim \\mathcal{N}(0,Q),\\) \\(v_k \\sim \\mathcal{N}(0,R).\\) Moreover, \\(A\\) is the dynamics and \\(H\\) the observation operator.\nThe 2-step filter:\nInitialization\n\\[ x_0, \\quad P_0 \\]\n1. Prediction\n\\[\\begin{eqnarray}\n&& x_{k+1}^- = F x_k \\\\\n&& P_{k+1}^- = F P_k F^{\\mathrm{T}} + Q\n\\end{eqnarray}\\]\n2. Correction\n\\[\\begin{eqnarray}\n  K_{k+1} && = P_{k+1}^{-} H^{\\mathrm{T}} ( H  P_{k+1}^{-} H^{\\mathrm{T}} + R )^{-1}\n               \\quad (= P_{k+1}^- H^{\\mathrm{T}} S^{-1})\\\\\n  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - H x_{k+1}^- ) \\\\\n  P_{k+1} &&= (I -  K_{k+1} H ) P_{k+1}^-\n              \\quad (= P_{k+1}^- - K_{k+1} S K^{\\mathrm{T}}_{k+1})\n\\end{eqnarray}\\]\nLoop\nSet \\(k = k+1\\) and go to step 1.\n\n\n\n\n\n\nTip\n\n\n\nIn some cases, the superscripts f and a are used to denote the forecast/prediction, and analysis/correction variables, respectively. We avoid this, for clarity of notation.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "021BasicKF.html#passage-from-continuous-to-discrete-for-random-dynamic-systems",
+    "href": "021BasicKF.html#passage-from-continuous-to-discrete-for-random-dynamic-systems",
+    "title": "3  Kalman Filters",
+    "section": "3.4 Passage from Continuous to Discrete for Random Dynamic Systems",
+    "text": "3.4 Passage from Continuous to Discrete for Random Dynamic Systems\nMost often, in the use of Kalman filtering, we deal with a continuous dynamic system that is modelled by a system of ODEs, with some random process noise. The passage from the continuous to a discrete-time formulation, which is needed for the KF, requires some attention. Following {cite}Sarkka2023, we will derive the associated discretization of the process matrix and the process noise covariance matrix.\nSuppose we have a linear, time invariant (LTI) system of ODEs with an additive random noise term (this is the engineering approach that avoids the use of SDEs and Itô calculus—see {cite}Asch2022 )\n\\[\n  \\frac{\\mathrm{d}\\mathbf{x}}{\\mathrm{d}t} = F \\mathbf{x}(t) + L \\mathbf{w}(t) , \\quad \\mathbf{x}(0) = \\mathbf{x}_0,\n\\]\nwhere \\(\\mathbf{w}(t)\\) is a white, Gaussian noise process with expectation and covariance\n\\[\\begin{align}\n& \\mathrm{E}[\\mathbf{w}(t)] = 0, \\\\\n& \\mathrm{Cov}[\\mathbf{w}(\\tau_1)\\mathbf{w}(\\tau_2)] = \\delta(\\tau_1 - \\tau_2) Q^c\n\\end{align}\\]\nwith \\(Q^c\\) the spectral density matrix of the white noise process, which is the continuous-time analogue of a covariance matrix, and in the scalar case is just the noise variance. Usually\n\\[\n  Q^c = \\mathrm{diag}(q^c_1, \\ldots, q^c_n),\n\\]\nwhere \\(q^c_1, \\ldots, q^c_n\\) are the spectral densities of \\(w_1(t), \\ldots, w_n(t),\\) the components of \\(\\mathbf{w}(t).\\)\nWe now proceed to convert this continous LTI system into its discrete counterpart, needed for the KF algorithm,\n\\[\n\\mathbf{x}_{k+1 } = A_k  \\mathbf{x}_{k} + \\mathbf{q}_{k},\n\\]\nwhere \\(A_k\\) is the discretized process/dynamics transition matrix, and \\(\\mathbf{q}_{k} \\sim \\mathcal{N} (0, Q)\\) is the Gaussian process noise.\nTo obtain expressions for \\(A\\) and \\(Q,\\) we need to solve the random ODE system. Doing this, we can show that\n\\[\n  A_k = \\exp (F \\Delta t_{k}) = \\sum_{n=0}^{\\infty} \\frac{(F \\Delta t_{k})^n}{n !}\n\\]\nand\n\\[\n  Q_k = \\int_0^{\\Delta t_{k}}  \\exp (F s) L Q^c L^{\\mathrm{T}} \\exp (F s)^{\\mathrm{T}} \\mathrm{d}s.\n\\]\nUsually, \\(F\\) is nilpotent to some low order, so the computation of the matrix exponential is relatively easy to do. This will be illustrated in the examples.\n\n\n\n\nAsch, Mark. 2022. A Toolbox for Digital Twins: From Model-Based to Data-Driven. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data Assimilation: Methods, Algorithms, and Applications. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data Assimilation: A Mathematical Introduction. Vol. 62. Texts in Applied Mathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "012BayesFilters.html",
+    "href": "012BayesFilters.html",
+    "title": "2  Bayesian Filters",
+    "section": "",
+    "text": "All filters can be expressed in a Bayesian form.\n\n\n\n\n\n\nImportant\n\n\n\nKalman filters are a special case of the more general Bayesian filter formulation\n\n\nComing soon…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bayesian Filters</span>"
+    ]
+  },
+  {
+    "objectID": "022NlinKF.html",
+    "href": "022NlinKF.html",
+    "title": "4  Nonlinear Kalman Filters",
+    "section": "",
+    "text": "4.1 Introduction\nRecall that the Kalman filter can be used for\nKalman filters are linear (and Gaussian) or nonlinear. Here we will formulate the basic nonliner filter, known as the extended Kalman filter.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "022NlinKF.html#introduction",
+    "href": "022NlinKF.html#introduction",
+    "title": "4  Nonlinear Kalman Filters",
+    "section": "",
+    "text": "state estimation—this is the direct filtering (or smoothing) problem\nparameter estimation—this is the inverse problem based on filtering with a pseudo-time",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "022NlinKF.html#recall-kalman-filter-problem---general-formulation",
+    "href": "022NlinKF.html#recall-kalman-filter-problem---general-formulation",
+    "title": "4  Nonlinear Kalman Filters",
+    "section": "4.2 Recall: Kalman filter problem - general formulation",
+    "text": "4.2 Recall: Kalman filter problem - general formulation\nWe present a very general formulation that will later be convenient for joint state and parameter estimation problems. Consider a discrete-time nonlinear dynamical system with noisy state transitions and noisy observations that are also noinlinear.\n\nDynamics:\n\\[\\quad v_{j+1} = \\Psi(v_j) + \\xi_j, \\quad j \\in \\mathbb{Z}^+ \\]\nObservations:\n\\[y_{j+1} = h (v_{j+1}) + \\eta_{j+1}, \\quad j \\in \\mathbb{Z}^+ \\]\nProbability (densities):\n\\[v_0 \\sim \\mathcal{N}(m_0,C_0), \\quad \\xi_j \\sim \\mathcal{N}(0,\\Sigma),  \\quad \\eta_j \\sim \\mathcal{N}(0,\\Gamma)\\]\nProbability (independence):\n\\[v_0 \\perp {\\xi_j} \\perp {\\eta_j}\\]\nOperators:\n\\[\\begin{eqnarray}\n    \\Psi \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_s, \\\\\n    h  \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_o,\n   \\end{eqnarray}\\] where \\(v_j \\in \\mathcal{H}_s,\\) \\(y_j \\in \\mathcal{H}_o\\) and \\(\\mathcal{H}\\) is a finite-dimensional Hilbert space.\n\nFiltering problem:\nEstimate (optimally) the state \\(v_j\\) of the dynamical system at time \\(j,\\) given the data \\(Y_j = \\{y_i\\}_{i=1}^{j}\\) up to time \\(j.\\) This is achieved by using a two-step predictor-corrector method. We will use the more general notation of (Law, Stuart, and Zygalakis 2015) instead of the usual, classical state-space formulation that is used in (Asch, Bocquet, and Nodet 2016) and (Asch 2022).\nThe objective here is to update the filtering distribution \\(\\mathbb{P}(v_j \\vert Y_j),\\) from time \\(j\\) to time \\(j+1,\\) in the nonlinear, Gaussian case, where\n\n\\(\\Psi\\) and \\(h\\) are nonlinear functions,\nall distributions are Gaussian.\n\nSuppose the Jacobian matrices of \\(\\Psi\\) and \\(h\\) exist, and are denoted by\n\\[\n\\begin{eqnarray}\n   \\Psi_x(v) &= \\left[ \\frac{\\partial \\Psi}{\\partial x} \\right]_{x=m}\\\\\n   h_x(v) &= \\left[ \\frac{\\partial h}{\\partial x} \\right]_{x=m}.\n\\end{eqnarray}\n\\]\n\nLet \\((m_j, C_j)\\) denote the mean and covariance of \\(v_j \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nLet \\((\\hat{m}_{j+1}, \\hat{C}_{j+1})\\) denote the mean and covariance of \\(v_{j+1} \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nDerive the map \\((m_j, C_j) \\mapsto (m_{j+1}, C_{j+1})\\) using the previous step.\n\n\n4.2.1 Prediction/Forecast\n\\[ \\mathbb{P}(v_n \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\]\n\nP0: initialize \\((m_0, C_0)\\) and compute \\(v_0\\)\nP1: predict the state, measurement\n\\[\n   \\begin{align}\n   v_{j+1} &= \\Psi (v_j) + \\xi_j \\\\\n   y_{j+1} &= h (v_{j+1}) + \\eta_{j+1}\n   \\end{align}\n   \\]\nP2: predict the mean and covariance\n\\[\n   \\begin{align}\n   \\hat{m}_{j+1}  &= \\Psi (m_j) \\\\\n   \\hat{C}_{j+1}  &= \\Psi_x C_j \\Psi_x^{\\mathrm{T}} + \\Sigma\n   \\end{align}\n   \\]\n\n\n\n4.2.2 Correction/Analysis\n\\[ \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_{n+1}) \\]\n\nC1: compute the innovation\n\\[ d_{j+1} = y_{j+1} - h (\\hat{m}_{j+1}) \\]\nC2: compute the measurement covariance\n\\[ S_{j+1} = h_x \\hat{C}_{j+1}  h_x^{\\mathrm{T}} + \\Gamma \\]\nC3: compute the (optimal) Kalman gain\n\\[ K_{j+1} = \\hat{C}_{j+1} h_x^{\\mathrm{T}}  S_{j+1}^{-1} \\]\nC4: update/correct the mean and covariance\n\\[\n   \\begin{align}\n   {m}_{j+1}  &= \\hat{m}_{j+1} + K_{j+1} d_{j+1}, \\\\\n   {C}_{j+1}  &= \\hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\\mathrm{T}}.\n   \\end{align}\n   \\]\n\n\n\n4.2.3 Loop over time\n\nset \\(j = j+1\\)\ngo to step P1",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "022NlinKF.html#state-space-formulation",
+    "href": "022NlinKF.html#state-space-formulation",
+    "title": "4  Nonlinear Kalman Filters",
+    "section": "4.3 State-space formulation",
+    "text": "4.3 State-space formulation\nIn classical filter theory, a state space formulation is usually used.\n\\[\n\\begin{eqnarray}\n&& x_{k+1}  = f (x_k)  + w_k \\\\\n&& y_{k+1}  = h (x_k) + v_k,\n\\end{eqnarray}\n\\]\nwhere \\(f\\) and \\(h\\) are nonlinear, differentiable functions with Jacobian matrices \\(D_f\\) and \\(D_h\\) respectively, \\(w_k \\sim \\mathcal{N}(0,Q),\\) \\(v_k \\sim \\mathcal{N}(0,R).\\)\nThe 2-step filter:\n\n4.3.1 Initialization\n\\[ x_0, \\quad P_0 \\]\n\n\n4.3.2 1. Prediction\n\\[\n\\begin{eqnarray}\n&& x_{k+1}^- = f (x_k) \\\\\n&& P_{k+1}^- = D_f P_k D_f^{\\mathrm{T}} + Q\n\\end{eqnarray}\n\\]\n\n\n4.3.3 2. Correction\n\\[\n\\begin{eqnarray}\n  K_{k+1} && = P_{k+1}^{-} D_h^{\\mathrm{T}} ( D_h  P_{k+1}^{-} D_h^{\\mathrm{T}} + R )^{-1}\n                 \\quad (= P_{k+1}^- D_h^{\\mathrm{T}} S^{-1}) \\\\\n  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - h (x_{k+1}^-) ) \\\\\n  P_{k+1} &&= (I -  K_{k+1} D_h ) P_{k+1}^-\n            \\quad (= P_{k+1}^- - K_{k+1} S K^{\\mathrm{T}}_{k+1})\n\\end{eqnarray}\n\\]\n\n\n4.3.4 Loop\nSet \\(k = k+1\\) and go to step 1.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "022NlinKF.html#other-nonlinear-filters",
+    "href": "022NlinKF.html#other-nonlinear-filters",
+    "title": "4  Nonlinear Kalman Filters",
+    "section": "4.4 Other nonlinear filters",
+    "text": "4.4 Other nonlinear filters\n\nunscented Kalman filter\nparticle filter\n\nFor details, please consult the references.\n\n\n\n\nAsch, Mark. 2022. A Toolbox for Digital Twins: From Model-Based to Data-Driven. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data Assimilation: Methods, Algorithms, and Applications. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data Assimilation: A Mathematical Introduction. Vol. 62. Texts in Applied Mathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/011BayesTheory.html",
+    "href": "01theory/011BayesTheory.html",
+    "title": "1  Bayes’ Theorem",
+    "section": "",
+    "text": "1.1 Introduction\nBayes’ theorem is at the core of modern uncertainty quantification.\nSee Theorem 1.1.",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/011BayesTheory.html#introduction",
+    "href": "01theory/011BayesTheory.html#introduction",
+    "title": "1  Bayes’ Theorem",
+    "section": "",
+    "text": "Theorem 1.1 (Bayes Theorem) \\[\nP(b \\vert a) = \\frac{P(a\\vert b) P(b)}{P(a)},\n\\] where \\(P(a \\vert b)\\) is the conditional probability of \\(a\\) given \\(b.\\)",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/011BayesTheory.html#theory",
+    "href": "01theory/011BayesTheory.html#theory",
+    "title": "1  Bayes’ Theorem",
+    "section": "1.2 Theory",
+    "text": "1.2 Theory\nStill to come…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/011BayesTheory.html#some-examples",
+    "href": "01theory/011BayesTheory.html#some-examples",
+    "title": "1  Bayes’ Theorem",
+    "section": "1.3 Some Examples",
+    "text": "1.3 Some Examples\nComing soon…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/012BayesFilters.html",
+    "href": "01theory/012BayesFilters.html",
+    "title": "4  Bayesian Filters",
+    "section": "",
+    "text": "All filters can be expressed in a Bayesian form.\n\n\n\n\n\n\nImportant\n\n\n\nKalman filters are a special case of the more general Bayesian filter formulation\n\n\nComing soon…",
+    "crumbs": [
+      "Bayes' Theory",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bayesian Filters</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample1.html",
+    "href": "02examples/KF/021KFExample1.html",
+    "title": "4  Example 1 - estimating a constant",
+    "section": "",
+    "text": "In this simple numerical example let us attempt to estimate a scalar random constant, a voltage for example. Let us assume that we can obtain measurements of the constant, but that the measurements are corrupted by a 0.1 volt RMS white measurement noise (e.g. our analog-to-digital converter is not very accurate).\nHere, we will use data assimilation notation, where - f denotes forecast (or prediction) - a denotes analysis (or correction) - t denotes the true value.\nIn this scalar, 1D example, our process is governed by the state equation,\n\\[\\begin{align*}\nx_{k} & = F x_{k-1}+w_{k}=x_{k-1}+w_{k}\n\\end{align*}\\]\nand the measurement equation, \\[\\begin{align*}\ny_{k} & = H x_{k}+v_{k} = x^{\\mathrm{t}} + v_{k}.\n\\end{align*}\\] The state, being constant, does not change from step to step, so \\(F=I.\\) Our noisy measurement is of the state directly so \\(H=1.\\)\nThe time-update (forecast) equations are, \\[\\begin{align}\nx_{k+1}^{\\mathrm{f}} & =  x_{k}^{\\mathrm{a}}\\,,\\\\\nP_{k+1}^{\\mathrm{f}} & =  P_{k}^{\\mathrm{a}}+Q\n\\end{align}\\] and the measurement update (analysis) equations are \\[\\begin{align}\nK_{k+1} & = P_{k+1}^{\\mathrm{f}}(P_{k+1}^{\\mathrm{f}}+R)^{-1},\\\\\nx_{k+1}^{\\mathrm{a}} & = x_{k+1}^{\\mathrm{f}}+K_{k+1}(y_{k+1}-x_{k+1}^{\\mathrm{f}}),\\\\\nP_{k+1}^{\\mathrm{a}} & = (1-K_{k+1})P_{k+1}^{\\mathrm{f}}.\n\\end{align}\\]\n:::{admonition} Initialization :class: tip Presuming a very small process variance, we let \\(Q=1.\\mathrm{e}-5\\). We could certainly let \\(Q=0\\) but assuming a small but non-zero value gives us more flexibility in tuning the filter as we will demonstrate below. Let us assume from experience that we know the true value of the random constant has a standard Gaussian probability distribution, so we will seed our filter with the guess that the constant is \\(0.\\) In other words, before starting we let \\(x_{0}=0.\\) Similarly we need to choose an initial value for \\(P_{k}^{\\mathrm{a}}\\), call it \\(P_{0}.\\) If we were absolutely certain that our initial state estimate was correct, we would let \\(P_{0}=0.\\) However, given the uncertainty in our initial estimate \\(x_{0},\\) choosing \\(P_{0}=0\\) would cause the filter to initially and always believe that \\(x_{k}^{\\mathrm{a}}=0.\\) As it turns out, the alternative choice is not critical. We could choose almost any \\(P_{0}\\neq0\\) and the filter would eventually converge. We will start our filter with \\(P_{0}=1.\\) :::\n:::{admonition} Simulations To begin with, we randomly chose a scalar constant \\(y=-0.37727.\\) We then simulate \\(100\\) distinct measurements that have an error normally-distributed around zero with a standard deviation of \\(0.1\\) (remember we supposed that the measurements are corrupted by a \\(0.1\\) volt RMS white measurement noise). :::\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nnp.random.seed(1955)\n\n#plt.rcParams['figure.figsize'] = (10, 6)\n\ndef KF_ct(n_iter=50, sig_w=0.001, sig_v=0.1):\n\n    # intial parameters\n    n_iter = 50\n    sz = (n_iter,) # size of array\n    x = -0.37727 # truth value\n    z = np.random.normal(x,0.1,size=sz) # observations (normal about x, sigma=0.1)\n    \n    Q = sig_w**2 # 1e-6 # process variance\n    \n    # allocate space for arrays\n    xhat      = np.zeros(sz)      # a posteri estimate of x\n    P         = np.zeros(sz)         # a posteri error estimate\n    xhatminus = np.zeros(sz) # a priori estimate of x\n    Pminus    = np.zeros(sz)    # a priori error estimate\n    K         = np.zeros(sz)         # gain or blending factor\n    \n    R = sig_v**2 # 0.1**2 # estimate of measurement variance, change to see effect\n    \n    # intial guesses\n    xhat[0] = 0.0\n    P[0] = 1.0\n    \n    for k in range(1,n_iter):\n        # time update\n        xhatminus[k] = xhat[k-1]\n        Pminus[k] = P[k-1] + Q\n    \n        # measurement update\n        K[k] = Pminus[k]/( Pminus[k] + R )\n        xhat[k] = xhatminus[k]+K[k]*(z[k]-xhatminus[k])\n        P[k] = (1 - K[k])*Pminus[k]\n    \n    fig, (ax1, ax2) = plt.subplots(2,1)\n    fig.suptitle('KF with default values')\n    ax1.plot(z,'ro',label='noisy measurements')\n    ax1.plot(xhat,'b-',label='KF posterior estimate')\n    ax1.axhline(x,color='g',label='true value')\n    ax1.legend()\n    \n    valid_iter = range(1,n_iter) # Pminus not valid at step 0\n    ax2.semilogy(valid_iter,Pminus[valid_iter],label='a priori error estimate')\n    ax2.grid()\n    ax2.legend()\n    ax2.set(xlabel='Iteration', ylabel='Voltage$^2$') #, ylim=[0,.01])\n\n\n# use all default values\nKF_ct()\n\n\n\n\n\n\n\n\nIn this first simulation we fixed the measurement variance at \\(R=(0.1)^{2}=0.01.\\) Because this is the “true” measurementerror variance, we would expect the “best” performance in terms of balancing responsiveness and estimate variance. This will become more evident in the second and third simulations.\nThe above figure depicts the results of this first simulation. The true value of the random constant \\(x=-0.37727\\) is given by the solid line, the noisy measurements by the dots and the filter estimate by the blue curve.\nNow, we will see what happens when the measurement error variance \\(R\\) is increased or decreased by a factor of \\(100\\) respectively.\n\nfirst, the filter was told that the measurement variance was \\(100\\) times greater (i.e. \\(R=1\\)) so it was “slower” to believe the measurements.\nthen, the filter was told that the measurement variance was \\(100\\) times smaller (i.e. \\(R=0.0001\\) ) so it was very “quick” to believe the noisy measurements.\n\n\n# increase R = 1\nKF_ct(sig_v=1)\n\n\n\n\n\n\n\n\n\n# decrease R = 0.0001\nKF_ct(sig_v=0.01)\n\n\n\n\n\n\n\n\n:::{admonition} Conclusion :class: danger\nWhile the estimation of a constant is relatively straightforward, this example clearly demonstrates the workings of the Kalman filter. In the second Figure (R=1) in particular, the Kalman filtering is evident as the estimate appears considerably smoother than the noisy measurements. We observe the speed of convergence of the variance in the bottom subplot of the respective Figures. :::",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Example 1 - estimating a constant</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample2.html",
+    "href": "02examples/KF/021KFExample2.html",
+    "title": "5  Example 2 - scalar, Gaussian random walk",
+    "section": "",
+    "text": "5.1 Implementation of the KF\nHere is a straigthforward, matrix-based implementation of teh KF that follows exactly the thoeretical formulation above.\nFor more generality, below we will rewrite the Kalman filter as a class.\n# scalar KF\nx = x0\nP = P0\n# Allocate space for estimated position\nestimated_positions  = np.zeros(N)\nestimated_covariance = np.zeros(N)\n# Kalman Filter Loop\nfor k in range(N):\n    # Predict\n    x = F*x\n    P = F*P*F + Q    \n    # Correct\n    d = Y[k] - H*x\n    S = H*P*H + R\n    K = P*H / S\n    x = x + K*d\n    P = P - K*S*K\n    # Store the filtered position and covariance\n    estimated_positions[k]  = x\n    estimated_covariance[k] = P\n \n# Plot the true positions, noisy measurements, and the Kalman filter estimates\n# and the 2 sigma upper and lower analytic population bounds\nlower_bound = estimated_positions - 1.96*np.sqrt(estimated_covariance)\nupper_bound = estimated_positions + 1.96*np.sqrt(estimated_covariance)\n\nfig, ax = plt.subplots(1, figsize=(10,6))\nax.fill_between(t, lower_bound, upper_bound, facecolor='C0', alpha=0.2,\n                label='2 sigma range')\nax.legend(loc='upper left')\nax.plot(t, X, label='True Position', color='green')\nax.scatter(t, Y, label='Noisy Measurements', color='orange', marker='o')\nax.plot(t, estimated_positions, label='Kalman Filter Estimate', color='blue')\n\nplt.xlabel('Time Step')\nplt.ylabel('Position')\nplt.title('Kalman Filter Estimation Over Time')\nplt.legend()\nplt.show()",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Example 2 - scalar, Gaussian random walk</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample2.html#implementation-of-kf-as-a-class",
+    "href": "02examples/KF/021KFExample2.html#implementation-of-kf-as-a-class",
+    "title": "5  Example 2 - scalar, Gaussian random walk",
+    "section": "5.2 Implementation of KF as a class",
+    "text": "5.2 Implementation of KF as a class\nFor more generality, we rewrite the Kalman filter as a class.\n\nclass KalmanFilter:\n    \"\"\"\n    An implementation of the classic Kalman Filter for a SCALAR linear dynamic systems.\n    The Kalman Filter is an optimal recursive data processing algorithm which\n    aims to estimate the state of a system from noisy observations.\n\n    Attributes:\n        F (np.ndarray): The state transition matrix.\n        B (np.ndarray): The control input marix.\n        H (np.ndarray): The observation matrix.\n        u (np.ndarray): the control input.\n        Q (np.ndarray): The process noise covariance matrix.\n        R (np.ndarray): The measurement noise covariance matrix.\n        x (np.ndarray): The mean state estimate of the previous step (k-1).\n        P (np.ndarray): The state covariance of previous step (k-1).\n    \"\"\"\n    def __init__(self, F=None, B=None, H=None, Q=None, R=None, x0=None, P0=None):\n        \"\"\"\n        Initializes the Kalman Filter with the necessary matrices and initial state.\n\n        Parameters:\n            F (np.ndarray): The state transition matrix.\n            B (np.ndarray): The control input marix.\n            H (np.ndarray): The observation matrix.\n            u (np.ndarray): the control input.\n            Q (np.ndarray): The process noise covariance matrix.\n            R (np.ndarray): The measurement noise covariance matrix.\n            x0 (np.ndarray): The initial state estimate.\n            P0 (np.ndarray): The initial state covariance matrix.\n        \"\"\"\n        self.F = F  # State transition matrix\n        self.B = B  # Control input matrix\n        self.u = u  # Control input\n        self.H = H  # Observation matrix\n        self.Q = Q  # Process noise covariance\n        self.R = R  # Measurement noise covariance\n        self.x = x0  # Initial state estimate\n        self.P = P0  # Initial estimate covariance\n\n    def predict(self):\n        \"\"\"\n        Predicts the state and the state covariance for the next time step.\n        \"\"\"\n        self.x = self.F @ self.x + self.B @ self.u\n        self.P = self.F @ self.P @ self.F.T + self.Q\n        #return self.x\n\n    def update(self, z):\n        \"\"\"\n        Updates the state estimate with the latest measurement.\n\n        Parameters:\n            z (np.ndarray): The measurement at the current step.\n        \"\"\"\n        y = z - self.H @ self.x\n        S = self.H @ self.P @ self.H.T + self.R\n        K = self.P @ self.H.T @ np.linalg.inv(S)\n        self.x = self.x + K @ y \n        I = np.eye(self.P.shape[0])\n        self.P = (I - K @ self.H) @ self.P\n\n\n# generate the GRW\nimport numpy as np\nimport matplotlib.pyplot as plt\nnp.random.seed(1955)\n# time interval and time-step\nT = 1\nN = 50\ndt = T/N\nt = np.linspace(0,1,N)\n# set parameters\nsig_w = 1\nsig_v = 0.5\nF = 1\nQ = sig_w**2\nH = 1\nR = sig_v**2\n# initialize\nx0 = 0\nP0 = 1\n# simulate data\nX = np.zeros(N)\nY = np.zeros(N)\nx = x0\n# loop over time\nfor j in range(N):\n    w = Q*np.random.randn()\n    x = F*x + w;\n    y = H*x + sig_v*np.random.randn()\n    X[j] = x\n    Y[j] = y# ready to execute the KF...\n\n# Kalman Filter Initialization\nF = np.array([[1]])        # State transition matrix\nB = np.array([[0]])        # No control input\nu = np.array([[0]])        # No control input\nH = np.array([[1]])        # Measurement function\nQ = np.array([[sig_w**2]]) # Process noise covariance\nR = np.array([[sig_v**2]]) # Measurement noise covariance\nx0 = np.array([[0]])       # Initial state estimate\nP0 = np.array([[1]])       # Initial estimate covariance\n\nkf = KalmanFilter(F, B, H, Q, R, x0, P0)\n\n# Allocate space for estimated position\nestimated_positions = np.zeros(N)\n\n# Kalman Filter Loop\nfor k in range(N):\n    # Predict\n    kf.predict()    \n    # Correct\n    measurement = np.array([[Y[k]]])\n    kf.update(measurement)    \n    # Store the filtered position \n    estimated_positions[k]  = np.ndarray.item(kf.x[0])\n\n# Plot the true positions, noisy measurements, and the Kalman filter estimates\nplt.figure(figsize=(10, 6))\nplt.plot(t, X, label='True Position', color='green')\nplt.scatter(t, Y, label='Noisy Measurements', color='red', marker='o')\nplt.plot(t, estimated_positions, label='Kalman Filter Estimate', color='blue')\n\nplt.xlabel('Time Step')\nplt.ylabel('Position')\nplt.title('Kalman Filter Estimation Over Time')\nplt.legend()\nplt.show()",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Example 2 - scalar, Gaussian random walk</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/021BasicKF.html",
+    "href": "01theory/021BasicKF.html",
+    "title": "3  Kalman Filters",
+    "section": "",
+    "text": "3.1 Introduction\nThe Kalman filter can be used for\nKalman filters are linear (and Gaussian) or nonlinear. Among the nonlinear approaches, the Ensemble Kalman filter (EnKF) provides a derivative-free approach to the solution of inverse problems.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/021BasicKF.html#introduction",
+    "href": "01theory/021BasicKF.html#introduction",
+    "title": "3  Kalman Filters",
+    "section": "",
+    "text": "state estimation—this is the direct filtering (or smoothing) problem\nparameter estimation—this is the inverse problem based on filtering with a pseudo-time",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/021BasicKF.html#kalman-filter-problem---general-formulation",
+    "href": "01theory/021BasicKF.html#kalman-filter-problem---general-formulation",
+    "title": "3  Kalman Filters",
+    "section": "3.2 Kalman filter problem - General formulation",
+    "text": "3.2 Kalman filter problem - General formulation\nWe present a very general formulation that will later be convenient for joint state and parameter estimation problems.\nWe consider a discrete-time dynamical system with noisy state transitions and noisy observations.\n\nDynamics:\n\\[v_{j+1} = \\Psi(v_j) + \\xi_j, \\quad j \\in \\mathbb{Z}^+\\]\nObservations:\n\\[y_{j+1} = h (v_{j+1}) + \\eta_{j+1}, \\quad j \\in \\mathbb{Z}^+\\]\nProbability (densities):\n\\[v_0 \\sim \\mathcal{N}(m_0,C_0), \\quad \\xi_j \\sim \\mathcal{N}(0,\\Sigma), \\quad \\eta_j \\sim \\mathcal{N}(0,\\Gamma)\\]\nProbability (independence):\n\\[v_0 \\perp {\\xi_j} \\perp {\\eta_j}\\]\nOperators:\n\\[\\begin{eqnarray}\n    \\Psi \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_s, \\\\\n    h  \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_o,\n   \\end{eqnarray}\\] where \\(v_j \\in \\mathcal{H}_s,\\) \\(y_j \\in \\mathcal{H}_o\\) and \\(\\mathcal{H}\\) is a finite-dimensional Hilbert space.\n\nFiltering problem: estimate (optimally) the state \\(v_j\\) of the dynamical system at time \\(j,\\) given the data \\(Y_j = \\{y_i\\}_{i=1}^{j}\\) up to time \\(j.\\) This is achieved by using a two-step predictor-corrector method. We will use the more general notation of (Law, Stuart, and Zygalakis 2015) instead of the usual, classical state-space formulation that is used in (Asch, Bocquet, and Nodet 2016) and (Asch 2022).\nThe objective is to update the filtering distribution \\(\\mathbb{P}(v_j \\vert Y_j),\\) from time \\(j\\) to time \\(j+1,\\) in the linear, Gaussian case, where - \\(\\Psi\\) and \\(h\\) are linear maps - all distributions are Gaussian.\nSuppose \\[\\begin{eqnarray}\n   \\Psi(v) &= Mv \\\\\n   h(v) &= Hv,\n\\end{eqnarray}\\] where the matrices \\(M \\in \\mathbb{R}^{n \\times n},\\) \\(H \\in \\mathbb{R}^{m \\times n},\\) with \\(m \\le n\\) and \\(\\mathrm{rank}(H)=m.\\)\n\nLet \\((m_j, C_j)\\) denote the mean and covariance of \\(v_j \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nLet \\((\\hat{m}_{j+1}, \\hat{C}_{j+1})\\) denote the mean and covariance of \\(v_{j+1} \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nDerive the map \\((m_j, C_j) \\mapsto (m_{j+1}, C_{j+1})\\) using the previous step.\n\n\n3.2.1 Prediction/Forecast\n\\[ \\mathbb{P}(v_n \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\]\n\nP0: initialize \\((m_0, C_0)\\) and compute \\(v_0\\)\nP1: predict the state, measurement\n\\[\\begin{align}\n   v_{j+1} &= M v_j + \\xi_j \\\\\n   y_{j+1} &= H v_{j+1} + \\eta_{j+1}\n   \\end{align}\\]\nP2: predict the mean and covariance\n\\[\\begin{align}\n   \\hat{m}_{j+1}  &= M m_j \\\\\n   \\hat{C}_{j+1}  &= M C_j M^{\\mathrm{T}} + \\Sigma\n   \\end{align}\\]\n\n\n\n3.2.2 Correction/Analysis\n\\[ \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_{n+1}) \\]\n\nC1: compute the innovation\n\\[ d_{j+1} = y_{j+1} - H \\hat{m}_{j+1} \\]\nC2: compute the measurement covariance\n\\[ S_{j+1} = H \\hat{C}_{j+1}  H^{\\mathrm{T}} + \\Gamma \\]\nC3: compute the (optimal) Kalman gain\n\\[ K_{j+1} = \\hat{C}_{j+1} H^{\\mathrm{T}}  S_{j+1}^{-1} \\]\nC4: update/correct the mean and covariance\n\\[\\begin{align}\n   {m}_{j+1}  &= \\hat{m}_{j+1} + K_{j+1} d_{j+1}, \\\\\n   {C}_{j+1}  &= \\hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\\mathrm{T}}.\n   \\end{align}\\]\n\n\n\n3.2.3 Loop over time\n\nset \\(j = j+1\\)\ngo to step P1",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/021BasicKF.html#state-space-formulation",
+    "href": "01theory/021BasicKF.html#state-space-formulation",
+    "title": "3  Kalman Filters",
+    "section": "3.3 State-space formulation",
+    "text": "3.3 State-space formulation\nIn classical (linear) filter theory, a state space formulation is usually used.\n\\[\\begin{eqnarray}\n&& x_{k+1}  = F x_k + B u_k + w_k \\\\\n&& y_{k+1}  = H x_k + v_k,\n\\end{eqnarray}\\] where \\(u\\) is a control input, and \\(w_k \\sim \\mathcal{N}(0,Q),\\) \\(v_k \\sim \\mathcal{N}(0,R).\\) Moreover, \\(A\\) is the dynamics and \\(H\\) the observation operator.\nThe 2-step filter:\nInitialization\n\\[ x_0, \\quad P_0 \\]\n1. Prediction\n\\[\\begin{eqnarray}\n&& x_{k+1}^- = F x_k \\\\\n&& P_{k+1}^- = F P_k F^{\\mathrm{T}} + Q\n\\end{eqnarray}\\]\n2. Correction\n\\[\\begin{eqnarray}\n  K_{k+1} && = P_{k+1}^{-} H^{\\mathrm{T}} ( H  P_{k+1}^{-} H^{\\mathrm{T}} + R )^{-1}\n               \\quad (= P_{k+1}^- H^{\\mathrm{T}} S^{-1})\\\\\n  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - H x_{k+1}^- ) \\\\\n  P_{k+1} &&= (I -  K_{k+1} H ) P_{k+1}^-\n              \\quad (= P_{k+1}^- - K_{k+1} S K^{\\mathrm{T}}_{k+1})\n\\end{eqnarray}\\]\nLoop\nSet \\(k = k+1\\) and go to step 1.\n\n\n\n\n\n\nTip\n\n\n\nIn some cases, the superscripts f and a are used to denote the forecast/prediction, and analysis/correction variables, respectively. We avoid this, for clarity of notation.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/021BasicKF.html#passage-from-continuous-to-discrete-for-random-dynamic-systems",
+    "href": "01theory/021BasicKF.html#passage-from-continuous-to-discrete-for-random-dynamic-systems",
+    "title": "3  Kalman Filters",
+    "section": "3.4 Passage from Continuous to Discrete for Random Dynamic Systems",
+    "text": "3.4 Passage from Continuous to Discrete for Random Dynamic Systems\nMost often, in the use of Kalman filtering, we deal with a continuous dynamic system that is modelled by a system of ODEs, with some random process noise. The passage from the continuous to a discrete-time formulation, which is needed for the KF, requires some attention. Following {cite}Sarkka2023, we will derive the associated discretization of the process matrix and the process noise covariance matrix.\nSuppose we have a linear, time invariant (LTI) system of ODEs with an additive random noise term (this is the engineering approach that avoids the use of SDEs and Itô calculus—see {cite}Asch2022 )\n\\[\n  \\frac{\\mathrm{d}\\mathbf{x}}{\\mathrm{d}t} = F \\mathbf{x}(t) + L \\mathbf{w}(t) , \\quad \\mathbf{x}(0) = \\mathbf{x}_0,\n\\]\nwhere \\(\\mathbf{w}(t)\\) is a white, Gaussian noise process with expectation and covariance\n\\[\\begin{align}\n& \\mathrm{E}[\\mathbf{w}(t)] = 0, \\\\\n& \\mathrm{Cov}[\\mathbf{w}(\\tau_1)\\mathbf{w}(\\tau_2)] = \\delta(\\tau_1 - \\tau_2) Q^c\n\\end{align}\\]\nwith \\(Q^c\\) the spectral density matrix of the white noise process, which is the continuous-time analogue of a covariance matrix, and in the scalar case is just the noise variance. Usually\n\\[\n  Q^c = \\mathrm{diag}(q^c_1, \\ldots, q^c_n),\n\\]\nwhere \\(q^c_1, \\ldots, q^c_n\\) are the spectral densities of \\(w_1(t), \\ldots, w_n(t),\\) the components of \\(\\mathbf{w}(t).\\)\nWe now proceed to convert this continous LTI system into its discrete counterpart, needed for the KF algorithm,\n\\[\n\\mathbf{x}_{k+1 } = A_k  \\mathbf{x}_{k} + \\mathbf{q}_{k},\n\\]\nwhere \\(A_k\\) is the discretized process/dynamics transition matrix, and \\(\\mathbf{q}_{k} \\sim \\mathcal{N} (0, Q)\\) is the Gaussian process noise.\nTo obtain expressions for \\(A\\) and \\(Q,\\) we need to solve the random ODE system. Doing this, we can show that\n\\[\n  A_k = \\exp (F \\Delta t_{k}) = \\sum_{n=0}^{\\infty} \\frac{(F \\Delta t_{k})^n}{n !}\n\\]\nand\n\\[\n  Q_k = \\int_0^{\\Delta t_{k}}  \\exp (F s) L Q^c L^{\\mathrm{T}} \\exp (F s)^{\\mathrm{T}} \\mathrm{d}s.\n\\]\nUsually, \\(F\\) is nilpotent to some low order, so the computation of the matrix exponential is relatively easy to do. This will be illustrated in the examples.\n\n\n\n\nAsch, Mark. 2022. A Toolbox for Digital Twins: From Model-Based to Data-Driven. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data Assimilation: Methods, Algorithms, and Applications. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data Assimilation: A Mathematical Introduction. Vol. 62. Texts in Applied Mathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/022NlinKF.html",
+    "href": "01theory/022NlinKF.html",
+    "title": "8  Nonlinear Kalman Filters",
+    "section": "",
+    "text": "8.1 Introduction\nRecall that the Kalman filter can be used for\nKalman filters are linear (and Gaussian) or nonlinear. Here we will formulate the basic nonliner filter, known as the extended Kalman filter.",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/022NlinKF.html#introduction",
+    "href": "01theory/022NlinKF.html#introduction",
+    "title": "8  Nonlinear Kalman Filters",
+    "section": "",
+    "text": "state estimation—this is the direct filtering (or smoothing) problem\nparameter estimation—this is the inverse problem based on filtering with a pseudo-time",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/022NlinKF.html#recall-kalman-filter-problem---general-formulation",
+    "href": "01theory/022NlinKF.html#recall-kalman-filter-problem---general-formulation",
+    "title": "8  Nonlinear Kalman Filters",
+    "section": "8.2 Recall: Kalman filter problem - general formulation",
+    "text": "8.2 Recall: Kalman filter problem - general formulation\nWe present a very general formulation that will later be convenient for joint state and parameter estimation problems. Consider a discrete-time nonlinear dynamical system with noisy state transitions and noisy observations that are also noinlinear.\n\nDynamics:\n\\[\\quad v_{j+1} = \\Psi(v_j) + \\xi_j, \\quad j \\in \\mathbb{Z}^+ \\]\nObservations:\n\\[y_{j+1} = h (v_{j+1}) + \\eta_{j+1}, \\quad j \\in \\mathbb{Z}^+ \\]\nProbability (densities):\n\\[v_0 \\sim \\mathcal{N}(m_0,C_0), \\quad \\xi_j \\sim \\mathcal{N}(0,\\Sigma),  \\quad \\eta_j \\sim \\mathcal{N}(0,\\Gamma)\\]\nProbability (independence):\n\\[v_0 \\perp {\\xi_j} \\perp {\\eta_j}\\]\nOperators:\n\\[\\begin{eqnarray}\n    \\Psi \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_s, \\\\\n    h  \\colon \\mathcal{H}_s &\\mapsto \\mathcal{H}_o,\n   \\end{eqnarray}\\] where \\(v_j \\in \\mathcal{H}_s,\\) \\(y_j \\in \\mathcal{H}_o\\) and \\(\\mathcal{H}\\) is a finite-dimensional Hilbert space.\n\nFiltering problem:\nEstimate (optimally) the state \\(v_j\\) of the dynamical system at time \\(j,\\) given the data \\(Y_j = \\{y_i\\}_{i=1}^{j}\\) up to time \\(j.\\) This is achieved by using a two-step predictor-corrector method. We will use the more general notation of (Law, Stuart, and Zygalakis 2015) instead of the usual, classical state-space formulation that is used in (Asch, Bocquet, and Nodet 2016) and (Asch 2022).\nThe objective here is to update the filtering distribution \\(\\mathbb{P}(v_j \\vert Y_j),\\) from time \\(j\\) to time \\(j+1,\\) in the nonlinear, Gaussian case, where\n\n\\(\\Psi\\) and \\(h\\) are nonlinear functions,\nall distributions are Gaussian.\n\nSuppose the Jacobian matrices of \\(\\Psi\\) and \\(h\\) exist, and are denoted by\n\\[\n\\begin{eqnarray}\n   \\Psi_x(v) &= \\left[ \\frac{\\partial \\Psi}{\\partial x} \\right]_{x=m}\\\\\n   h_x(v) &= \\left[ \\frac{\\partial h}{\\partial x} \\right]_{x=m}.\n\\end{eqnarray}\n\\]\n\nLet \\((m_j, C_j)\\) denote the mean and covariance of \\(v_j \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nLet \\((\\hat{m}_{j+1}, \\hat{C}_{j+1})\\) denote the mean and covariance of \\(v_{j+1} \\vert Y_j\\) and note that these entirely characterize the random variable since it is Gaussian.\nDerive the map \\((m_j, C_j) \\mapsto (m_{j+1}, C_{j+1})\\) using the previous step.\n\n\n8.2.1 Prediction/Forecast\n\\[ \\mathbb{P}(v_n \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\]\n\nP0: initialize \\((m_0, C_0)\\) and compute \\(v_0\\)\nP1: predict the state, measurement\n\\[\n   \\begin{align}\n   v_{j+1} &= \\Psi (v_j) + \\xi_j \\\\\n   y_{j+1} &= h (v_{j+1}) + \\eta_{j+1}\n   \\end{align}\n   \\]\nP2: predict the mean and covariance\n\\[\n   \\begin{align}\n   \\hat{m}_{j+1}  &= \\Psi (m_j) \\\\\n   \\hat{C}_{j+1}  &= \\Psi_x C_j \\Psi_x^{\\mathrm{T}} + \\Sigma\n   \\end{align}\n   \\]\n\n\n\n8.2.2 Correction/Analysis\n\\[ \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_n) \\mapsto \\mathbb{P}(v_{n+1} \\vert y_1, \\ldots, y_{n+1}) \\]\n\nC1: compute the innovation\n\\[ d_{j+1} = y_{j+1} - h (\\hat{m}_{j+1}) \\]\nC2: compute the measurement covariance\n\\[ S_{j+1} = h_x \\hat{C}_{j+1}  h_x^{\\mathrm{T}} + \\Gamma \\]\nC3: compute the (optimal) Kalman gain\n\\[ K_{j+1} = \\hat{C}_{j+1} h_x^{\\mathrm{T}}  S_{j+1}^{-1} \\]\nC4: update/correct the mean and covariance\n\\[\n   \\begin{align}\n   {m}_{j+1}  &= \\hat{m}_{j+1} + K_{j+1} d_{j+1}, \\\\\n   {C}_{j+1}  &= \\hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\\mathrm{T}}.\n   \\end{align}\n   \\]\n\n\n\n8.2.3 Loop over time\n\nset \\(j = j+1\\)\ngo to step P1",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/022NlinKF.html#state-space-formulation",
+    "href": "01theory/022NlinKF.html#state-space-formulation",
+    "title": "8  Nonlinear Kalman Filters",
+    "section": "8.3 State-space formulation",
+    "text": "8.3 State-space formulation\nIn classical filter theory, a state space formulation is usually used.\n\\[\n\\begin{eqnarray}\n&& x_{k+1}  = f (x_k)  + w_k \\\\\n&& y_{k+1}  = h (x_k) + v_k,\n\\end{eqnarray}\n\\]\nwhere \\(f\\) and \\(h\\) are nonlinear, differentiable functions with Jacobian matrices \\(D_f\\) and \\(D_h\\) respectively, \\(w_k \\sim \\mathcal{N}(0,Q),\\) \\(v_k \\sim \\mathcal{N}(0,R).\\)\nThe 2-step filter:\n\n8.3.1 Initialization\n\\[ x_0, \\quad P_0 \\]\n\n\n8.3.2 1. Prediction\n\\[\n\\begin{eqnarray}\n&& x_{k+1}^- = f (x_k) \\\\\n&& P_{k+1}^- = D_f P_k D_f^{\\mathrm{T}} + Q\n\\end{eqnarray}\n\\]\n\n\n8.3.3 2. Correction\n\\[\n\\begin{eqnarray}\n  K_{k+1} && = P_{k+1}^{-} D_h^{\\mathrm{T}} ( D_h  P_{k+1}^{-} D_h^{\\mathrm{T}} + R )^{-1}\n                 \\quad (= P_{k+1}^- D_h^{\\mathrm{T}} S^{-1}) \\\\\n  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - h (x_{k+1}^-) ) \\\\\n  P_{k+1} &&= (I -  K_{k+1} D_h ) P_{k+1}^-\n            \\quad (= P_{k+1}^- - K_{k+1} S K^{\\mathrm{T}}_{k+1})\n\\end{eqnarray}\n\\]\n\n\n8.3.4 Loop\nSet \\(k = k+1\\) and go to step 1.",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/022NlinKF.html#other-nonlinear-filters",
+    "href": "01theory/022NlinKF.html#other-nonlinear-filters",
+    "title": "8  Nonlinear Kalman Filters",
+    "section": "8.4 Other nonlinear filters",
+    "text": "8.4 Other nonlinear filters\n\nunscented Kalman filter\nparticle filter\n\nFor details, please consult the references.\n\n\n\n\nAsch, Mark. 2022. A Toolbox for Digital Twins: From Model-Based to Data-Driven. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data Assimilation: Methods, Algorithms, and Applications. Philadelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data Assimilation: A Mathematical Introduction. Vol. 62. Texts in Applied Mathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Nonlinear Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample3.html",
+    "href": "02examples/KF/021KFExample3.html",
+    "title": "6  Example 3 - constant-velocity 1D position tracking",
+    "section": "",
+    "text": "Kalman filters are extensively used in navigation and other GPS-based systems. These can be either linear or nonlinear. In the latter case, one usually resorts to the extended Kalman, filter (EKF) that is designed to deal better with nonlinear state equations—see below.\nProcess noise design for \\(Q\\)… - diagonal - constant velocity model - constant acceleration model\nWe begin with a very simple case of tracking a 1D position due to constant velocity motion, described by\n\\[\\frac{\\mathrm{d}x}{\\mathrm{d}t} = v, \\quad x(0) = x_0.\\]\nThis equation can be written as a system of two equations\n\\[\\frac{\\mathrm{d}\\mathbf{x}}{\\mathrm{d}t} = F \\mathbf{x} + L \\mathbf{w} , \\quad \\mathbf{x}(0) = \\mathbf{x}_0,\\]\nwhere\n\\[\\mathbf{x}=\\begin{bmatrix}x\\\\  \\dot{x} \\end{bmatrix},\\quad\n   F=\\begin{bmatrix}0 & 1\\\\  0 & 0 \\end{bmatrix},\\quad\n   L=\\begin{bmatrix}0\\\\  1  \\end{bmatrix},\\quad\n   \\mathbf{w}=w.\\]\nIn discrete-time, we introduce a time-step, \\(\\Delta t,\\) that is sometimes just set equal to one, and obtain the discrete, state-space formulation\n\\[ \\mathbf{x}_{k+1 } = F  \\mathbf{x}_{k} + L w_k, \\]\nwhere\n\\[\n   F=\\begin{bmatrix}1 & \\Delta t\\\\  0 & 1 \\end{bmatrix},\\quad\n   L=\\begin{bmatrix} 1 \\\\  0  \\end{bmatrix}.\\]\nWe begin by simulating the motion and generating noisy measurements of the position.\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n# Set the random seed for reproducibility\nnp.random.seed(42)\n\n# Simulate the ground truth position of the object\ntrue_velocity = 0.5  # units per time step\nnum_steps = 50\ntime_steps = np.linspace(0, num_steps, num_steps)\ntrue_positions = true_velocity * time_steps\n\n# Simulate the measurements with noise\nmeasurement_noise = 5 #1#0  # increase this value to make measurements noisier\nnoisy_measurements = true_positions + np.random.normal(0, measurement_noise, num_steps)\n\n# Plot the true positions and the noisy measurements\nplt.figure(figsize=(10, 6))\nplt.plot(time_steps, true_positions, label='True Position', color='green')\nplt.scatter(time_steps, noisy_measurements, label='Noisy Measurements', color='red', marker='o')\n\nplt.xlabel('Time Step')\nplt.ylabel('Position')\nplt.title('True Position and Noisy Measurements Over Time')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nNow, we set up the inputs for the Kalman filter, run it, and plot the results of the estimation.\nThe process noise covariance matrix, \\(Q,\\) is taken here as\n\\[\n  Q = \\begin{bmatrix}1 & 0\\\\  0 & \\sigma_w^2 \\end{bmatrix},\n\\]\nwhere we have supposed that\n\\[\n  w \\sim \\mathcal{N} (0, \\sigma_w^2) .\n\\]\nThis form for \\(Q\\) can be derived from the discretization of a Wiener process, as shown in {cite}Sarkka2023. We will consider a more general case in Example 4, below.\n\nsig_v = measurement_noise\nsig_w = 0.1 # np.sqrt(3)  # process noise\n# Kalman Filter Initialization\nF = np.array([[1, 1], [0, 1]])        # State transition matrix\nH = np.array([[1, 0]])                # Measurement function\nQ = np.array([[1, 0], [0, sig_w**2]]) # Process noise covariance\nR = np.array([[sig_v**2]])            # Measurement noise covariance\nx0 = np.array([[0], [0]])             # Initial state estimate\nP0 = np.array([[1, 0], [0, 1]])       # Initial estimate covariance\n\n# Initialize the state estimate and covariance\nnd = 2\nT = 50\n\nx_hat = np.zeros((T, nd, 1))\nP     = np.zeros((T, nd, nd))\n\nx_hat[0] = x0\nP[0] = P0 #Q\ny = noisy_measurements\n\n# Run the Kalman filter\nfor t in range(1, T):\n    # Prediction step\n    x_hat[t] = F @ x_hat[t-1]\n    P[t] = F @ P[t-1] @ F.T + Q\n\n    # Update step\n    K = P[t] @ H.T @ np.linalg.inv(H @ P[t] @ H.T + R)\n    x_hat[t] = x_hat[t] + K @ (y[t] - H @ x_hat[t])\n    P[t] = (np.eye(nd) - K @ H) @ P[t]\n\n\n# Plot the true positions, noisy measurements, and the Kalman filter estimates\ntime_steps = range(T)\nestimated_positions  = x_hat[:,0,:]\nestimated_velocities = x_hat[:,1,:]\nplt.figure(figsize=(10, 6))\nplt.plot(time_steps, true_positions, label='True Position $x$', color='green')\nplt.scatter(time_steps, noisy_measurements, label='Noisy Measurements $y$', color='red', marker='o')\nplt.plot(time_steps, estimated_positions, label='Kalman Filter Estimate of $x$', color='blue')\nplt.axhline(0.5,color='k',label='True velocity')\nplt.plot(time_steps, estimated_velocities, label='Kalman Filter Estimate of $\\dot{x}$', color='orange')\nplt.xlabel('Time Step')\nplt.ylabel('Position')\nplt.title('Kalman Filter Estimation Over Time')\nplt.legend()\nplt.show()",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Example 3 - constant-velocity 1D position tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html",
+    "href": "02examples/KF/021KFExample4.html",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "",
+    "text": "7.1 State-space model\nAssuming the above dynamics, and adding a noisy position measurement model, we obtain the linear state-space model\n\\[\n\\begin{align}\n  \\mathbf{x}_{k+1 } &= F  \\mathbf{x}_{k} + \\mathbf{q}_{k}, \\quad \\mathbf{q}_{k} \\sim \\mathcal{N} (0, Q), \\\\\n   \\mathbf{y}_{k+1 } &= H \\mathbf{x}_{k} + \\mathbf{r}_{k}, \\quad \\mathbf{r}_{k} \\sim \\mathcal{N} (0, R),\n\\end{align}\n\\]\nwith\n\\[\n  H = \\begin{bmatrix} 1 & 0 & 0 & 0\\\\  0 & 1 & 0 & 0 \\end{bmatrix}, \\quad\n  R = \\begin{bmatrix} \\sigma_1^2 & 0 \\\\  0 & \\sigma_2^2  \\end{bmatrix}  .\n\\]\nWe are now ready to simulate the Kalman filter.\nimport matplotlib.pyplot as plt\nimport numpy as np\nfrom scipy import linalg\n# we use Sarkka's utilities to streamline a bit...\nfrom common_utilities import generate_ssm, RandomState, rmse, plot_car_trajectory\n# initialize\nq = 1.    # process noise\ndt = 0.1  # time step\ns = 0.5   # measurement noise\n\nM = 4  # State dimension\nN = 2  # Observation dimension\n\nA = np.array([[1, 0, dt, 0],\n              [0, 1, 0, dt],\n              [0, 0, 1, 0],\n              [0, 0, 0, 1]])\n\nQ = q * np.array([[dt ** 3 / 3, 0, dt ** 2 / 2, 0],\n                  [0, dt **3 / 3, 0, dt ** 2 / 2],\n                  [dt ** 2 / 2, 0, dt, 0],\n                  [0, dt ** 2 / 2, 0, dt]])\n\nH = np.array([[1, 0, 0, 0],\n              [0, 1, 0, 0]])\n\nR = np.array([[s ** 2, 0],\n              [0, s ** 2]])\n\nx_0 = np.array([0., 0., 1., -1.])\n# Simulate trajectory and noisy measurements\nrandom_state = RandomState(6)\nsteps = 100\n\nstates, observations = generate_ssm(x_0, A, Q, H, R, steps, random_state)\n\nplot_car_trajectory(observations, states, \"Trajectory\")",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html#state-space-model",
+    "href": "02examples/KF/021KFExample4.html#state-space-model",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "",
+    "text": "definition of all parameters\ninitilization of all matrices\nsimulation and generate noisy measurements - plot\nKalman filter\nKalman smoother",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html#kalman-filter",
+    "href": "02examples/KF/021KFExample4.html#kalman-filter",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "7.2 Kalman filter",
+    "text": "7.2 Kalman filter\n\ndef kalman_filter(m_0, P_0, A, Q, H, R, observations):\n    M = m_0.shape[-1]\n    steps, N = observations.shape\n    \n    kf_m = np.empty((steps, M))\n    kf_P = np.empty((steps, M, M))\n    \n    m = m_0\n    P = P_0\n    \n    for i in range(steps):\n        y = observations[i]\n        m = A @ m\n        P = A @ P @ A.T + Q\n        \n        S = H @ P @ H.T + R\n        # More efficient and stable way of computing K = P @ H.T @ linalg.inv(S)\n        # This also leverages the fact that S is known to be a positive definite matrix (assume_a=\"pos\")\n        K = linalg.solve(S.T, H @ P, assume_a=\"pos\").T \n        \n        m = m + K @ (y - H @ m)\n        P = P - K @ S @ K.T\n        \n        kf_m[i] = m\n        kf_P[i] = P\n    return kf_m, kf_P\n\n\nm_0 = x_0\nP_0 = np.array([[1, 0, 0, 0],\n                [0, 1, 0, 0],\n                [0, 0, 1, 0],\n                [0, 0, 0, 1]])\n\nkf_m, kf_P = kalman_filter(m_0, P_0, A, Q, H, R, observations)\n\nplot_car_trajectory(observations, states, \"Trajectory\", kf_m, \"Filter Estimate\")\n\nrmse_raw = rmse(states[:, :2], observations)\nrmse_kf = rmse(kf_m[:, :2], states[:, :2])\nprint(f\"RAW RMSE: {rmse_raw}\")\nprint(f\"KF RMSE: {rmse_kf}\")\n\nRAW RMSE: 0.7131995943918173\nKF RMSE: 0.3746597043548562",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html#kalman-smoother",
+    "href": "02examples/KF/021KFExample4.html#kalman-smoother",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "7.3 Kalman smoother",
+    "text": "7.3 Kalman smoother\nTHe RTS smoother requires a forward run of the Kalman filter that provides the state and the covariance matrix, for all time steps.\n\ndef rts_smoother(kf_m, kf_P, A, Q):\n    steps, M = kf_m.shape\n    \n    rts_m = np.empty((steps, M))\n    rts_P = np.empty((steps, M, M))\n    \n    m = kf_m[-1]\n    P = kf_P[-1]\n    \n    rts_m[-1] = m\n    rts_P[-1] = P\n    \n    for i in range(steps-2, -1, -1):\n        filtered_m = kf_m[i]\n        filtered_P = kf_P[i]\n        \n        mp = A @ filtered_m\n        Pp = A @ filtered_P @ A.T + Q\n\n        # More efficient and stable way of computing Gk = filtered_P @ A.T @ linalg.inv(Pp)\n        # This also leverages the fact that Pp is known to be a positive definite matrix (assume_a=\"pos\")\n        Gk = linalg.solve(Pp, A @ filtered_P, assume_a=\"pos\").T \n\n        m = filtered_m + Gk @ (m - mp)\n        P = filtered_P + Gk @ (P - Pp) @ Gk.T\n        \n        rts_m[i] = m\n        rts_P[i] = P\n\n    return rts_m, rts_P\n\n\nrts_m, rts_P = rts_smoother(kf_m, kf_P, A, Q)\n\nplot_car_trajectory(observations, states, \"Trajectory\", rts_m, \"Smoother Estimate\")\n\nrmse_rts = rmse(states[:, :2], rts_m[:, :2])\n\nprint(f\"RAW RMSE: {rmse_raw}\")\nprint(f\"KF RMSE: {rmse_kf}\")\nprint(f\"RTS RMSE: {rmse_rts}\")\n\nRAW RMSE: 0.7131995943918173\nKF RMSE: 0.3746597043548562\nRTS RMSE: 0.1857332232186917",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html#conclusions-on-kalman-filters",
+    "href": "02examples/KF/021KFExample4.html#conclusions-on-kalman-filters",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "7.4 Conclusions on Kalman Filters",
+    "text": "7.4 Conclusions on Kalman Filters\n\nworkhorse for all linear, Gaussian problems\ncases covered here:\n\ntrack a constant\ntrack a random walk\nmovement tracking: scalar consatnt velocity, 2D and 3D tracking\n\n2 basic philosophies:\n\nuse a KF classs\ninclude KF code each time\nuse KF module/function\n\nChoice: I prefer (2). Since the KF is coded in only 5 lines, there is no real need for a class and the resulting code remains very readable\nProcess noise modelling, to design the matrix \\(Q,\\) is a complex subject. See Saho and references therein.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/KF/021KFExample4.html#references",
+    "href": "02examples/KF/021KFExample4.html#references",
+    "title": "7  Example 4 - constant-velocity 2D motion tracking",
+    "section": "7.5 References",
+    "text": "7.5 References\n\n K. Law, A Stuart, K. Zygalakis. Data Assimilation. A Mathematical Introduction. Springer. 2015.\n M. Asch, M. Bocquet, M. Nodet. Data Assimilation: Methods, Algorithms and Applications. SIAM. 2016.\n M. Asch. A Toobox for Digital Twins. From Model-Based to Data-Driven. SIAM. 2022\n S. Sarkka, L. Svensson. Bayesian Filtering and Smoothing, 2nd ed., Cambridge University Press. 2023.",
+    "crumbs": [
+      "Kalman Filters",
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Example 4 - constant-velocity 2D motion tracking</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EKF/022EKFExample1.html",
+    "href": "02examples/EKF/022EKFExample1.html",
+    "title": "9  Example 1 - tracking a random sinusoidal signal",
+    "section": "",
+    "text": "Before introducing more general nonlinear dyanmic systems (see the following examples), let us consider a simple case of tracking a random sine signal whose angular velocity and amplitude vary, randomly, over time. We express the nonlinearity through the measurement model, though this could be done with the dynamic model, as in the examples below.\nLet the state vector be\n\\[\n  \\mathbf{x}_k = \\left[\\begin{array}{c}\n        \\theta_k\\\\\n        \\omega_k \\\\\n        a_k\n    \\end{array}\\right],\n\\]\nwhere the \\(\\theta\\) is the angle, \\(\\omega\\) the angular velocity and \\(a\\) the amplitude of the sine function. The model is then\n\\[\n\\begin{align}\n\\frac{\\mathrm{d} \\theta}{\\mathrm{d}t} &=  \\omega \\\\\n\\frac{\\mathrm{d} \\omega}{\\mathrm{d}t} &=  w_{\\omega}(t) \\\\\n\\frac{\\mathrm{d} a}{\\mathrm{d}t} &=  w_a(t)\n\\end{align}\n\\]\nIn matrix form, we have\n\\[\n  \\frac{\\mathrm{d}\\mathbf{x}}{\\mathrm{d}t} = F \\mathbf{x}(t) + L \\mathbf{w}(t) , \\quad \\mathbf{x}(0) = \\mathbf{x}_0,\n\\]\nwhere\n\\[\nF = \\begin{bmatrix} 0 & 1 & 0\\\\ 0 & 0 & 0 \\\\  0 & 0 & 0 \\end{bmatrix}, \\quad\nL =  \\begin{bmatrix} 0 & 0\\\\ 1 & 0 \\\\ 0 & 1  \\end{bmatrix}, \\quad\n\\mathbf{w}(t) =  \\begin{bmatrix} w_\\omega (t)\\\\ w_a(t) \\end{bmatrix},\n\\]\nand the power spectral density of the white noise process \\(\\mathbf{w}(t)\\) is\n\\[\nQ^c = \\begin{bmatrix} q_1 & 1\\\\ 0 & q_2 \\end{bmatrix}.\n\\]\nUsing the matrix exponential formulas (see KF-tutorial), we get the discrete system\n\\[\n\\begin{align}\n\\mathbf{x}_{k+1 } &= A_k  \\mathbf{x}_{k} + \\mathbf{q}_{k}, \\\\\ny_k &= a_k \\sin \\theta_k + r_k\n\\end{align}\n\\]\nwhere \\(r_k \\sim \\mathcal{N}(0, \\sigma_r)\\) is univariate Gaussian noise,\n\\[\nA_k = \\begin{bmatrix} 0 & \\Delta t & 0\\\\ 0 & 1 & 0 \\\\  0 & 0 & 1 \\end{bmatrix},\n\\]\nand \\(\\mathbf{q}_{k} \\sim \\mathcal{N}(0, Q_k)\\) with\n\\[\nQ_k = \\begin{bmatrix} q_1 \\Delta t^3 / 3   & q_1 \\Delta t^2 / 2  & 0 \\\\\n        q_1 \\Delta t^2 / 2  &  q_1 \\Delta t  & 0 \\\\\n        0 &   0 &  q_2 \\Delta t \\end{bmatrix}.\n\\]\nFinally, the Jacobian of $h(_{k}) = a_k _k $ is easily seen to be\n\\[\n  Dh_k = [ a_k \\cos \\theta_k \\quad 0 \\quad \\sin \\theta_k ]\n\\]",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Example 1 - tracking a random sinusoidal signal</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EKF/022EKFExample2.html",
+    "href": "02examples/EKF/022EKFExample2.html",
+    "title": "10  Example 2 - tracking a noisy pendulum",
+    "section": "",
+    "text": "10.1 Extended Kalman Filter (EKF)\ndef extended_kalman_filter(m_0, P_0, g, Q, dt, R, observations):\n    n = m_0.shape[-1]\n    steps = observations.shape[0]\n    \n    ekf_m = np.empty((steps, n))\n    ekf_P = np.empty((steps, n, n))\n    \n    m = m_0[:]\n    P = P_0[:]\n    \n    for i in range(steps):\n        y = observations[i]\n        \n        # Jacobian of the dynamic model function\n        Df = np.array([[1.,                     dt], \n                      [-g * dt * np.cos(m[0]), 1.]])\n        \n        # Predicted state distribution\n        m = np.array([m[0] + dt * m[1],\n                      m[1] - g * dt * np.sin(m[0])])\n        P = Df @ P @ Df.T + Q\n        \n        # Predicted observation\n        h  = np.sin(m[0])\n        Dh = np.array([[np.cos(m[0]), 0.]])\n        S = Dh @ P @ Dh.T + R\n        \n        # Kalman Gain\n        K = linalg.solve(S, Dh @ P, assume_a=\"pos\").T \n        m = m + K @ np.atleast_1d(y - h)\n        P = P - K @ S @ K.T\n        \n        ekf_m[i] = m\n        ekf_P[i] = P\n    return ekf_m, ekf_P\n# initialize state and covariance\nm_0 = np.array([1.6, 0.])  # Slightly off\nP_0 = np.array([[0.1, 0.], \n                [0., 0.1]])\n\nekf_m, ekf_P = extended_kalman_filter(m_0, P_0, g, Q, dt, R, observations)\nplot_pendulum(timeline, observations, states, \"Trajectory\", ekf_m, \"EKF Estimate\")\n\nrmse_ekf = rmse(ekf_m[:, :1], states[:, :1])\nprint(f\"EKF RMSE: {rmse_ekf}\")\n\nEKF RMSE: 0.10306106181239276\n# plot covariances\nplt.plot(timeline, ekf_P[:,0,0], timeline,ekf_P[:,1,1] )\nplt.legend(['P(1,1)', 'P(2,2)'])\nplt.show()",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Example 2 - tracking a noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EKF/022EKFExample2.html#extended-smoother",
+    "href": "02examples/EKF/022EKFExample2.html#extended-smoother",
+    "title": "10  Example 2 - tracking a noisy pendulum",
+    "section": "10.2 Extended Smoother",
+    "text": "10.2 Extended Smoother\n\ndef extended_smoother(ekf_m, ekf_P, g, Q, dt):    \n    steps, M = ekf_m.shape\n    \n    rts_m = np.empty((steps, M))\n    rts_P = np.empty((steps, M, M))\n    \n    m = ekf_m[-1]\n    P = ekf_P[-1]\n    \n    rts_m[-1] = m\n    rts_P[-1] = P\n    \n    for i in range(steps-2, -1, -1):\n        filtered_m = ekf_m[i]\n        filtered_P = ekf_P[i]\n        \n        Df = np.array([[1., dt], \n                      [-g * dt * np.cos(filtered_m[0]), 1.]])\n        \n        mp = np.array([filtered_m[0] + dt * filtered_m[1], \n                       filtered_m[1] - g * dt * np.sin(filtered_m[0])])\n        Pp = Df @ filtered_P @ Df.T + Q\n        \n        # More efficient and stable way of computing Gk = filtered_P @ A.T @ linalg.inv(Pp)\n        # This also leverages the fact that Pp is known to be a positive definite matrix (assume_a=\"pos\")\n        Gk = linalg.solve(Pp, Df @ filtered_P, assume_a=\"pos\").T \n\n        m = filtered_m + Gk @ (m - mp)\n        P = filtered_P + Gk @ (P - Pp) @ Gk.T\n        \n        rts_m[i] = m\n        rts_P[i] = P\n\n    return rts_m, rts_P\n\n\nrts_m, rts_P = extended_smoother(ekf_m, ekf_P, g, Q, dt)\nplot_pendulum(timeline, observations, states, \"Trajectory\", rts_m, \"Extended Smoother Estimate\")\nrmse_erts = rmse(rts_m[:, :1], states[:, :1])\nprint(f\"KF RMSE: {rmse_ekf}\")\nprint(f\"ERTS RMSE: {rmse_erts}\")\n\nKF RMSE: 0.10306106181239276\nERTS RMSE: 0.027612762479911554",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Example 2 - tracking a noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EKF/022EKFExample2.html#conclusions-on-extended-kalman-filters",
+    "href": "02examples/EKF/022EKFExample2.html#conclusions-on-extended-kalman-filters",
+    "title": "10  Example 2 - tracking a noisy pendulum",
+    "section": "10.3 Conclusions on Extended Kalman Filters",
+    "text": "10.3 Conclusions on Extended Kalman Filters\nThe pros and cons of the EKF are: - Pros: - Relative simplicity, based on well-known linearization methods. - Maintains the simple, elegant, and computationally efficient KF update equations. - Good performance for such a simple method. - Ability to treat nonlinear process and observation models. - Ability to treat both additive and more general nonlinear Gaussian noise. - Cons: - Performance can suffer in presence of strong nonlinearity because of the local validity of the linear approximation (valid for small perturbations around the linear term). - Cannot deal with non-Gaussian noise, such as discrete-valued random variables. - Requires differentiable process and measurement operators and evaluation of Jacobian matrices, which might be problematic in very high dimensions.\nIn spite of this, the EKF remains a solid filter and remains the basis of most GPS and navigation systems.",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Example 2 - tracking a noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EKF/022EKFExample2.html#references",
+    "href": "02examples/EKF/022EKFExample2.html#references",
+    "title": "10  Example 2 - tracking a noisy pendulum",
+    "section": "10.4 References",
+    "text": "10.4 References\n\n K. Law, A Stuart, K. Zygalakis. Data Assimilation. A Mathematical Introduction. Springer. 2015.\n M. Asch, M. Bocquet, M. Nodet. Data Assimilation: Methods, Algorithms and Applications. SIAM. 2016.\n M. Asch. A Toobox for Digital Twins. From Model-Based to Data-Driven. SIAM. 2022\n S. Sarkka, L. Svensson. Bayesian Filtering and Smoothing, 2nd ed., Cambridge University Press. 2023.",
+    "crumbs": [
+      "Nonlinear Kalman Filters",
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Example 2 - tracking a noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/031EnKF.html",
+    "href": "01theory/031EnKF.html",
+    "title": "11  Ensemble Kalman Filter",
+    "section": "",
+    "text": "11.1 Stochastic EnKF - linear observation operator",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Ensemble Kalman Filter</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/031EnKF.html#stochastic-enkf---linear-observation-operator",
+    "href": "01theory/031EnKF.html#stochastic-enkf---linear-observation-operator",
+    "title": "11  Ensemble Kalman Filter",
+    "section": "",
+    "text": "11.1.1 Prediction/Forecast\n\\[\n\\begin{align}\n\\hat{v}_{k+1}^{n} &= \\Psi ( {v}_{k}^{n} ) +  \\xi_{k}^{n} , \\quad n=1, \\ldots, N, \\\\\n\\hat{m}_{k+1} & =  \\frac{1}{N} \\sum_{i=1}^{N}   \\hat{v}_{k+1}^{n}  \\\\\n\\hat{C}_{k+1} & = \\frac{1}{N-1} \\sum_{i=1}^{N} \\left( \\hat{v}_{k+1}^{n} - \\hat{m}_{k+1}  \\right)\n                     \\left( \\hat{v}_{k+1}^{n} - \\hat{m}_{k+1}  \\right)^{\\mathrm{T}}\n\\end{align}\n\\]\n\n\n11.1.2 Correction/Analysis\n\\[\n\\begin{align}\n  {S}_{k+1} &= H \\hat{C}_{k+1} H^{\\mathrm{T}} + \\Gamma ,\\\\\n  {K}_{k+1} &= \\hat{C}_{k+1} H^{\\mathrm{T}} {S}_{k+1}^{-1} , \\\\\n  {y}_{k+1}^{n} &= {y}_{k+1} + \\eta^n_{k+1} , \\quad n=1, \\ldots, N, \\\\\n  {v}_{k+1}^{n} &= (I - K_{k+1}H )\\hat{v}_{k+1}^{n} + K_{k+1} y^n_{k+1} , \\quad n=1, \\ldots, N.\n\\end{align}\n\\]\nAlternatively, defining the innovation \\(d = {y}_{k+1}^{n} - H \\hat{v}_{k+1}^{n},\\) we can write the state update more simply as\n\\[\n  {v}_{k+1}^{n} = \\hat{v}_{k+1}^{n} + K_{k+1} d .\n\\]\nIn words:\n\nFor a given \\(N_e \\in  \\mathbb{N}\\) generate i.i.d. ensemble of states random variables from the distribution of \\(X(0).\\)\nFor \\(t \\in  \\mathbb{N}\\) recursively repeat the following steps:\n\n\nAdvance each ensemble member in time, using the nonlinear state equation with independently generated random state noise\nCompute the forecast sample mean and the forecast sample covariance\nCompute the sample Kalman gain\nAdd additional perturbation to the observation vector \\(Y\\) using independently generated random variables \\(\\eta(t)\\)\nUpdate each forecast ensemble member\n\nBurgers et al. [1998] shows that without the data perturbation, the covariance of the ensemble would go to the zero matrix as \\(t\\) goes to infinity. The data perturbation also guarantees that the relation between the forecast sample covariance and the analysis sample covariance is analogous to the relation between the forecast and analysis covariances in the standard KF.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Ensemble Kalman Filter</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/031EnKF.html#full-nonlinear-formulation-of-the-ensemble-kalman-filter",
+    "href": "01theory/031EnKF.html#full-nonlinear-formulation-of-the-ensemble-kalman-filter",
+    "title": "11  Ensemble Kalman Filter",
+    "section": "11.2 Full nonlinear formulation of the ensemble Kalman filter",
+    "text": "11.2 Full nonlinear formulation of the ensemble Kalman filter\nThere are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,\n\\[\n\\begin{align}\nx_{k+1}^{n} &= \\Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \\quad n=1, \\ldots, N_e, \\\\\n{y}_{k+1}    &=  \\mathcal{H} (x_{k+1}) +  v_{k+1}.  \\\\\n\\end{align}\n\\]\nTo fix notation:\n\nstate forecast \\(X^f,\\) dimension $ (N_t N_x)$\nensemble state forecast \\(\\mathbf{X}^f,\\) dimension $ (N_t N_x N_e)$\nobservation, \\(Y,\\) dimension $ (N_t N_y)$\nensemble state anomaly, \\(\\mathbf{X}' = \\mathbf{X} - \\overline{\\mathbf{X}},\\) dimension $ (N_t N_x N_e)$ with $ = (1/N_e) _{e=1}^{N_e} _e$\nensemble observation anomaly, \\(\\mathbf{Y}' = \\mathcal{H}(\\mathbf{X}) - \\overline{ \\mathcal{H}(\\mathbf{X} ) },\\) dimension $ (N_t N_y N_e)$ with $ = (1/N_e) _{e=1}^{N_e} (_e).$\n\nThen, the Kalman analysis update is\n\\[\n\\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f} + \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1} D,\n\\]\nwith\n\\[  \\begin{align}\nS &= \\frac{1}{N_e - 1} \\mathbf{Y}'(\\mathbf{Y}')^\\mathrm{T} + R\\quad \\text{(observation covariance)} \\\\\nD &= (Y + y) - \\mathcal{H}(\\mathbf{X}) \\quad \\text{(innovation)},\n\\end{align} \\]\nwhere \\(y \\sim \\mathcal{N}(0,R)\\) is the stochastic perturbation, and \\(R\\) is the measurement noise covariance matrix.\nOr, defining the Kalman gain matrix as\n\\[\n   K = \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1},\n\\]\nwe obtain the classical KF update,\n\\[\n   \\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f}  + K D.\n\\]",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>11</span>  <span class='chapter-title'>Ensemble Kalman Filter</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample1.html",
+    "href": "02examples/EnKF/032EnKFExample1.html",
+    "title": "12  Example 1: noisy pendulum",
+    "section": "",
+    "text": "12.1 Generate noisy observations\nTo generate the noisy observations, we have 2 options\nWhatever the approach chosen, it must be used both for the observation generation and for the state evolution within the Kalman filter.\nWe will use the simpler Euler approximation. For reference, here is the RK4 method.\ndef Pendulum(state, *args): #nonlinear pendulum\n    g = args[0]\n    L = args[1]\n    x1, x2 = state #Unpack the state vector\n    f = np.zeros(2) #Derivatives\n    f[0] = x2\n    f[1] = -g/L * np.sin(x1)\n    return f \n\ndef RK4(rhs, state, dt, *args):\n    \n    k1 = rhs(state,         *args)\n    k2 = rhs(state+k1*dt/2, *args)\n    k3 = rhs(state+k2*dt/2, *args)\n    k4 = rhs(state+k3*dt,   *args)\n\n    new_state = state + (dt/6)*(k1 + 2*k2 + 2*k3 + k4)\n    return new_state\n\n#np.random.seed(55)\n# Solve system and generate noisy observations\nT = np.linspace(0, Nt, Nt)\n#x0True = np.array([1.8, 0.0]) # True initial conditions\nx0True = np.array([1.5, 0.0]) # True initial conditions\n#time integration\nchol_Q = np.linalg.cholesky(Q) # noise std dev.\nsqrt_R = np.sqrt(R)\nxxTrue = np.zeros([Nx, Nt])\nxxTrue[:,0] = x0True\nyy = np.zeros((Nt, Ny))\nyy[0] = np.sin(xxTrue[0, 0]) + sig_v * np.random.randn() # must initialize correctly!\nfor k in range(Nt-1):\n    w_k = chol_Q @ np.random.randn(2)\n    xxTrue[:,k+1] = RK4(Pendulum, xxTrue[:,k], dt, g, 1.0) + w_k\n    yy[k+1,0] = np.sin(xxTrue[0, k+1]) + sig_v * np.random.randn()\n\n# plot results\nfig, ax = plt.subplots(nrows=1,ncols=1, figsize=(10,4))\nax.plot(T*dt, np.sin(xxTrue[0, :]), color='b', linewidth = 3, label=\"Noisy state\")\nax.scatter(T*dt, yy[:,0], marker=\"o\", label=\"Measurements\", color=\"red\", alpha=0.66, s=10)\nax.set_xlabel('t')\nax.set_ylabel(\"$\\sin(x_1(t))$\", labelpad=5)\nax.legend()\nplt.show()\n# Use Euler method\nfrom common_utilities import generate_pendulum, RandomState, rmse, plot_pendulum\nrandom_state = RandomState(1)\nsteps = Nt\nx_0 = x0True\n#timeline, states, observations = generate_pendulum(x_0, g, Q, dt, R, steps, random_state)\n#plot_pendulum(timeline, observations, states, \"Trajectory\")\ny = np.zeros((Nt, Ny))\ntimeline, xTrue, y[:, 0] = generate_pendulum(x_0, g, Q, dt, R, steps, random_state)\nplot_pendulum(timeline, y, xTrue, \"Trajectory\")\nfig, ax = plt.subplots(nrows=1,ncols=1, figsize=(10,4))\nax.plot(T*dt, np.sin(xTrue[:, 0]), color='b', linewidth = 3, label=\"Noisy state\")\nax.scatter(T*dt, y[:,0], marker=\"o\", label=\"Measurements\", color=\"red\", alpha=0.66, s=10)\nax.legend()\nplt.ylabel('$\\sin x_1(t)$')\nplt.xlabel('$t$')\nplt.show()\nfig, ax = plt.subplots(nrows=1,ncols=1, figsize=(6,6))\n#plt.plot(xTrue[0, :], xTrue[1, :], 'b')\nplt.plot(xTrue[:, 0], xTrue[:, 1], 'b')\nplt.scatter(xTrue[0, 0], xTrue[0, 1], marker=\"o\", color=\"green\", s=500)\nplt.xlabel('$x_1(t)$')\nplt.ylabel('$x_2(t)$')\nplt.show()",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Example 1: noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample1.html#generate-noisy-observations",
+    "href": "02examples/EnKF/032EnKFExample1.html#generate-noisy-observations",
+    "title": "12  Example 1: noisy pendulum",
+    "section": "",
+    "text": "Use an accurate RK4 method.\nUse a simpler, first-order Euler method.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Example 1: noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample1.html#ensemble-kalman-filter",
+    "href": "02examples/EnKF/032EnKFExample1.html#ensemble-kalman-filter",
+    "title": "12  Example 1: noisy pendulum",
+    "section": "12.2 Ensemble Kalman Filter",
+    "text": "12.2 Ensemble Kalman Filter\n\ndef ens_kalman_filter(m_0, P_0, Q, R, Ne, dt, Y):\n    Nx = m_0.shape[-1]\n    Nt, Ny = Y.shape\n    \n    enkf_m = np.empty((Nt, Nx))\n    enkf_P = np.empty((Nt, Nx, Nx))\n    X      = np.empty((Nx, Ne))\n    HXf    = np.empty((Ny, Nx))\n\n    X[:,:] = np.tile(m_0, (Ne,1)).T  + np.linalg.cholesky(P_0)@np.random.randn(Nx, Ne) # initial ensemble state\n    P        = P_0 # initial state covariance\n    enkf_m[0, :]    = m_0\n    enkf_P[0, :, :] = P_0\n    \n    for i in range(Nt-1):\n        # ==== predict/forecast ====\n        Xf = Ax(X[:,:],dt) + np.linalg.cholesky(Q)@np.random.randn(Nx, Ne) # predict state ensemble\n        mX = np.mean(Xf, axis=1)        # state ensemble mean\n        Xfp = Xf - mX[:, None]          # state forecast anomaly\n        #Phat = Xfp @ Xfp.T / (Ne - 1)  # predict covariance (not needed)\n        # ==== prepare =====\n        HXf = Hx(Xf)                    # nonlinear observation\n        mY = np.mean(HXf, axis=1)       # observation ensemble mean\n        HXp = HXf - mY[:, None]         # observation anomaly\n        S = (HXp @ HXp.T)/(Ne - 1) + R  # observation covariance        \n        K = linalg.solve(S, HXp @ Xfp.T, assume_a=\"pos\").T  / (Ne - 1)  # Kalman gain\n        # === perturb y and compute innovation ====\n        ypert = Y[i,:] +  np.linalg.cholesky(R)@np.random.randn(Ny, Ne)\n        d = ypert - HXf\n        # ==== correct/analyze ====\n        X[:,:] = Xf + K @ d         # update state ensemble\n        mX = np.mean(X[:,:], axis=1)# state analysis ensemble mean\n        Xap = X[:,:] - mX[:, None]  # state analysis anomaly\n        P = Xap @ Xap.T / ( Ne - 1)     # update covariance\n        # ==== save ====\n        enkf_m[i+1] = mX                # save KF state estimate (mean)\n        enkf_P[i+1] = P                 # save KF error estimate (covariance)\n    return enkf_m, enkf_P\n\n\n# initialize state and covariance\nx_0 = np.array([1.5, 0.])   # Initial state\nm_0 = np.array([1.6, 0.])   # Initial state estimate (slightly off)\nP_0 = np.array([[r, 0.], \n                [0., r]]) # Initial estimate covariance\n\nenkf_m, enkf_P = ens_kalman_filter(m_0, P_0, Q, R, Ne, dt, y)\n\n#rmse_ekf = rmse(ekf_m[:, :1], states[:, :1])\n#print(f\"EKF RMSE: {rmse_ekf}\")\n\n\nfig, axes = plt.subplots(ncols=2, figsize=(18, 8))\nx1 = xTrue  # states\nx2 = enkf_m # KF estimate\ny  = y      # Measurements\ntimeline = T*dt\naxes[1].scatter(timeline, y, marker=\".\", label=\"Measurements\", color=\"red\", alpha=0.66)\n#axes[1].plot(timeline, np.sin(x1[0, :]), linestyle=\"dashdot\", label=\"Trajectory\", color=\"blue\")\naxes[1].plot(timeline, np.sin(x1[:, 0]), linestyle=\"dashdot\", label=\"Trajectory\", color=\"blue\")\naxes[1].plot(timeline, np.sin(x2[:, 0]), linestyle=\"dashdot\", label=\"EnKF estimate\", color=\"green\")\n#axes[0].plot(x1[0, :], x1[1, :], label=\"Trajectory\", color=\"blue\")\naxes[0].plot(x1[:, 0], x1[:, 1], label=\"Trajectory\", color=\"blue\")\naxes[0].plot(x2[:, 0], x2[:, 1], label=\"EnKF estimate\", color=\"green\")\naxes[0].legend()\naxes[1].legend()\naxes[0].set_xlabel('$x_1(t)$')\naxes[1].set_xlabel('$t$')\naxes[0].set_ylabel('$ x_2(t)$')\naxes[1].set_ylabel('$\\sin x_1(t)$')\n\nplt.show()\n\n\n\n\n\n\n\n\n\nfig, ax = plt.subplots(nrows=1,ncols=1, figsize=(8,8))\nplt.scatter(x1[0, 0], x1[0, 1], marker=\"o\", color=\"green\", s=500)\nplt.plot(x1[:, 0], x1[:, 1], label=\"Trajectory\", color=\"blue\")\nplt.plot(x2[:, 0], x2[:, 1], label=\"EnKF estimate\", color=\"red\")\nplt.xlabel('$x_1(t)$')\nplt.ylabel('$x_2(t)$')\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n:::{admonition} Observations :class: warning\nThe ensemble Kalman filter tracks rapidly, smoothly and accurately the noisy trajectory of the pendulum. This can be compared to the performance of the EKF (extended Kalman filter) in Example 2, Section 4, that was less accurate (took longer to catch up) and was more noisy.\nNote that the error/anomaly covariance elements, \\(P_{ii},\\) are noisy, since they are empirically averaged quantities.\n:::",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>12</span>  <span class='chapter-title'>Example 1: noisy pendulum</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample2.html",
+    "href": "02examples/EnKF/032EnKFExample2.html",
+    "title": "13  Example 2: Lorenz63 system",
+    "section": "",
+    "text": "13.1 Ensemble KF for Data Assimilation\nHere we will generalize the ensemble Kalman filter to take into account the possibility of sparse observations. This is usually the case in real-life systems, where observations are only available et fixed instants, and hence the filtering can only be applied at these times. Inbetween observations, the system evolves freely (without correction) according to its underlying state equation.\nSuppose we have \\(N_y\\) measurements/observations at an interval of \\(\\delta t_y.\\) This gives measurements for times \\(t_0 \\le t \\le t_m,\\) where \\(t_m = N_m \\delta t_m.\\) This can be considered as the assimilation window. The system then evolves freely for \\(t &gt; t_m\\) until some final forecast window time \\(t_f.\\) The state, or equation itself is simulated with a smaller \\(\\delta t\\) and for a large number \\(N_t\\) steps, giving \\(t_f = N_t \\delta t.\\) Usually, for real life systems, we will have\n\\[\n  \\delta t_m \\ge \\delta t,  \\quad  N_m \\le N_t , \\quad t_m \\le t_f.\n\\]\nFor code testing, we make the simplifying (unrealistic) academic assumption that\n\\[\n  \\delta t_m = \\delta t, \\quad N_m = N_t, \\quad t_f = t_m.\n\\]\nThis implies the availabilty of measurements at each (and every) time step. Note that in many of the previous examples, this was indeed the case.\ndef enKF_Lorenz63_setup(dt, T, dt_m, T_m, sig_w, sig_v): \n    \"\"\"\n    Prepare input (true state and observations) for the stochastic \n    ensemble filter of the Lorenz63 system.\n\n    Parameters:\n        dt: time step for state evolution\n        T:  time interval for state evolution\n        dt_m: time interval between 2 measurements (can equal dt for dense observations)\n        T_m: time interval for observations\n        sig_w: state noise sd., cov. Q = sig_w**2 x np.eye(3)\n        sig_v: measurement noise sd., cov. R = sig_v**2 x np.eye(3) \n    \"\"\"\n    # parameters Lorenz63\n    sigma = 10.0     \n    rho  = 28.0     \n    beta = 8.0/3.0\n    dim_x = 3\n    dim_y = 3\n    # noise covariances\n    Q  = sig_w**2 * np.eye(dim_x)\n    R  = sig_v**2 * np.eye(dim_y)\n    # measurement operator (identity here)\n    def H(u):\n        w = u\n        return w\n\n    # Solve system and generate noisy observations\n    Nt = int(T/dt)     # number of time steps\n    Nm = int(T_m/dt_m) # number of observations\n    t = np.linspace(0, Nt, Nt+1) * dt # time vector (including 0 and T)\n    ind_m = (np.linspace(int(dt_m/dt),int(T_m/dt),Nm)).astype(int) # obs. indices\n    t_m = t[ind_m] # measurement time vector\n    x0True = np.array([1.0, 1.0, 1.0]) # True initial conditions\n    sqrt_Q = np.linalg.cholesky(Q) # noise std dev.\n    sqrt_R = np.linalg.cholesky(R)\n    # initialize (correctly!)\n    xTrue = np.zeros([Nt+1, dim_x])\n    xTrue[0, :] = x0True\n    y = np.zeros((Nm, dim_y))\n    km = 0 # index for measurement times\n    y[0,:] = H(xTrue[0,:]) + sig_v * np.random.randn(dim_y) \n    for k in range(Nt):\n        w_k = sqrt_Q @ np.random.randn(dim_x)\n        xTrue[k+1,:] = RK4(Lorenz63,xTrue[k,:], dt,sigma, rho, beta) #+ w_k\n        if (km &lt; Nm) and (k+1 == ind_m[km]):\n            v_k = sqrt_R @ np.random.randn(dim_y)\n            y[km,:]     = H(xTrue[k+1,:]) + v_k\n            km = km + 1\n    # plot state and measurements\n    fig, ax = plt.subplots(nrows=3,ncols=1, figsize=(10,8))\n    ax = ax.flat\n    #t = T*dt\n    for k in range(3):\n        ax[k].plot(t,xTrue[:,k], label='True', linewidth = 3)\n        ax[k].plot(t[ind_m],y[:,k], 'o', fillstyle='none', \\\n                   label='Observation', markersize = 8, markeredgewidth = 2)\n        ax[k].set_xlabel('t')\n        ax[k].axvspan(0, T_m, color='lightgray', alpha=0.4, lw=0)    \n    ax[0].legend(loc=\"center\", bbox_to_anchor=(0.5,1.25),ncol =4,fontsize=15)   \n    ax[0].set_ylabel('x(t)')\n    ax[1].set_ylabel('y(t)')\n    ax[2].set_ylabel('z(t)')\n    fig.subplots_adjust(hspace=0.5)\n\n    return Q, R, xTrue, y, ind_m, Nt, Nm\nQ, R, xTrue, y, ind_m, Nt, Nm = enKF_Lorenz63_setup(dt=0.01, T=10, dt_m=0.2, T_m =2, sig_w=0.001, sig_v=0.15)\ndef enKF_Lorenz63_DA(x0, P0, Q, R, y, ind_m, Nt, Nm, Ne=10):\n    \"\"\"\n    Run DA of the Lorenz63 system using the stochastic \n    ensemble filter with sparse observations in the DA\n    window, defined by time index set `ind_m`.\n\n    Parameters:\n    \n    \"\"\"\n    # parameters Lorenz63\n    sigma = 10.0     \n    rho  = 28.0     \n    beta = 8.0/3.0\n    def Hx(u):\n        w = u\n        return w\n    Nx     = x0.shape[-1]\n    Ny     = y.shape[-1]\n    enkf_m = np.empty((Nt+1, Nx))\n    enkf_P = np.empty((Nt+1, Nx, Nx))\n    X      = np.empty((Nx, Ne))\n    Xf     = np.empty((Nx, Ne))\n    HXf    = np.empty((Ny, Nx))\n\n    X[:,:] = np.tile(x0, (Ne,1)).T  + np.linalg.cholesky(P0)@np.random.randn(Nx, Ne) # initial ensemble state\n    P       = P0 # initial state covariance\n    enkf_m[0, :]    = x0 \n    enkf_P[0, :, :] = P0\n\n    i_m = 0 # index for measurement times\n    \n    for i in range(Nt):\n        # ==== predict/forecast ====\n        for e in range(Ne):\n            w_i = np.linalg.cholesky(Q) @ np.random.randn(Nx)#, Ne)\n            Xf[:,e] = RK4(Lorenz63, X[:,e], dt, sigma, rho, beta) + w_i # predict state ensemble\n        mX = np.mean(Xf, axis=1)        # state ensemble mean\n        Xfp = Xf - mX[:, None]          # state forecast anomaly\n        P = Xfp @ Xfp.T / (Ne - 1)      # predict covariance \n        # ==== prepare analysis step =====\n        if (i_m &lt; Nm) and (i+1 == ind_m[i_m]):\n            HXf = Hx(Xf)                    # nonlinear observation\n            mY = np.mean(HXf, axis=1)       # observation ensemble mean\n            HXp = HXf - mY[:, None]         # observation anomaly\n            S = (HXp @ HXp.T)/(Ne - 1) + R  # observation covariance\n            K = linalg.solve(S, HXp @ Xfp.T, assume_a=\"pos\").T  / (Ne - 1)  # Kalman gain\n            # === perturb y and compute innovation ====\n            ypert = y[i_m, :] +  (np.linalg.cholesky(R)@np.random.randn(Ny, Ne)).T\n            d = ypert.T - HXf\n            # ==== correct/analyze ====\n            X[:,:] = Xf + K @ d          # update state ensemble\n            mX = np.mean(X[:,:], axis=1) # state analysis ensemble mean\n            Xap = X[:,:] - mX[:, None]   # state analysis anomaly\n            P = Xap @ Xap.T / ( Ne - 1)  # update covariance\n            i_m = i_m + 1\n        else:\n            X[:,:] = Xf  # when there is no obs, then state=forecast\n        # ==== save ====\n        enkf_m[i+1] = mX                # save KF state estimate (mean)\n        enkf_P[i+1] = P                 # save KF error estimate (covariance)\n    return enkf_m, enkf_P\n# Initialize and run the analysis\nsig_w = 0.0015\nsig_v = 0.15\nQ  = sig_w**2 * np.eye(3) #* 1.e-6 # for comparison with DT\nR  = sig_v**2 * np.eye(3)\n\nx0 = np.array([2., 3., 4.]) # a little off\nsig_vv = 0.1\nP0 = np.eye(3) * sig_vv**2 # Initial estimate covariance\nNe = 10\nXa, P = enKF_Lorenz63_DA(x0, P0, Q, R, y, ind_m, Nt, Nm, Ne=10)\n# Post-process and plot the results\n# generate unfiltered state\nXb = np.empty((Nt+1, 3))\nXb[0,:] = x0\nfor i in range(Nt):\n    Xb[i+1,:] =  RK4(Lorenz63, Xb[i,:], dt, sigma, rho, beta)    \n# plot state and measurements\nt = np.linspace(0, Nt, Nt+1) * dt # time vector\nT_m = 2.\nfig, ax = plt.subplots(nrows=3,ncols=1, figsize=(10,8))\nax = ax.flat\n\nfor k in range(3):\n    ax[k].plot(t,xTrue[:,k], label='True')#, linewidth = 3)\n    ax[k].plot(t,Xa[:,k], '--', label='EnKF analysis')#, linewidth = 3)\n    ax[k].plot(t[ind_m],y[:,k], 'o', fillstyle='none', \\\n               label='Observation')#, markersize = 8, markeredgewidth = 2)\n    ax[k].plot(t,Xb[:,k], ':', label='Unfiltered')#, linewidth = 3)\n    ax[k].set_xlabel('t')\n    ax[k].axvspan(0, T_m, color='lightgray', alpha=0.4, lw=0)    \nax[0].legend(loc=\"center\", bbox_to_anchor=(0.5,1.25),ncol =4,fontsize=15)   \nax[0].set_ylabel('x(t)')\nax[1].set_ylabel('y(t)')\nax[2].set_ylabel('z(t)')\nfig.subplots_adjust(hspace=0.5)",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Example 2: Lorenz63 system</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample2.html#conclusion",
+    "href": "02examples/EnKF/032EnKFExample2.html#conclusion",
+    "title": "13  Example 2: Lorenz63 system",
+    "section": "13.2 Conclusion",
+    "text": "13.2 Conclusion\nThe ensemble Kalman filter, even with very sparse observations and a chaotic system, does an excellent job of\n\ntracking within the DA window,\nforecasting way beyond the window, whereas the unfiltered/unassimilated, freely evolving system deviates considerably, as is to be expected from the chaotic Lorenz system.\n\nFrom \\(t \\approx 6,\\) the KF starts to deviate very slightly, mostly a phase difference. However, in real situations, there will already be new measurements available by this time. Then the KF analysis will kick in again, and rectify the trajectory.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>13</span>  <span class='chapter-title'>Example 2: Lorenz63 system</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample3.html",
+    "href": "02examples/EnKF/032EnKFExample3.html",
+    "title": "14  Example 3: SIR Model",
+    "section": "",
+    "text": "14.1 Ensemble KF for Data Assimilation\nHere we will generalize the ensemble Kalman filter to take into account the possibility of sparse observations. This is usually the case in real-life systems, where observations are only available et fixed instants, and hence the filtering can only be applied at these times. Inbetween observations, the system evolves freely (without correction) according to its underlying state equation.\nSuppose we have \\(N_y\\) measurements/observations at an interval of \\(\\delta t_y.\\) This gives measurements for times \\(t_0 \\le t \\le t_m,\\) where \\(t_m = N_m \\delta t_m.\\) This can be considered as the assimilation window. The system then evolves freely for \\(t &gt; t_m\\) until some final forecast window time \\(t_f.\\) The state, or equation itself is simulated with a smaller \\(\\delta t\\) and for a large number \\(N_t\\) steps, giving \\(t_f = N_t \\delta t.\\) Usually, for real life systems, we will have\n\\[\n  \\delta t_m \\ge \\delta t,  \\quad  N_m \\le N_t , \\quad t_m \\le t_f.\n\\]\nFor code testing, we make the simplifying (unrealistic) academic assumption that\n\\[\n  \\delta t_m = \\delta t, \\quad N_m = N_t, \\quad t_f = t_m.\n\\]\nThis implies the availabilty of measurements at each (and every) time step. Note that in many of the previous examples, this was indeed the case.\ndef enKF_SIR_setup(dt, T, dt_m, T_m, sig_w, sig_v): \n    \"\"\"\n    Prepare input (true state and observations) for the stochastic \n    ensemble filter of the Lorenz63 system.\n\n    Parameters:\n        dt: time step for state evolution\n        T:  time interval for state evolution\n        dt_m: time interval between 2 measurements (can equal dt for dense observations)\n        T_m: time interval for observations\n        sig_w: state noise sd., cov. Q = sig_w**2 x np.eye(3)\n        sig_v: measurement noise sd., cov. R = sig_v**2 x np.eye(3) \n    \"\"\"\n    # parameters SIR\n    beta  = 4.0\n    lambd = 1.0\n    dim_x = 3\n    dim_y = 3\n    # noise covariances\n    Q  = sig_w**2 * np.eye(dim_x)\n    R  = sig_v**2 * np.eye(dim_y)\n    # measurement operator (identity here)\n    def H(u):\n        w = u\n        return w\n\n    # Solve system and generate noisy observations\n    Nt = int(T/dt)     # number of time steps\n    Nm = int(T_m/dt_m) # number of observations\n    t = np.linspace(0, Nt, Nt+1) * dt # time vector\n    ind_m = (np.linspace(int(dt_m/dt),int(T_m/dt),Nm)).astype(int) # obs. indices\n    t_m = t[ind_m] # measurement time vector\n    x0True = np.array([0.99, 0.01, 0]) # True initial conditions\n    sqrt_Q = np.linalg.cholesky(Q) # noise std dev.\n    sqrt_R = np.linalg.cholesky(R)\n    # initialize (correctly!)\n    xTrue = np.zeros([Nt+1, dim_x])\n    xTrue[0, :] = x0True\n    y = np.zeros((Nm, dim_y))\n    km = 0 # index for measurement times\n    y[0,:] = H(xTrue[0,:]) + sig_v * np.random.randn(dim_y) \n    for k in range(Nt):\n        w_k = sqrt_Q @ np.random.randn(dim_x)\n        xTrue[k+1,:] = RK4(SIR, xTrue[k,:], dt, beta, lambd) #+ w_k\n        if (km &lt; Nm) and (k+1 == ind_m[km]):\n            v_k = sqrt_R @ np.random.randn(dim_y)\n            y[km,:]     = H(xTrue[k+1,:]) + v_k\n            km = km + 1\n    # plot state and measurements\n    fig, ax = plt.subplots(nrows=3,ncols=1, figsize=(10,8))\n    ax = ax.flat\n    #t = T*dt\n    for k in range(3):\n        ax[k].plot(t,xTrue[:,k], label='True', linewidth = 3)\n        ax[k].plot(t[ind_m],y[:,k], 'o', fillstyle='none', \\\n                   label='Observation', markersize = 8, markeredgewidth = 2)\n        ax[k].set_xlabel('t')\n        ax[k].axvspan(0, T_m, color='lightgray', alpha=0.4, lw=0)    \n    ax[0].legend(loc=\"center\", bbox_to_anchor=(0.5,1.25),ncol =4,fontsize=15)   \n    ax[0].set_ylabel('S(t)')\n    ax[1].set_ylabel('I(t)')\n    ax[2].set_ylabel('R(t)')\n    fig.subplots_adjust(hspace=0.5)\n\n    return Q, R, xTrue, y, ind_m, Nt, Nm\nQ, R, xTrue, y, ind_m, Nt, Nm = enKF_SIR_setup(dt=0.1, T=5, dt_m=0.2, T_m =2, sig_w=0.001, sig_v=0.02)\ndef enKF_SIR_DA(x0, P0, Q, R, y, ind_m, Nt, Nm, Ne=10):\n    \"\"\"\n    Run DA of the SIR system using the stochastic \n    ensemble filter with sparse observations in the DA\n    window, defined by time index set `ind_m`.\n\n    Parameters:\n    \n    \"\"\"\n    # parameters SIR\n    beta  = 4.0\n    lambd = 1.0\n    def Hx(u):\n        w = u\n        return w\n    Nx     = x0.shape[-1]\n    Ny     = y.shape[-1]\n    enkf_m = np.empty((Nt+1, Nx))\n    enkf_P = np.empty((Nt+1, Nx, Nx))\n    X      = np.empty((Nx, Ne))\n    Xf     = np.empty((Nx, Ne))\n    HXf    = np.empty((Ny, Nx))\n\n    X[:,:] = np.tile(x0, (Ne,1)).T  + np.linalg.cholesky(P0)@np.random.randn(Nx, Ne) # initial ensemble state\n    P       = P0 # initial state covariance\n    enkf_m[0, :]    = x0 \n    enkf_P[0, :, :] = P0\n\n    i_m = 0 # index for measurement times\n    \n    for i in range(Nt):\n        # ==== predict/forecast ====\n        for e in range(Ne):\n            w_i = np.linalg.cholesky(Q) @ np.random.randn(Nx)#, Ne)\n            Xf[:,e] = RK4(SIR, X[:,e], dt,  beta, lambd) + w_i # predict state ensemble\n        mX = np.mean(Xf, axis=1)        # state ensemble mean\n        Xfp = Xf - mX[:, None]          # state forecast anomaly\n        P = Xfp @ Xfp.T / (Ne - 1)      # predict covariance \n        # ==== prepare analysis step =====\n        if (i_m &lt; Nm) and (i+1 == ind_m[i_m]):\n            HXf = Hx(Xf)              # nonlinear observation\n            mY = np.mean(HXf, axis=1)       # observation ensemble mean\n            HXp = HXf - mY[:, None]         # observation anomaly\n            S = (HXp @ HXp.T)/(Ne - 1) + R  # observation covariance\n            K = linalg.solve(S, HXp @ Xfp.T, assume_a=\"pos\").T  / (Ne - 1)  # Kalman gain\n            # === perturb y and compute innovation ====\n            ypert = y[i_m, :] +  (np.linalg.cholesky(R)@np.random.randn(Ny, Ne)).T\n            d = ypert.T - HXf\n            # ==== correct/analyze ====\n            X[:,:] = Xf + K @ d         # update state ensemble\n            mX = np.mean(X[:,:], axis=1)# state analysis ensemble mean\n            Xap = X[:,:] - mX[:, None]  # state analysis anomaly\n            P = Xap @ Xap.T / ( Ne - 1)     # update covariance\n            i_m = i_m + 1\n        else:\n            X[:,:] = Xf  # when there is no obs, then state=forecast\n        # ==== save ====\n        enkf_m[i+1] = mX                # save KF state estimate (mean)\n        enkf_P[i+1] = P                 # save KF error estimate (covariance)\n    return enkf_m, enkf_P\n# Initialize and run the analysis\nsig_w = 0.0015\nsig_v = 0.02\nQ  = sig_w**2 * np.eye(3) #* 1.e-6 # for comparison with DT\nR  = sig_v**2 * np.eye(3)\n\nx0 = np.array([0.95, 0.05, 0]) # a little off [0.99, 0.01, 0]\nsig_vv = 0.1\nP0 = np.eye(3) * sig_vv**2 # Initial estimate covariance\nNe = 10\nXa, P = enKF_SIR_DA(x0, P0, Q, R, y, ind_m, Nt, Nm, Ne=10)\n# Post-process and plot the results\n# generate unfiltered state\nXb = np.empty((Nt+1, 3))\nXb[0,:] = x0\nfor i in range(Nt):\n    Xb[i+1,:] =  RK4(SIR, Xb[i,:], dt, beta, lambd)    \n# plot state and measurements\nt = np.linspace(0, Nt, Nt+1) * dt # time vector\nT_m = 2.\nfig, ax = plt.subplots(nrows=3,ncols=1, figsize=(10,8))\nax = ax.flat\n\nfor k in range(3):\n    ax[k].plot(t,xTrue[:,k], label='True')#, linewidth = 3)\n    ax[k].plot(t,Xa[:,k], '--', label='EnKF analysis')#, linewidth = 3)\n    ax[k].plot(t[ind_m],y[:,k], 'o', fillstyle='none', \\\n               label='Observation')#, markersize = 8, markeredgewidth = 2)\n    ax[k].plot(t,Xb[:,k], ':', label='Unfiltered')#, linewidth = 3)\n    ax[k].set_xlabel('t')\n    ax[k].axvspan(0, T_m, color='lightgray', alpha=0.4, lw=0)    \nax[0].legend(loc=\"center\", bbox_to_anchor=(0.5,1.25),ncol =4,fontsize=15)   \nax[0].set_ylabel('S(t)')\nax[1].set_ylabel('I(t)')\nax[2].set_ylabel('R(t)')\nfig.subplots_adjust(hspace=0.5)",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Example 3: SIR Model</span>"
+    ]
+  },
+  {
+    "objectID": "02examples/EnKF/032EnKFExample3.html#conclusion",
+    "href": "02examples/EnKF/032EnKFExample3.html#conclusion",
+    "title": "14  Example 3: SIR Model",
+    "section": "14.2 Conclusion",
+    "text": "14.2 Conclusion\nThe ensemble Kalman filter, even with sparse observations and a nonlinear system, does an excellent job of\n\ntracking within the DA window\nforecasting way beyond the window, whereas the unfiltered/unassimilated, freely evolving system deviates considerably, as is to be expected from the nonlinear SIR system.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>14</span>  <span class='chapter-title'>Example 3: SIR Model</span>"
     ]
   }
 ]

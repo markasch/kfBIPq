@@ -3,20 +3,49 @@ project:
   output-dir: docs
 
 book:
-  title: "KFbip"
+  title: "Kalman Filters: from Bayes to Inverse Problems"
   author: "Mark Asch"
   date: "4/3/2024"
+  sidebar: 
+    background: "#EAECEE"
+    logo: kf.png
+    search: true
+
   chapters:
     - index.qmd
-    - intro.qmd
-    - summary.qmd
-    - references.qmd
+    - part: Bayes' Theory
+      chapters:
+        - 01theory/011BayesTheory.qmd
+        - 01theory/012BayesFilters.qmd
+    - part: Kalman Filters
+      chapters:
+        - 01theory/021BasicKF.qmd
+        - 02examples/KF/021KFExample1.ipynb
+        - 02examples/KF/021KFExample2.ipynb
+        - 02examples/KF/021KFExample3.ipynb
+        - 02examples/KF/021KFExample4.ipynb
+    - part: Nonlinear Kalman Filters
+      chapters:
+        - 01theory/022NlinKF.qmd
+        - 02examples/EKF/022EKFExample1.ipynb
+        - 02examples/EKF/022EKFExample2.ipynb
+    - part: Ensemble Filters
+      chapters:
+        - 01theory/031EnKF.qmd
+        - 02examples/EnKF/032EnKFExample1.ipynb
+        - 02examples/EnKF/032EnKFExample2.ipynb
+        - 02examples/EnKF/032EnKFExample3.ipynb
+    - part: Inverse Problems
+      chapters:
+        - references.qmd
 
 bibliography: references.bib
 
 format:
   html:
     theme: cosmo
+    backgroundcolor: "#F5F5F5"
+
   pdf:
     documentclass: scrreprt
 

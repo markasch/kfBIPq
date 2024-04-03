@@ -9,7 +9,7 @@
 <meta name="author" content="Mark Asch">
 <meta name="dcterms.date" content="2024-04-03">
 
-<title>KFbip</title>
+<title>Kalman Filters: from Bayes to Inverse Problems</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -32,7 +52,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./intro.html" rel="next">
+<link href="./01theory/011BayesTheory.html" rel="next">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -82,7 +102,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Preface</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Welcome to <em>“Kalman Filters: from Bayes to Inverse Problems”</em></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -95,9 +115,12 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      <img src="./kf.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">KFbip</a> 
+      <a href="./">Kalman Filters: from Bayes to Inverse Problems</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -110,27 +133,154 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Preface</span></a>
+ <span class="menu-text">Welcome to <em>“Kalman Filters: from Bayes to Inverse Problems”</em></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Bayes’ Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  <a href="./01theory/011BayesTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bayes’ Theorem</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./summary.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  <a href="./01theory/012BayesFilters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian Filters</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Kalman Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01theory/021BasicKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/KF/021KFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Example 1 - estimating a constant</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/KF/021KFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Example 2 - scalar, Gaussian random walk</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/KF/021KFExample3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Example 3 - constant-velocity 1D position tracking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/KF/021KFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example 4 - constant-velocity 2D motion tracking</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Nonlinear Kalman Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01theory/022NlinKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonlinear Kalman Filters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/EKF/022EKFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Example 1 - tracking a random sinusoidal signal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/EKF/022EKFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Example 2 - tracking a noisy pendulum</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Ensemble Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">ENSEMBLE Kalman Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/EnKF/032EnKFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example 1: noisy pendulum</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/EnKF/032EnKFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Example 2: Lorenz63 system</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02examples/EnKF/032EnKFExample3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example 3: SIR Model</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Inverse Problems</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">References</span></a>
   </div>
 </li>
+      </ul>
+  </li>
     </ul>
     </div>
 </nav>
@@ -141,7 +291,10 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#welcome-to-kalman-filters-from-bayes-to-inverse-problems" id="toc-welcome-to-kalman-filters-from-bayes-to-inverse-problems" class="nav-link active" data-scroll-target="#welcome-to-kalman-filters-from-bayes-to-inverse-problems">Welcome to <em>“Kalman Filters: from Bayes to Inverse Problems”</em></a>
+  <ul class="collapse">
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -150,7 +303,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">KFbip</h1>
+<h1 class="title">Kalman Filters: from Bayes to Inverse Problems</h1>
 </div>
 
 
@@ -179,12 +332,63 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="preface" class="level1 unnumbered">
-<h1 class="unnumbered">Preface</h1>
-<p>This is a Quarto book.</p>
-<p>To learn more about Quarto books visit <a href="https://quarto.org/docs/books" class="uri">https://quarto.org/docs/books</a>.</p>
+<section id="welcome-to-kalman-filters-from-bayes-to-inverse-problems" class="level1 unnumbered">
+<h1 class="unnumbered">Welcome to <em>“Kalman Filters: from Bayes to Inverse Problems”</em></h1>
+<p>This book contains a presentation of Kalman filters, from basics to ensemble filters. A large number of examples are provided in the form of jupyter notebooks. Then the notion of Bayesian inverse problems (BIP) is introduced. Finally, there is a detailed presentation of the use of the ensemble Kalman filter as a basis for the solution of inverse problems. This is denoted EKI, or ensemble Kalman inversion, following the magnificent work of Andrew Stuart and his collaborators.</p>
+<p>This book is based upon a number of sources. The original Bayesian formulation for inverse problems <span class="citation" data-cites="Stuart2015">(<a href="index.html#ref-Stuart2015" role="doc-biblioref">Dashti and Stuart 2015</a>)</span> was the basis for the later ensemble Kalman inversion, presented in a series of papers <span class="citation" data-cites="Stuart2013 Stuart2022 Huang2022">(<a href="index.html#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>; <a href="index.html#ref-Stuart2022" role="doc-biblioref">Calvello, Reich, and Stuart 2022</a>; <a href="index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>.</p>
+<p>In <span class="citation" data-cites="Asch2016">(<a href="index.html#ref-Asch2016" role="doc-biblioref">Asch, Bocquet, and Nodet 2016</a>)</span> and <span class="citation" data-cites="LSZ2015">(<a href="index.html#ref-LSZ2015" role="doc-biblioref">Law, Stuart, and Zygalakis 2015</a>)</span> the reader can find detailed presentations of Kalman filters approaches for data assimilation. In <span class="citation" data-cites="Asch2022">(<a href="index.html#ref-Asch2022" role="doc-biblioref">Asch 2022</a>)</span> there are basic explanations of uncertainty quantification, inverse problems and their use for digital twins.</p>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-Asch2022" class="csl-entry" role="listitem">
+Asch, Mark. 2022. <em>A <span>Toolbox</span> for <span>Digital</span>
+<span>Twins</span>: <span>From</span>
+<span>Model</span>-<span>Based</span> to
+<span>Data</span>-<span>Driven</span></em>. Philadelphia, PA: Society
+for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611976977">https://doi.org/10.1137/1.9781611976977</a>.
+</div>
+<div id="ref-Asch2016" class="csl-entry" role="listitem">
+Asch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. <em>Data
+<span>Assimilation</span>: <span>Methods</span>,
+<span>Algorithms</span>, and <span>Applications</span></em>.
+Philadelphia, PA: Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611974546">https://doi.org/10.1137/1.9781611974546</a>.
+</div>
+<div id="ref-Stuart2022" class="csl-entry" role="listitem">
+Calvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.
+<span>“Ensemble <span>Kalman</span> <span>Methods</span>: <span>A</span>
+<span>Mean</span> <span>Field</span> <span>Perspective</span>.”</span>
+arXiv. <a href="http://arxiv.org/abs/2209.11371">http://arxiv.org/abs/2209.11371</a>.
+</div>
+<div id="ref-Stuart2015" class="csl-entry" role="listitem">
+Dashti, Masoumeh, and Andrew M. Stuart. 2015. <span>“The
+<span>Bayesian</span> <span>Approach</span> to <span>Inverse</span>
+<span>Problems</span>.”</span> In <em>Handbook of
+<span>Uncertainty</span> <span>Quantification</span></em>, edited by
+Roger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer
+International Publishing. <a href="https://doi.org/10.1007/978-3-319-11259-6_7-1">https://doi.org/10.1007/978-3-319-11259-6_7-1</a>.
+</div>
+<div id="ref-Huang2022" class="csl-entry" role="listitem">
+Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M.
+Stuart. 2022. <span>“Efficient <span>Derivative</span>-Free
+<span>Bayesian</span> <span>Inference</span> for
+<span>Large</span>-<span>Scale</span> <span>Inverse</span>
+<span>Problems</span>.”</span> arXiv. <a href="http://arxiv.org/abs/2204.04386">http://arxiv.org/abs/2204.04386</a>.
+</div>
+<div id="ref-Stuart2013" class="csl-entry" role="listitem">
+Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.
+<span>“Ensemble <span>Kalman</span> Methods for Inverse
+Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
+</div>
+<div id="ref-LSZ2015" class="csl-entry" role="listitem">
+Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data
+<span>Assimilation</span>: <span>A</span> <span>Mathematical</span>
+<span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span>
+<span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -601,8 +805,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   <div class="nav-page nav-page-previous">
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./01theory/011BayesTheory.html" class="pagination-link" aria-label="Bayes' Theorem">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bayes’ Theorem</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

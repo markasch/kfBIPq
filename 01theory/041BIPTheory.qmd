@@ -1,0 +1,77 @@
+# Bayesian Inversion
+
+## Introduction
+
+Bayesian approaches, provide a foundation for inference from noisy and limited data, a natural mechanism for regularization in the form of prior information, and in very general cases—e.g., non-linear forward operators, non-Gaussian errors—a quantitative assessment of uncertainty in the results. Indeed, the output of Bayesian inference is not a single value for the quantity of interest, but a probability distribution that summarizes all available information about this quantity, be it a vector of parameters or a function (i.e., a signal or spatial field). Exploration of this posterior distribution—and thus estimating means, higher moments, and marginal densities of the inverse solution—may require repeated evaluations of the forward operator. For complex physical models and high-dimensional model spaces, this can be computationally prohibitive. 
+
+Bayesian inference provides an attractive setting for the solution of inverse problems. Measurement errors,forward model uncertainties, and complex prior information can all be combined to yield a rigorous and quantitative assessment of uncertainty in the solution of the inverse problem. 
+
+## Theory
+
+A Bayesian Inverse Problem (BIP) is defined as follows:
+
+- Given: 
+  - observational data and their uncertainties, 
+  - a (possibly stochastic) forward model that maps model parameters to observations, 
+  - and a prior probability distribution on model parameters that encodes any prior knowledge or assumptions about the parameters.
+- Find:
+  - the posterior probability distribution of the parameters conditioned on the observational data. 
+
+This probability density function (pdf) is defined as the Bayesian
+solution of the inverse problem. The posterior distribution assigns
+to any candidate set of parameter fields our belief (expressed as
+a probability) that a member of this candidate set is the ``true''
+parameter field that gave rise to the observed data.
+
+Of course, all of this is summarized in Bayes' theorem, expressed as folllows.
+
+What can be said about the value of an unknown or poorly known variable/parameter,
+$\theta,$ that represents the parameters of the system, if we have
+some measured data $\mathcal{D}$ and a model $\mathcal{M}$ of the
+underlying mechanism that generated the data? This is precisely the
+Bayesian context, where we seek a quantification of the uncertainty
+in our knowledge of the parameters that according to Bayes' Theorem 
+takes the form
+
+\begin{equation}\label{eq:Bayes-2}
+p(\theta\mid\mathcal{D})=\frac{p(\mathcal{D}\mid\theta)p(\theta)}{p(\mathcal{D})}=\frac{p(\mathcal{D}\mid\theta)p(\theta)}{\int_{\theta}p(\mathcal{D}\mid\theta)p(\theta)}.
+\end{equation}
+
+Here, the physical model that generates the data is represented by the conditional probability
+(also known as the _likelihood_) $p(\mathcal{D}\mid\theta),$
+and the prior knowledge of the system by the term $p(\theta).$ The
+denominator is considered as a normalizing factor and represents the
+total probability of $\mathcal{D}.$ From these we can then calculate
+the resulting _posterior probability_, $p(\theta\mid\mathcal{D}).$  A generalization can include a model, $\mathcal{M},$ for the parameters. In this case (6.1) can be written as
+
+\begin{equation}\label{eq:Bayes-3}
+	p(\theta\mid\mathcal{D},\mathcal{M})=\frac{p(\mathcal{D}\mid\theta,\mathcal{M})p(\theta\mid \mathcal{M})}{p(\mathcal{D}\mid \mathcal{M})}.
+\end{equation}
+
+This is depicted in the flowchart.
+
+<img src="./Bayes-flowchart.png" width="259" height="346" />
+
+
+## Inverse Problem
+
+We consider the inverse problem of recovering an unknown function $u$ from knwn data $y$ related by
+
+$$
+ y = \mathcal{G}(u) + \eta,
+$$
+where $\mathcal{G}$ denotes the forward model from inouts to observables, $\eta \sim \mathcal{N}(0, \Gamma)$ represents the model error and observation noise, with $\Gamma$ a positive definite noise covariance matrix. In the Bayesian approachn $u$ is a random variable with _prior_ distribution $p_u(u).$ Then, the Bayesian solution of the inverse problem is the _posterior_ distribution $p_{u\vert y}(u)$ of $u$ given $y,$ which by formal applicatiuon of Bayes' Theorem can be characterized by
+
+$$
+  p_{u\vert y}(u) \propto \exp \left(  -\Phi(u;y) \right) p_u (u),
+$$
+with
+$$
+  \Phi(u;y) \doteq \frac{1}{2} \left\Vert y - \mathcal{G}(u) \right\Vert_{\Gamma}^2.
+$$
+
+TBC...
+
+
+## Examples
+

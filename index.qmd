@@ -1,5 +1,22 @@
-# Preface {.unnumbered}
+# Welcome to _"Kalman Filters: from Bayes to Inverse Problems"_ {.unnumbered}
 
-This is a Quarto book.
+This book contains a presentation of Kalman filters, from basics to ensemble filters. 
+A large number of examples are provided in the form of jupyter notebooks. 
+Then the notion of Bayesian inverse problems (BIP) is introduced.  Finally, there is a detailed presentation of the use of the ensemble Kalman filter as a basis for the solution of inverse problems. This is denoted EKI, or ensemble Kalman inversion, following the magnificent work of Andrew Stuart and his collaborators.
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+This book is based upon a number of sources. 
+The original Bayesian formulation for inverse problems [@Stuart2015] 
+was the basis for the later ensemble Kalman inversion, presented in a 
+series of papers [@Stuart2013; @Stuart2022; @Huang2022].
+
+
+In [@Asch2016] and [@LSZ2015] the reader can find detailed 
+presentations of Kalman filters approaches for data assimilation. 
+In  [@Asch2022] there are basic explanations of uncertainty 
+quantification, inverse problems and their use for digital twins.
+
+
+## References
+
+::: {#refs}
+:::

@@ -1,0 +1,199 @@
+# Kalman Filters
+
+## Introduction
+
+The Kalman filter can be used for
+
+- state estimation---this is the direct filtering (or smoothing) problem
+- parameter estimation---this is the inverse problem based on filtering with a pseudo-time
+
+Kalman filters are linear (and Gaussian) or nonlinear. Among the nonlinear approaches, the Ensemble Kalman filter (EnKF) provides a *derivative-free* approach to the solution of inverse problems.
+
+## Kalman filter problem - General formulation
+
+We present a very general formulation that will later be convenient for joint state and parameter estimation problems.
+
+
+We consider a discrete-time dynamical system with noisy state transitions and noisy observations.
+
+- Dynamics:
+   
+   $$v_{j+1} = \Psi(v_j) + \xi_j, \quad j \in \mathbb{Z}^+$$	
+     
+- Observations: 
+
+    $$y_{j+1} = h (v_{j+1}) + \eta_{j+1}, \quad j \in \mathbb{Z}^+$$
+	   
+- Probability (densities): 
+
+     $$v_0 \sim \mathcal{N}(m_0,C_0), \quad \xi_j \sim \mathcal{N}(0,\Sigma), \quad \eta_j \sim \mathcal{N}(0,\Gamma)$$ 
+	 
+- Probability (independence): 
+
+     $$v_0 \perp {\xi_j} \perp {\eta_j}$$ 
+	 
+- Operators:
+
+	 \begin{eqnarray}
+	  \Psi \colon \mathcal{H}_s &\mapsto \mathcal{H}_s, \\
+	  h  \colon \mathcal{H}_s &\mapsto \mathcal{H}_o,
+	 \end{eqnarray}
+    where  $v_j \in \mathcal{H}_s,$  $y_j \in \mathcal{H}_o$ and $\mathcal{H}$ is a finite-dimensional Hilbert space.
+
+
+**Filtering problem**: estimate (optimally) the state $v_j$ of the dynamical system at time $j,$ given the data $Y_j = \{y_i\}_{i=1}^{j}$ up to time $j.$ This is achieved by using a two-step *predictor-corrector* method. We will use the more general notation of [@LSZ2015] instead of the usual, classical state-space formulation that is used in [@Asch2016] and [@Asch2022].
+
+The objective is to update the filtering distribution  $\mathbb{P}(v_j \vert Y_j),$ from time $j$ to time $j+1,$  in the linear, Gaussian case, where
+- $\Psi$ and $h$ are linear maps
+- all distributions are Gaussian.
+
+Suppose 
+\begin{eqnarray}
+   \Psi(v) &= Mv \\
+   h(v) &= Hv,
+\end{eqnarray}
+where the matrices $M \in \mathbb{R}^{n \times n},$ $H \in \mathbb{R}^{m \times n},$ with $m \le n$  and $\mathrm{rank}(H)=m.$ 
+
+1. Let $(m_j, C_j)$ denote the mean and covariance of $v_j \vert Y_j$  and note that these entirely characterize the random variable since it is Gaussian.
+2. Let  $(\hat{m}_{j+1}, \hat{C}_{j+1})$ denote the mean and covariance of $v_{j+1} \vert Y_j$  and note that these entirely characterize the random variable since it is Gaussian.
+3. Derive the map $(m_j, C_j) \mapsto (m_{j+1}, C_{j+1})$ using the previous step.
+
+### Prediction/Forecast
+
+$$ \mathbb{P}(v_n \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) $$
+
+- P0: initialize $(m_0, C_0)$ and compute $v_0$
+- P1: predict the state, measurement
+ 
+     \begin{align}
+     v_{j+1} &= M v_j + \xi_j \\
+     y_{j+1} &= H v_{j+1} + \eta_{j+1}
+     \end{align}
+     
+- P2: predict the mean and covariance  
+     
+     \begin{align}
+     \hat{m}_{j+1}  &= M m_j \\
+     \hat{C}_{j+1}  &= M C_j M^{\mathrm{T}} + \Sigma
+     \end{align}
+     
+
+### Correction/Analysis
+
+$$ \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_{n+1}) $$
+
+- C1: compute the innovation
+
+     $$ d_{j+1} = y_{j+1} - H \hat{m}_{j+1} $$
+	 
+- C2: compute the measurement covariance
+
+     $$ S_{j+1} = H \hat{C}_{j+1}  H^{\mathrm{T}} + \Gamma $$
+	 
+- C3: compute the (optimal) Kalman gain
+
+     $$ K_{j+1} = \hat{C}_{j+1} H^{\mathrm{T}}  S_{j+1}^{-1} $$
+	 
+- C4: update/correct the mean and covariance
+     
+     \begin{align}
+     {m}_{j+1}  &= \hat{m}_{j+1} + K_{j+1} d_{j+1}, \\
+     {C}_{j+1}  &= \hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\mathrm{T}}.
+     \end{align}
+     
+     
+### Loop over time
+- set $j = j+1$
+- go to step P1
+
+
+## State-space formulation
+
+In classical (linear) filter theory, a state space formulation is usually used.
+
+\begin{eqnarray}
+ && x_{k+1}  = F x_k + B u_k + w_k \\
+ && y_{k+1}  = H x_k + v_k,
+\end{eqnarray}
+where $u$ is a control input, and $w_k \sim \mathcal{N}(0,Q),$ $v_k \sim \mathcal{N}(0,R).$ Moreover, $A$ is the dynamics and $H$ the observation operator.
+
+The 2-step filter:
+
+**Initialization**
+
+$$ x_0, \quad P_0 $$
+
+**1. Prediction** 
+
+\begin{eqnarray}
+ && x_{k+1}^- = F x_k \\
+ && P_{k+1}^- = F P_k F^{\mathrm{T}} + Q 
+\end{eqnarray} 
+
+**2. Correction**
+
+\begin{eqnarray}
+  K_{k+1} && = P_{k+1}^{-} H^{\mathrm{T}} ( H  P_{k+1}^{-} H^{\mathrm{T}} + R )^{-1}
+               \quad (= P_{k+1}^- H^{\mathrm{T}} S^{-1})\\
+  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - H x_{k+1}^- ) \\
+  P_{k+1} &&= (I -  K_{k+1} H ) P_{k+1}^- 
+              \quad (= P_{k+1}^- - K_{k+1} S K^{\mathrm{T}}_{k+1})
+\end{eqnarray} 
+
+
+**Loop**
+
+Set $k = k+1$ and go to step 1.
+
+
+:::{.callout-tip}
+In some cases, the superscripts `f` and `a` are used to denote the forecast/prediction, and analysis/correction variables, respectively. We avoid this, for clarity of notation.
+:::
+
+## Passage from Continuous to Discrete for Random Dynamic Systems 
+
+Most often, in the use of Kalman filtering, we deal with a continuous dynamic system that is modelled by a system of ODEs, with some random process noise. The passage from the continuous to a discrete-time formulation, which is needed for the KF, requires some attention. Following {cite}Sarkka2023, we will derive the associated discretization of the process matrix and the process noise covariance matrix.
+
+Suppose we have a linear, time invariant (LTI) system of ODEs with an additive random noise term (this is the engineering approach that avoids the use of SDEs and Itô calculus---see {cite}Asch2022 )
+
+$$ 
+  \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = F \mathbf{x}(t) + L \mathbf{w}(t) , \quad \mathbf{x}(0) = \mathbf{x}_0,
+$$ 
+
+where $\mathbf{w}(t)$ is a white, Gaussian noise process with expectation and covariance
+
+\begin{align}
+& \mathrm{E}[\mathbf{w}(t)] = 0, \\
+& \mathrm{Cov}[\mathbf{w}(\tau_1)\mathbf{w}(\tau_2)] = \delta(\tau_1 - \tau_2) Q^c
+\end{align}
+
+with $Q^c$ the spectral density matrix of the white noise process, which is the continuous-time analogue of a covariance matrix, and in the scalar case is just the noise variance. Usually
+
+$$
+  Q^c = \mathrm{diag}(q^c_1, \ldots, q^c_n),
+$$
+
+where $q^c_1, \ldots, q^c_n$ are the spectral densities of $w_1(t), \ldots, w_n(t),$ the components of $\mathbf{w}(t).$
+
+We now proceed to convert this continous LTI system into its discrete counterpart, needed for the KF algorithm,
+
+$$
+ \mathbf{x}_{k+1 } = A_k  \mathbf{x}_{k} + \mathbf{q}_{k}, 
+$$
+
+where $A_k$ is the discretized process/dynamics transition matrix, and $\mathbf{q}_{k} \sim \mathcal{N} (0, Q)$ is the Gaussian process noise. 
+
+To obtain expressions for $A$ and $Q,$ we need to solve the random ODE system. Doing this, we can show that
+
+$$
+  A_k = \exp (F \Delta t_{k}) = \sum_{n=0}^{\infty} \frac{(F \Delta t_{k})^n}{n !}
+$$
+
+and
+
+$$
+  Q_k = \int_0^{\Delta t_{k}}  \exp (F s) L Q^c L^{\mathrm{T}} \exp (F s)^{\mathrm{T}} \mathrm{d}s.
+$$
+
+Usually, $F$ is nilpotent to some low order, so the computation of the matrix exponential is relatively easy to do. This will be illustrated in the examples.
+

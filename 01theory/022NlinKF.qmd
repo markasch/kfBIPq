@@ -1,0 +1,173 @@
+# Nonlinear Kalman Filters
+
+## Introduction
+
+Recall that the Kalman filter can be used for
+
+- state estimation---this is the direct filtering (or smoothing) problem
+- parameter estimation---this is the inverse problem based on filtering with a pseudo-time
+
+Kalman filters are linear (and Gaussian) or nonlinear. Here we will formulate the basic nonliner filter, known as the _extended_ Kalman filter.
+
+## Recall: Kalman filter problem - general formulation
+
+We present a very general formulation that will later be convenient for joint state and parameter estimation problems.
+Consider a discrete-time nonlinear dynamical system with noisy state transitions and noisy observations that are also noinlinear.
+
+- Dynamics: 
+
+  $$\quad v_{j+1} = \Psi(v_j) + \xi_j, \quad j \in \mathbb{Z}^+ $$
+  
+- Observations: 
+
+  $$y_{j+1} = h (v_{j+1}) + \eta_{j+1}, \quad j \in \mathbb{Z}^+ $$
+  
+- Probability (densities): 
+
+   $$v_0 \sim \mathcal{N}(m_0,C_0), \quad \xi_j \sim \mathcal{N}(0,\Sigma),  \quad \eta_j \sim \mathcal{N}(0,\Gamma)$$ 
+   
+- Probability (independence): 
+
+  $$v_0 \perp {\xi_j} \perp {\eta_j}$$ 
+  
+- Operators:
+
+	 \begin{eqnarray}
+	  \Psi \colon \mathcal{H}_s &\mapsto \mathcal{H}_s, \\
+	  h  \colon \mathcal{H}_s &\mapsto \mathcal{H}_o,
+	 \end{eqnarray}
+    where  $v_j \in \mathcal{H}_s,$  $y_j \in \mathcal{H}_o$ and $\mathcal{H}$ is a finite-dimensional Hilbert space.
+
+
+
+**Filtering problem**: 
+
+Estimate (optimally) the state $v_j$ of the dynamical system at time $j,$ given the data $Y_j = \{y_i\}_{i=1}^{j}$ up to time $j.$ This is achieved by using a two-step *predictor-corrector* method. We will use the more general notation of [@LSZ2015] instead of the usual, classical state-space formulation that is used in [@Asch2016] and [@Asch2022].
+
+The objective here is to update the filtering distribution  $\mathbb{P}(v_j \vert Y_j),$ from time $j$ to time $j+1,$  in the nonlinear, Gaussian case, where
+
+- $\Psi$ and $h$ are nonlinear functions,
+- all distributions are Gaussian.
+
+Suppose the Jacobian matrices of $\Psi$ and $h$ exist, and are denoted by
+
+$$ 
+\begin{eqnarray}
+   \Psi_x(v) &= \left[ \frac{\partial \Psi}{\partial x} \right]_{x=m}\\
+   h_x(v) &= \left[ \frac{\partial h}{\partial x} \right]_{x=m}.
+\end{eqnarray}
+$$
+
+
+1. Let $(m_j, C_j)$ denote the mean and covariance of $v_j \vert Y_j$  and note that these entirely characterize the random variable since it is Gaussian.
+2. Let  $(\hat{m}_{j+1}, \hat{C}_{j+1})$ denote the mean and covariance of $v_{j+1} \vert Y_j$  and note that these entirely characterize the random variable since it is Gaussian.
+3. Derive the map $(m_j, C_j) \mapsto (m_{j+1}, C_{j+1})$ using the previous step.
+
+### Prediction/Forecast
+
+$$ \mathbb{P}(v_n \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) $$
+
+- P0: initialize $(m_0, C_0)$ and compute $v_0$
+- P1: predict the state, measurement
+
+     $$ 
+     \begin{align}
+     v_{j+1} &= \Psi (v_j) + \xi_j \\
+     y_{j+1} &= h (v_{j+1}) + \eta_{j+1}
+     \end{align}
+     $$
+	 
+- P2: predict the mean and covariance  
+
+     $$ 
+     \begin{align}
+     \hat{m}_{j+1}  &= \Psi (m_j) \\
+     \hat{C}_{j+1}  &= \Psi_x C_j \Psi_x^{\mathrm{T}} + \Sigma
+     \end{align}
+     $$
+
+### Correction/Analysis
+
+$$ \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_{n+1}) $$
+
+- C1: compute the innovation
+
+     $$ d_{j+1} = y_{j+1} - h (\hat{m}_{j+1}) $$
+	 
+- C2: compute the measurement covariance
+
+     $$ S_{j+1} = h_x \hat{C}_{j+1}  h_x^{\mathrm{T}} + \Gamma $$
+	 
+- C3: compute the (optimal) Kalman gain
+
+     $$ K_{j+1} = \hat{C}_{j+1} h_x^{\mathrm{T}}  S_{j+1}^{-1} $$
+	 
+- C4: update/correct the mean and covariance
+
+     $$
+     \begin{align}
+     {m}_{j+1}  &= \hat{m}_{j+1} + K_{j+1} d_{j+1}, \\
+     {C}_{j+1}  &= \hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\mathrm{T}}.
+     \end{align}
+     $$
+     
+### Loop over time
+
+- set $j = j+1$
+- go to step P1
+
+
+## State-space formulation
+
+In classical filter theory, a state space formulation is usually used.
+
+$$
+\begin{eqnarray}
+ && x_{k+1}  = f (x_k)  + w_k \\
+ && y_{k+1}  = h (x_k) + v_k,
+\end{eqnarray}
+$$
+
+where $f$ and $h$ are nonlinear, differentiable functions with Jacobian matrices $D_f$ and $D_h$ respectively, $w_k \sim \mathcal{N}(0,Q),$ $v_k \sim \mathcal{N}(0,R).$
+
+The 2-step filter:
+
+### Initialization
+
+$$ x_0, \quad P_0 $$
+
+### 1. Prediction 
+
+$$ 
+\begin{eqnarray}
+ && x_{k+1}^- = f (x_k) \\
+ && P_{k+1}^- = D_f P_k D_f^{\mathrm{T}} + Q 
+\end{eqnarray} 
+$$
+
+### 2. Correction
+
+$$ 
+\begin{eqnarray}
+  K_{k+1} && = P_{k+1}^{-} D_h^{\mathrm{T}} ( D_h  P_{k+1}^{-} D_h^{\mathrm{T}} + R )^{-1} 
+                 \quad (= P_{k+1}^- D_h^{\mathrm{T}} S^{-1}) \\
+  x_{k+1} &&= x_{k+1}^{-} + K_{k+1} (y_{k+1} - h (x_{k+1}^-) ) \\
+  P_{k+1} &&= (I -  K_{k+1} D_h ) P_{k+1}^-
+            \quad (= P_{k+1}^- - K_{k+1} S K^{\mathrm{T}}_{k+1})
+\end{eqnarray} 
+$$
+
+
+### Loop
+
+Set $k = k+1$ and go to step 1.
+
+
+
+## Other nonlinear filters
+
+- unscented Kalman filter
+- particle filter
+
+For details, please consult the references.
+

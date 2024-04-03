@@ -1,0 +1,10 @@
+# Bayesian Filters
+
+All filters can be expressed in a Bayesian form.
+
+:::{.callout-important}
+Kalman filters are a special case of the more general Bayesian filter formulation
+:::
+
+
+Coming soon...
