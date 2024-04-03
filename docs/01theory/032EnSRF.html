@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kalman Filters: from Bayes to Inverse Problems - 11&nbsp; Ensemble Kalman Filter</title>
+<title>Kalman Filters: from Bayes to Inverse Problems - 15&nbsp; Deterministic Ensemble Kalman Filters</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,8 +30,8 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../02examples/EnKF/032EnKFExample1.html" rel="next">
-<link href="../02examples/EKF/022EKFExample2.html" rel="prev">
+<link href="../01theory/041BIP.html" rel="next">
+<link href="../02examples/EnKF/032EnKFExample3.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +110,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/031EnKF.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/032EnSRF.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -248,7 +248,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/031EnKF.html" class="sidebar-item-text sidebar-link active">
+  <a href="../01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></span></a>
   </div>
 </li>
@@ -272,7 +272,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/032EnSRF.html" class="sidebar-item-text sidebar-link">
+  <a href="../01theory/032EnSRF.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
   </div>
 </li>
@@ -311,21 +311,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#stochastic-enkf---linear-observation-operator" id="toc-stochastic-enkf---linear-observation-operator" class="nav-link active" data-scroll-target="#stochastic-enkf---linear-observation-operator"><span class="header-section-number">11.1</span> Stochastic EnKF - linear observation operator</a>
-  <ul class="collapse">
-  <li><a href="#predictionforecast" id="toc-predictionforecast" class="nav-link" data-scroll-target="#predictionforecast"><span class="header-section-number">11.1.1</span> Prediction/Forecast</a></li>
-  <li><a href="#correctionanalysis" id="toc-correctionanalysis" class="nav-link" data-scroll-target="#correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</a></li>
-  </ul></li>
-  <li><a href="#full-nonlinear-formulation-of-the-ensemble-kalman-filter" id="toc-full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="nav-link" data-scroll-target="#full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</a></li>
+  <li><a href="#the-filterng-problem." id="toc-the-filterng-problem." class="nav-link active" data-scroll-target="#the-filterng-problem."><span class="header-section-number">15.1</span> The filterng problem.</a></li>
+  <li><a href="#recall-ensemble-kalman-filter-enkf" id="toc-recall-ensemble-kalman-filter-enkf" class="nav-link" data-scroll-target="#recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</a></li>
+  <li><a href="#ensemble-square-root-filters-ensrf" id="toc-ensemble-square-root-filters-ensrf" class="nav-link" data-scroll-target="#ensemble-square-root-filters-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</a></li>
+  <li><a href="#etkf-in-practice" id="toc-etkf-in-practice" class="nav-link" data-scroll-target="#etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/031EnKF.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/032EnSRF.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></h1>
 </div>
 
 
@@ -342,91 +340,111 @@ window.Quarto = {
 </header>
 
 
-<p>The idea behind the EnKF is</p>
-<ol type="1">
-<li>permit fully nonlinear process and observation models;</li>
-<li>avoid gradient calculations for linearization, as in the EKF,</li>
-<li>by replacing mean and covariance with empirical, ensemble averaging.</li>
-</ol>
-<p>The EnKF is obtained by - replacing the exact covariance <span class="math inline">\(P\)</span> by the ensemble sample covariance, and - adding noise to the data in order to avoid a shrinking of the ensemble spread and to obtain the correct filtering covariance in the limit</p>
-<p>Here are the steps for the so-called <strong>stochastic EnKF</strong>, where we add an artificial, random perturbation to the observations, and we assume we have a linear observation operator, <span class="math inline">\(H.\)</span></p>
-<section id="stochastic-enkf---linear-observation-operator" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="stochastic-enkf---linear-observation-operator"><span class="header-section-number">11.1</span> Stochastic EnKF - linear observation operator</h2>
-<section id="predictionforecast" class="level3" data-number="11.1.1">
-<h3 data-number="11.1.1" class="anchored" data-anchor-id="predictionforecast"><span class="header-section-number">11.1.1</span> Prediction/Forecast</h3>
+<p>We have seen the stochastic ensemble Kalman filter in the previous section. It has the advantage of great simplicity, but is known to have unreliable statistical behaviour and can suffer from sampling errors. In particular, it does not converge in the ensemble Kalman inversion (EKI) context - see next section. Filters that do not use (stochastically) perturbed observations are called <em>deterministic</em> filters. The family of <em>ensemble square root filters</em> are deterministic, in this sense. These filters exhibit exponential conversion in the EKI context.</p>
+<section id="the-filterng-problem." class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="the-filterng-problem."><span class="header-section-number">15.1</span> The filterng problem.</h2>
+<p>Nonlinear state equation and observations are given by,</p>
+<p><span class="math display">\[\begin{align}
+x_{k+1}^{n} &amp;=  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
+{y}_{k+1}    &amp;=  \mathcal{H} (x_{k+1}) +  v_{k+1}, \\
+
+\end{align}\]</span></p>
+<p>where the noise/error terms</p>
 <p><span class="math display">\[
-\begin{align}
-\hat{v}_{k+1}^{n} &amp;= \Psi ( {v}_{k}^{n} ) +  \xi_{k}^{n} , \quad n=1, \ldots, N, \\
-\hat{m}_{k+1} &amp; =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n}  \\
-\hat{C}_{k+1} &amp; = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
-                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}
-\end{align}
+w_k \sim  \mathcal{N}(0, Q), \quad  v_k \sim  \mathcal{N}(0, R).
 \]</span></p>
+<div class="callout callout-style-default callout-note callout-titled" title="Filtering problem">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Filtering problem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Predict the optimal state from the noisy measurements.</p>
+</div>
+</div>
 </section>
-<section id="correctionanalysis" class="level3" data-number="11.1.2">
-<h3 data-number="11.1.2" class="anchored" data-anchor-id="correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</h3>
-<p><span class="math display">\[
-\begin{align}
-  {S}_{k+1} &amp;= H \hat{C}_{k+1} H^{\mathrm{T}} + \Gamma ,\\
-  {K}_{k+1} &amp;= \hat{C}_{k+1} H^{\mathrm{T}} {S}_{k+1}^{-1} , \\
-  {y}_{k+1}^{n} &amp;= {y}_{k+1} + \eta^n_{k+1} , \quad n=1, \ldots, N, \\
-  {v}_{k+1}^{n} &amp;= (I - K_{k+1}H )\hat{v}_{k+1}^{n} + K_{k+1} y^n_{k+1} , \quad n=1, \ldots, N.
-\end{align}
-\]</span></p>
-<p>Alternatively, defining the innovation <span class="math inline">\(d = {y}_{k+1}^{n} - H \hat{v}_{k+1}^{n},\)</span> we can write the state update more simply as</p>
-<p><span class="math display">\[
-  {v}_{k+1}^{n} = \hat{v}_{k+1}^{n} + K_{k+1} d .
-\]</span></p>
-<p>In words:</p>
-<ol type="1">
-<li>For a given <span class="math inline">\(N_e \in  \mathbb{N}\)</span> generate i.i.d. ensemble of states random variables from the distribution of <span class="math inline">\(X(0).\)</span></li>
-<li>For <span class="math inline">\(t \in  \mathbb{N}\)</span> recursively repeat the following steps:</li>
-</ol>
+<section id="recall-ensemble-kalman-filter-enkf" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</h2>
+<p>Just to recall the notation, here are the two steps (forecast/analysis, or predict/correct) of the EnKF.</p>
+<p><em>Prediction/Forecast Step</em></p>
 <ul>
-<li>Advance each ensemble member in time, using the nonlinear state equation with independently generated random state noise</li>
-<li>Compute the forecast sample mean and the forecast sample covariance</li>
-<li>Compute the sample Kalman gain</li>
-<li>Add additional perturbation to the observation vector <span class="math inline">\(Y\)</span> using independently generated random variables <span class="math inline">\(\eta(t)\)</span></li>
-<li>Update each forecast ensemble member</li>
+<li><p>evolve each ensemble member forward <span class="math display">\[ x_{k+1}^{n} =  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n}, \quad n=1,
+\ldots, N_e\]</span></p></li>
+<li><p>compute ensemble mean <span class="math display">\[ \bar{x} = \frac{1}{N_e} \sum_{n=1}^{N_e}  x_{n}^{\mathrm{f}} \]</span></p></li>
+<li><p>compute covariance <span class="math display">\[ P^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} , \]</span></p>
+<p>where <span class="math inline">\(X'^{\mathrm{f}} = x^{\mathrm{f}} - \bar{x}\)</span> is the ensemble state perturbation matrix.</p></li>
 </ul>
-<p>Burgers et al.&nbsp;[1998] shows that without the data perturbation, the covariance of the ensemble would go to the zero matrix as <span class="math inline">\(t\)</span> goes to infinity. The data perturbation also guarantees that the relation between the forecast sample covariance and the analysis sample covariance is analogous to the relation between the forecast and analysis covariances in the standard KF.</p>
-</section>
-</section>
-<section id="full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</h2>
-<p>There are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,</p>
-<p><span class="math display">\[
-\begin{align}
-x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
-{y}_{k+1}    &amp;=  \mathcal{H} (x_{k+1}) +  v_{k+1}.  \\
-\end{align}
-\]</span></p>
-<p>To fix notation:</p>
+<p><em>Correction/Analysis Step</em></p>
 <ul>
-<li>state forecast <span class="math inline">\(X^f,\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
-<li><em>ensemble</em> state forecast <span class="math inline">\(\mathbf{X}^f,\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span></li>
-<li>observation, <span class="math inline">\(Y,\)</span> dimension $ (N_t N_y)$</li>
-<li>ensemble state anomaly, <span class="math inline">\(\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span> with <span class="math inline">\(\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e\)</span></li>
-<li>ensemble observation anomaly, <span class="math inline">\(\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },\)</span> dimension <span class="math inline">\((N_t \times N_y \times N_e)\)</span> with <span class="math inline">\(\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).\)</span></li>
+<li>compute the optimal Kalman gain <span class="math display">\[ K = P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}  \]</span></li>
+<li>update the ensemble using perturbed observations <span class="math display">\[  x_n^{\mathrm{a}} =  x_n^{\mathrm{f}}  + K( y_n + \epsilon_y - H  x_n^{\mathrm{f}}), \quad n=1,
+\ldots, N_e,
+\]</span> where <span class="math inline">\(\epsilon_n\)</span> is the stochastic perturbation of the observations <span class="math inline">\(y.\)</span></li>
 </ul>
-<p>Then, the Kalman analysis update is</p>
-<p><span class="math display">\[
-\mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
+</section>
+<section id="ensemble-square-root-filters-ensrf" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="ensemble-square-root-filters-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</h2>
+<div class="callout callout-style-default callout-tip callout-titled" title="Idea">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Idea
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Update the ensemble to preserve the covariance that is consistent with the KF <em>theoretical</em> covariance <span class="math display">\[ P_n^{\mathrm{a}} = (I - K_n H) P_n^{\mathrm{f}}.
 \]</span></p>
-<p>with</p>
-<p><span class="math display">\[  \begin{align}
-S &amp;= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
-D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
-\end{align} \]</span></p>
-<p>where <span class="math inline">\(y \sim \mathcal{N}(0,R)\)</span> is the stochastic perturbation, and <span class="math inline">\(R\)</span> is the measurement noise covariance matrix.</p>
-<p>Or, defining the Kalman gain matrix as</p>
-<p><span class="math display">\[
-   K = \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
+</div>
+</div>
+<p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomailies,</p>
+<p><span class="math display">\[ K_n =  \frac{1}{N_e - 1} \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1},
+\]</span> where <span class="math display">\[ S = \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R.
 \]</span></p>
-<p>we obtain the classical KF update,</p>
-<p><span class="math display">\[
-   \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f}  + K D.
+<p>Then, to compute the posterior variance, we need to evaluate <span class="math display">\[ P_n^{\mathrm{a}} =  \frac{1}{N_e - 1} X'^{\mathrm{a}} ( X'^{\mathrm{a}} )^{\mathrm{T}}.
 \]</span></p>
+<p>So supposing there is a transform matrix, <span class="math inline">\(T,\)</span> such that <span class="math display">\[  X'^{\mathrm{a}} =  X'^{\mathrm{f}} T,
+\]</span> we can substitute in the definition of <span class="math inline">\(P_n^{\mathrm{a}}\)</span> to obtain <span class="math display">\[\begin{align}
+P_n^{\mathrm{a}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} T ( X'^{\mathrm{f}} T )^{\mathrm{T}} \\
+                 &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} (T T^{\mathrm{T}} ) ( X'^{\mathrm{f}}  )^{\mathrm{T}}.
+\end{align}\]</span> And, on the other hand, for the consistency, we want to obtain <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}}
+     \left[ I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}}   \right] ( X'^{\mathrm{f}}  )^{\mathrm{T}},
+\]</span> where we have used the relations <span class="math display">\[\begin{align}
+  K &amp;=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
+  P_n^{\mathrm{f}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} \\
+  Y'^{\mathrm{f}}  &amp;= H X'^{\mathrm{f}}.
+\end{align}\]</span></p>
+<p>Hence, <span class="math inline">\(T\)</span> must satisfy the so-called square root condition, <span class="math display">\[\begin{align}
+T T^{\mathrm{T}}  &amp;= I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}} \\
+                  &amp;=  I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  
+                      \left( \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right)^{-1}  Y'^{\mathrm{f}}
+\end{align}\]</span></p>
+<p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula <span class="math display">\[ (A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
+\]</span></p>
+<p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = Y^{\mathrm{T}},\)</span> <span class="math inline">\(V=Y,\)</span> we obtain the simpler form of the square root condition <span class="math display">\[ T T^{\mathrm{T}}  = \left[I +  \frac{1}{N_e - 1}( Y'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  Y'^{\mathrm{f}} \right]^{-1}.
+\]</span> This form is the basis of the ETKF, or <em>transform filter.</em></p>
+<p>Finally, the square root <span class="math inline">\(T\)</span> can be obtained from the eigenvalue factorization, <span class="math display">\[  T T^{\mathrm{T}}  = (U \Sigma U^{\mathrm{T}})^{-1}
+\]</span> and thus <span class="math display">\[ T = U \Sigma^{-1/2} U^{\mathrm{T}}.
+\]</span></p>
+<p>Note that <span class="math inline">\(T\)</span> is not unique, since for any orthogonal matrix <span class="math inline">\(\tilde{U},\)</span> the product <span class="math inline">\(T \tilde{U}\)</span> will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for <span class="math inline">\(T\)</span> and the resulting square root filters.</p>
+<p>It can be shown that in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that <span class="math inline">\(T\)</span> is symmetric, which is the case in the above derivation.</p>
+</section>
+<section id="etkf-in-practice" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</h2>
+<p>There are a number of possible simplifications that render the filter</p>
+<ul>
+<li>unbiased</li>
+<li>non-collapsing</li>
+<li>computationally more stable</li>
+<li>computationally cheaper</li>
+</ul>
+<p>One pathway is to scale the forecast observation ensemble perturbation matrix <span class="math inline">\(Y^{\mathrm{f}}\)</span> to normalize the standard deviation, which then equals one, and thus reduce loss of accuracy due to roundoff errors.</p>
+<p>A second path is to avoid the eigenvalue decompostion of <span class="math inline">\(T T^{\mathrm{T}}\)</span> and replace it by an SVD of <span class="math inline">\(T\)</span> alone. This is particularly advantageous in high dimensions and in the presence of bad conditioning.</p>
 
 
 </section>
@@ -843,13 +861,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../02examples/EKF/022EKFExample2.html" class="pagination-link" aria-label="Example 2 - tracking a noisy pendulum">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Example 2 - tracking a noisy pendulum</span></span>
+      <a href="../02examples/EnKF/032EnKFExample3.html" class="pagination-link" aria-label="Example 3: SIR Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example 3: SIR Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../02examples/EnKF/032EnKFExample1.html" class="pagination-link" aria-label="Example 1: noisy pendulum">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example 1: noisy pendulum</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../01theory/041BIP.html" class="pagination-link" aria-label="Bayesian Inversion">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

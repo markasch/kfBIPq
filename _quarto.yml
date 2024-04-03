@@ -35,9 +35,11 @@ book:
         - 02examples/EnKF/032EnKFExample1.ipynb
         - 02examples/EnKF/032EnKFExample2.ipynb
         - 02examples/EnKF/032EnKFExample3.ipynb
+        - 01theory/032EnSRF.ipynb
     - part: Inverse Problems
       chapters:
-        - references.qmd
+         - 01theory/041BIP.qmd
+         - 01theory/042EKI.qmd
 
 bibliography: references.bib
 

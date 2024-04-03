@@ -583,7 +583,7 @@
     "href": "01theory/031EnKF.html#full-nonlinear-formulation-of-the-ensemble-kalman-filter",
     "title": "11  Ensemble Kalman Filter",
     "section": "11.2 Full nonlinear formulation of the ensemble Kalman filter",
-    "text": "11.2 Full nonlinear formulation of the ensemble Kalman filter\nThere are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,\n\\[\n\\begin{align}\nx_{k+1}^{n} &= \\Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \\quad n=1, \\ldots, N_e, \\\\\n{y}_{k+1}    &=  \\mathcal{H} (x_{k+1}) +  v_{k+1}.  \\\\\n\\end{align}\n\\]\nTo fix notation:\n\nstate forecast \\(X^f,\\) dimension $ (N_t N_x)$\nensemble state forecast \\(\\mathbf{X}^f,\\) dimension $ (N_t N_x N_e)$\nobservation, \\(Y,\\) dimension $ (N_t N_y)$\nensemble state anomaly, \\(\\mathbf{X}' = \\mathbf{X} - \\overline{\\mathbf{X}},\\) dimension $ (N_t N_x N_e)$ with $ = (1/N_e) _{e=1}^{N_e} _e$\nensemble observation anomaly, \\(\\mathbf{Y}' = \\mathcal{H}(\\mathbf{X}) - \\overline{ \\mathcal{H}(\\mathbf{X} ) },\\) dimension $ (N_t N_y N_e)$ with $ = (1/N_e) _{e=1}^{N_e} (_e).$\n\nThen, the Kalman analysis update is\n\\[\n\\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f} + \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1} D,\n\\]\nwith\n\\[  \\begin{align}\nS &= \\frac{1}{N_e - 1} \\mathbf{Y}'(\\mathbf{Y}')^\\mathrm{T} + R\\quad \\text{(observation covariance)} \\\\\nD &= (Y + y) - \\mathcal{H}(\\mathbf{X}) \\quad \\text{(innovation)},\n\\end{align} \\]\nwhere \\(y \\sim \\mathcal{N}(0,R)\\) is the stochastic perturbation, and \\(R\\) is the measurement noise covariance matrix.\nOr, defining the Kalman gain matrix as\n\\[\n   K = \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1},\n\\]\nwe obtain the classical KF update,\n\\[\n   \\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f}  + K D.\n\\]",
+    "text": "11.2 Full nonlinear formulation of the ensemble Kalman filter\nThere are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,\n\\[\n\\begin{align}\nx_{k+1}^{n} &= \\Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \\quad n=1, \\ldots, N_e, \\\\\n{y}_{k+1}    &=  \\mathcal{H} (x_{k+1}) +  v_{k+1}.  \\\\\n\\end{align}\n\\]\nTo fix notation:\n\nstate forecast \\(X^f,\\) dimension \\((N_t \\times N_x)\\)\nensemble state forecast \\(\\mathbf{X}^f,\\) dimension \\((N_t \\times N_x \\times N_e)\\)\nobservation, \\(Y,\\) dimension $ (N_t N_y)$\nensemble state anomaly, \\(\\mathbf{X}' = \\mathbf{X} - \\overline{\\mathbf{X}},\\) dimension \\((N_t \\times N_x \\times N_e)\\) with \\(\\overline{\\mathbf{X}} = (1/N_e) \\sum_{e=1}^{N_e} \\mathbf{X}_e\\)\nensemble observation anomaly, \\(\\mathbf{Y}' = \\mathcal{H}(\\mathbf{X}) - \\overline{ \\mathcal{H}(\\mathbf{X} ) },\\) dimension \\((N_t \\times N_y \\times N_e)\\) with \\(\\overline{ \\mathcal{H}( \\mathbf{X} )} = (1/N_e)\\sum_{e=1}^{N_e} \\mathcal{H}(\\mathbf{X}_e).\\)\n\nThen, the Kalman analysis update is\n\\[\n\\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f} + \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1} D,\n\\]\nwith\n\\[  \\begin{align}\nS &= \\frac{1}{N_e - 1} \\mathbf{Y}'(\\mathbf{Y}')^\\mathrm{T} + R\\quad \\text{(observation covariance)} \\\\\nD &= (Y + y) - \\mathcal{H}(\\mathbf{X}) \\quad \\text{(innovation)},\n\\end{align} \\]\nwhere \\(y \\sim \\mathcal{N}(0,R)\\) is the stochastic perturbation, and \\(R\\) is the measurement noise covariance matrix.\nOr, defining the Kalman gain matrix as\n\\[\n   K = \\frac{1}{N_e - 1} \\mathbf{X}'(\\mathbf{Y}')^\\mathrm{T} S^{-1},\n\\]\nwe obtain the classical KF update,\n\\[\n   \\mathbf{X}^\\mathrm{a} = \\mathbf{X}^\\mathrm{f}  + K D.\n\\]",
     "crumbs": [
       "Ensemble Filters",
       "<span class='chapter-number'>11</span>  <span class='chapter-title'>Ensemble Kalman Filter</span>"
@@ -664,6 +664,160 @@
     "crumbs": [
       "Ensemble Filters",
       "<span class='chapter-number'>14</span>  <span class='chapter-title'>Example 3: SIR Model</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/041BIP.html",
+    "href": "01theory/041BIP.html",
+    "title": "16  Bayesian Inversion",
+    "section": "",
+    "text": "16.1 Introduction\nBayesian approaches, provide a foundation for inference from noisy and limited data, a natural mechanism for regularization in the form of prior information, and in very general cases—e.g., non-linear forward operators, non-Gaussian errors—a quantitative assessment of uncertainty in the results. Indeed, the output of Bayesian inference is not a single value for the quantity of interest, but a probability distribution that summarizes all available information about this quantity, be it a vector of parameters or a function (i.e., a signal or spatial field). Exploration of this posterior distribution—and thus estimating means, higher moments, and marginal densities of the inverse solution—may require repeated evaluations of the forward operator. For complex physical models and high-dimensional model spaces, this can be computationally prohibitive.\nBayesian inference provides an attractive setting for the solution of inverse problems. Measurement errors,forward model uncertainties, and complex prior information can all be combined to yield a rigorous and quantitative assessment of uncertainty in the solution of the inverse problem.",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Bayesian Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/041BIP.html#theory",
+    "href": "01theory/041BIP.html#theory",
+    "title": "16  Bayesian Inversion",
+    "section": "16.2 Theory",
+    "text": "16.2 Theory\nA Bayesian Inverse Problem (BIP) is defined as follows:\n\nGiven:\n\nobservational data and their uncertainties,\na (possibly stochastic) forward model that maps model parameters to observations,\nand a prior probability distribution on model parameters that encodes any prior knowledge or assumptions about the parameters.\n\nFind:\n\nthe posterior probability distribution of the parameters conditioned on the observational data.\n\n\nThis probability density function (pdf) is defined as the Bayesian solution of the inverse problem. The posterior distribution assigns to any candidate set of parameter fields our belief (expressed as a probability) that a member of this candidate set is the ``true’’ parameter field that gave rise to the observed data.\nOf course, all of this is summarized in Bayes’ theorem, expressed as folllows.\nWhat can be said about the value of an unknown or poorly known variable/parameter, \\(\\theta,\\) that represents the parameters of the system, if we have some measured data \\(\\mathcal{D}\\) and a model \\(\\mathcal{M}\\) of the underlying mechanism that generated the data? This is precisely the Bayesian context, where we seek a quantification of the uncertainty in our knowledge of the parameters that according to Bayes’ Theorem takes the form\n\\[\\begin{equation}\\label{eq:Bayes-2}\np(\\theta\\mid\\mathcal{D})=\\frac{p(\\mathcal{D}\\mid\\theta)p(\\theta)}{p(\\mathcal{D})}=\\frac{p(\\mathcal{D}\\mid\\theta)p(\\theta)}{\\int_{\\theta}p(\\mathcal{D}\\mid\\theta)p(\\theta)}.\n\\end{equation}\\]\nHere, the physical model that generates the data is represented by the conditional probability (also known as the likelihood) \\(p(\\mathcal{D}\\mid\\theta),\\) and the prior knowledge of the system by the term \\(p(\\theta).\\) The denominator is considered as a normalizing factor and represents the total probability of \\(\\mathcal{D}.\\) From these we can then calculate the resulting posterior probability, \\(p(\\theta\\mid\\mathcal{D}).\\) A generalization can include a model, \\(\\mathcal{M},\\) for the parameters. In this case (6.1) can be written as\n\\[\\begin{equation}\\label{eq:Bayes-3}\n    p(\\theta\\mid\\mathcal{D},\\mathcal{M})=\\frac{p(\\mathcal{D}\\mid\\theta,\\mathcal{M})p(\\theta\\mid \\mathcal{M})}{p(\\mathcal{D}\\mid \\mathcal{M})}.\n\\end{equation}\\]\nThis is depicted in the flowchart.",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Bayesian Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/041BIP.html#inverse-problem",
+    "href": "01theory/041BIP.html#inverse-problem",
+    "title": "16  Bayesian Inversion",
+    "section": "16.3 Inverse Problem",
+    "text": "16.3 Inverse Problem\nWe consider the inverse problem of recovering an unknown function \\(u\\) from knwn data \\(y\\) related by\n\\[\ny = \\mathcal{G}(u) + \\eta,\n\\] where \\(\\mathcal{G}\\) denotes the forward model from inouts to observables, \\(\\eta \\sim \\mathcal{N}(0, \\Gamma)\\) represents the model error and observation noise, with \\(\\Gamma\\) a positive definite noise covariance matrix. In the Bayesian approachn \\(u\\) is a random variable with prior distribution \\(p_u(u).\\) Then, the Bayesian solution of the inverse problem is the posterior distribution \\(p_{u\\vert y}(u)\\) of \\(u\\) given \\(y,\\) which by formal applicatiuon of Bayes’ Theorem can be characterized by\n\\[\n  p_{u\\vert y}(u) \\propto \\exp \\left(  -\\Phi(u;y) \\right) p_u (u),\n\\] with \\[\n  \\Phi(u;y) \\doteq \\frac{1}{2} \\left\\Vert y - \\mathcal{G}(u) \\right\\Vert_{\\Gamma}^2.\n\\]\nTBC…",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Bayesian Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/041BIP.html#examples",
+    "href": "01theory/041BIP.html#examples",
+    "title": "16  Bayesian Inversion",
+    "section": "16.4 Examples",
+    "text": "16.4 Examples",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>16</span>  <span class='chapter-title'>Bayesian Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/042EKI.html",
+    "href": "01theory/042EKI.html",
+    "title": "17  Ensemble Kalman Inversion",
+    "section": "",
+    "text": "17.1 Formulation\nConceptually, the idea of EKI is very simple. Just apply the standard EnKF to an augmented system, for a given number of iterations, to invert for \\(u.\\)",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Ensemble Kalman Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/042EKI.html#theory",
+    "href": "01theory/042EKI.html#theory",
+    "title": "17  Ensemble Kalman Inversion",
+    "section": "17.2 Theory",
+    "text": "17.2 Theory\nThis approach aims to finding the best Gaussian approximation of the posterior distribution of \\(\\theta\\) for ill-posed inverse problems, where the prior is a Gaussian \\(\\mathcal{N}(r_0, \\Sigma_0)\\).\nConsider the case :\n\n\\(\\alpha = 1\\), \\(\\Sigma_{\\omega} = \\frac{\\Delta t}{1 - \\Delta t} C_{n}\\), where \\(C_{n}\\) is the covariance estimation at the current step.\n\n\\(x_{n+1} = \\begin{bmatrix} y \\\\ r_0 \\end{bmatrix}, \\quad\n\\mathcal{F}(\\theta) = \\begin{bmatrix} \\mathcal{G}(\\theta) \\\\ \\theta  \\end{bmatrix},\\quad\n\\textrm{and}\\quad \\Sigma_{\\nu} = \\frac{1}{\\Delta t} \\begin{bmatrix} \\Sigma_{\\eta} & 0 \\\\ 0 & \\Sigma_0\\end{bmatrix}\\)\n\nwhere \\(r_0\\) and \\(\\Sigma_0\\) are prior mean and covariance, and the hyperparameter \\(0 &lt; \\Delta t &lt; 1\\) is set to be \\(1/2.\\)\nLinear Analysis\nIn the linear setting,\n\\[ \\mathcal{G}(\\theta) = G\\cdot \\theta \\qquad F = \\begin{bmatrix} G \\\\ I  \\end{bmatrix} \\]\nThe update equations become \\[\n\\begin{align*}\n    \\hat{m}_{n+1} &=  m_n\\\\\n    \\hat{C}_{n+1} &=  \\frac{1}{1 - \\Delta t} C_{n}\n\\end{align*}\n\\] and \\[\n\\begin{align*}\n        m_{n+1} &= m_{n+1} + \\hat{C}_{n+1} F^T (F  \\hat{C}_{n+1} F^T + \\Sigma_{\\nu,n+1})^{-1} (x_{n+1} - F m_{n}) \\\\\n         C_{n+1}&= \\hat{C}_{n+1} - \\hat{C}_{n+1} F^T(F  \\hat{C}_{n+1} F^T + \\Sigma_{\\nu,n+1})^{-1} F \\hat{C}_{n+1},\n\\end{align*}\n\\]\nWe have the following theorem about the convergence of the algorithm in the setting of the linear forward model:\n\n\n\n\n\n\nTheorem (EKI)\n\n\n\nAssume that the prior covariance matrix \\(\\Sigma_{0} \\succ 0\\) and initial covariance matrix \\(C_{0} \\succ 0.\\) The iteration for the conditional mean \\(m_n\\) and covariance matrix \\(C_{n}\\) characterizing the distribution of \\(\\theta_n|Y_n\\) converges exponentially fast to posterior mean \\(m_{\\rm post}\\) and covariance \\(C_{\\rm post}.\\)\n\n\nReference\nPlease see Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems.",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Ensemble Kalman Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/042EKI.html#algorithm",
+    "href": "01theory/042EKI.html#algorithm",
+    "title": "17  Ensemble Kalman Inversion",
+    "section": "17.3 Algorithm",
+    "text": "17.3 Algorithm\nTBC",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Ensemble Kalman Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/042EKI.html#mean-field-dynamical-system-approach",
+    "href": "01theory/042EKI.html#mean-field-dynamical-system-approach",
+    "title": "17  Ensemble Kalman Inversion",
+    "section": "17.4 Mean field dynamical system approach",
+    "text": "17.4 Mean field dynamical system approach\nTBC",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Ensemble Kalman Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/042EKI.html#conclusions",
+    "href": "01theory/042EKI.html#conclusions",
+    "title": "17  Ensemble Kalman Inversion",
+    "section": "17.5 Conclusions",
+    "text": "17.5 Conclusions\nTBC\n\n\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022. “Ensemble Kalman Methods: A Mean Field Perspective.” arXiv. http://arxiv.org/abs/2209.11371.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M. Stuart. 2022. “Efficient Derivative-Free Bayesian Inference for Large-Scale Inverse Problems.” arXiv. http://arxiv.org/abs/2204.04386.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. “Ensemble Kalman Methods for Inverse Problems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.",
+    "crumbs": [
+      "Inverse Problems",
+      "<span class='chapter-number'>17</span>  <span class='chapter-title'>Ensemble Kalman Inversion</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html",
+    "href": "01theory/032EnSRF.html",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "",
+    "text": "15.1 The filterng problem.\nNonlinear state equation and observations are given by,\n\\[\\begin{align}\nx_{k+1}^{n} &=  \\mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n} , \\quad n=1, \\ldots, N_e, \\\\\n{y}_{k+1}    &=  \\mathcal{H} (x_{k+1}) +  v_{k+1}, \\\\\n\n\\end{align}\\]\nwhere the noise/error terms\n\\[\nw_k \\sim  \\mathcal{N}(0, Q), \\quad  v_k \\sim  \\mathcal{N}(0, R).\n\\]",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html#recall-ensemble-kalman-filter-enkf",
+    "href": "01theory/032EnSRF.html#recall-ensemble-kalman-filter-enkf",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "15.2 Recall: Ensemble Kalman Filter (EnKF)",
+    "text": "15.2 Recall: Ensemble Kalman Filter (EnKF)\nJust to recall the notation, here are the two steps (forecast/analysis, or predict/correct) of the EnKF.\nPrediction/Forecast Step\n\nevolve each ensemble member forward \\[ x_{k+1}^{n} =  \\mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n}, \\quad n=1,\n\\ldots, N_e\\]\ncompute ensemble mean \\[ \\bar{x} = \\frac{1}{N_e} \\sum_{n=1}^{N_e}  x_{n}^{\\mathrm{f}} \\]\ncompute covariance \\[ P^{\\mathrm{f}} = \\frac{1}{N_e - 1} X'^{\\mathrm{f}} ( X'^{\\mathrm{f}} )^{\\mathrm{T}} , \\]\nwhere \\(X'^{\\mathrm{f}} = x^{\\mathrm{f}} - \\bar{x}\\) is the ensemble state perturbation matrix.\n\nCorrection/Analysis Step\n\ncompute the optimal Kalman gain \\[ K = P^{\\mathrm{f}} H^{\\mathrm{T}} (H P^{\\mathrm{f}} H^{\\mathrm{T}} + R)^{-1}  \\]\nupdate the ensemble using perturbed observations \\[  x_n^{\\mathrm{a}} =  x_n^{\\mathrm{f}}  + K( y_n + \\epsilon_y - H  x_n^{\\mathrm{f}}), \\quad n=1,\n\\ldots, N_e,\n\\] where \\(\\epsilon_n\\) is the stochastic perturbation of the observations \\(y.\\)",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html#ensemble-square-root-filters-ensrf",
+    "href": "01theory/032EnSRF.html#ensemble-square-root-filters-ensrf",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "15.3 Ensemble Square Root Filters (EnSRF)",
+    "text": "15.3 Ensemble Square Root Filters (EnSRF)\n\n\n\n\n\n\nIdea\n\n\n\nUpdate the ensemble to preserve the covariance that is consistent with the KF theoretical covariance \\[ P_n^{\\mathrm{a}} = (I - K_n H) P_n^{\\mathrm{f}}.\n\\]\n\n\nRecall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomailies,\n\\[ K_n =  \\frac{1}{N_e - 1} \\mathbf{X}'^{\\mathrm{f}}(\\mathbf{Y}'^{\\mathrm{f}})^\\mathrm{T} S^{-1},\n\\] where \\[ S = \\frac{1}{N_e - 1} Y'^{\\mathrm{f}} ( Y'^{\\mathrm{f}} )^{\\mathrm{T}} +  R.\n\\]\nThen, to compute the posterior variance, we need to evaluate \\[ P_n^{\\mathrm{a}} =  \\frac{1}{N_e - 1} X'^{\\mathrm{a}} ( X'^{\\mathrm{a}} )^{\\mathrm{T}}.\n\\]\nSo supposing there is a transform matrix, \\(T,\\) such that \\[  X'^{\\mathrm{a}} =  X'^{\\mathrm{f}} T,\n\\] we can substitute in the definition of \\(P_n^{\\mathrm{a}}\\) to obtain \\[\\begin{align}\nP_n^{\\mathrm{a}} &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} T ( X'^{\\mathrm{f}} T )^{\\mathrm{T}} \\\\\n                 &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} (T T^{\\mathrm{T}} ) ( X'^{\\mathrm{f}}  )^{\\mathrm{T}}.\n\\end{align}\\] And, on the other hand, for the consistency, we want to obtain \\[ (I - K_n H) P_n^{\\mathrm{f}} = \\frac{1}{N_e - 1} X'^{\\mathrm{f}}\n     \\left[ I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  S^{-1}  Y'^{\\mathrm{f}}   \\right] ( X'^{\\mathrm{f}}  )^{\\mathrm{T}},\n\\] where we have used the relations \\[\\begin{align}\n  K &=   P^{\\mathrm{f}} H^{\\mathrm{T}} (H P^{\\mathrm{f}} H^{\\mathrm{T}} + R)^{-1}, \\\\\n  P_n^{\\mathrm{f}} &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} ( X'^{\\mathrm{f}} )^{\\mathrm{T}} \\\\\n  Y'^{\\mathrm{f}}  &= H X'^{\\mathrm{f}}.\n\\end{align}\\]\nHence, \\(T\\) must satisfy the so-called square root condition, \\[\\begin{align}\nT T^{\\mathrm{T}}  &= I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  S^{-1}  Y'^{\\mathrm{f}} \\\\\n                  &=  I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  \n                      \\left( \\frac{1}{N_e - 1} Y'^{\\mathrm{f}} ( Y'^{\\mathrm{f}} )^{\\mathrm{T}} +  R  \\right)^{-1}  Y'^{\\mathrm{f}}\n\\end{align}\\]\nWe can replace the inversion of \\(S\\) by the much simpler and more stable inversion of the diagonal measurement error covariance \\(R\\) using the Sherman-Woodbury-Morrison formula \\[ (A + UCV^{\\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.\n\\]\nIdentifying \\(A=I,\\) \\(C = R^{-1},\\) \\(U = Y^{\\mathrm{T}},\\) \\(V=Y,\\) we obtain the simpler form of the square root condition \\[ T T^{\\mathrm{T}}  = \\left[I +  \\frac{1}{N_e - 1}( Y'^{\\mathrm{f}})^{\\mathrm{T}}  R^{-1}  Y'^{\\mathrm{f}} \\right]^{-1}.\n\\] This form is the basis of the ETKF, or transform filter.\nFinally, the square root \\(T\\) can be obtained from the eigenvalue factorization, \\[  T T^{\\mathrm{T}}  = (U \\Sigma U^{\\mathrm{T}})^{-1}\n\\] and thus \\[ T = U \\Sigma^{-1/2} U^{\\mathrm{T}}.\n\\]\nNote that \\(T\\) is not unique, since for any orthogonal matrix \\(\\tilde{U},\\) the product \\(T \\tilde{U}\\) will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for \\(T\\) and the resulting square root filters.\nIt can be shown that in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that \\(T\\) is symmetric, which is the case in the above derivation.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html#etkf-in-practice",
+    "href": "01theory/032EnSRF.html#etkf-in-practice",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "15.4 ETKF in practice",
+    "text": "15.4 ETKF in practice\nThere are a number of possible simplifications that render the filter\n\nunbiased\nnon-collapsing\ncomputationally more stable\ncomputationally cheaper\n\nOne pathway is to scale the forecast observation ensemble perturbation matrix \\(Y^{\\mathrm{f}}\\) to normalize the standard deviation, which then equals one, and thus reduce loss of accuracy due to roundoff errors.\nA second path is to avoid the eigenvalue decompostion of \\(T T^{\\mathrm{T}}\\) and replace it by an SVD of \\(T\\) alone. This is particularly advantageous in high dimensions and in the presence of bad conditioning.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html#the-filterng-problem.",
+    "href": "01theory/032EnSRF.html#the-filterng-problem.",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "",
+    "text": "Filtering problem\n\n\n\nPredict the optimal state from the noisy measurements.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
     ]
   }
 ]

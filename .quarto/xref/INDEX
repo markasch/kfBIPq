@@ -64,5 +64,14 @@
   },
   "02examples/EnKF/032EnKFExample3.ipynb": {
     "032EnKFExample3.html": "13b433c2"
+  },
+  "01theory/041BIP.qmd": {
+    "041BIP.html": "c39cede4"
+  },
+  "01theory/042EKI.qmd": {
+    "042EKI.html": "edccaa49"
+  },
+  "01theory/032EnSRF.ipynb": {
+    "032EnSRF.html": "68f5f3db"
   }
 }

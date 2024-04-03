@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kalman Filters: from Bayes to Inverse Problems - 11&nbsp; Ensemble Kalman Filter</title>
+<title>Kalman Filters: from Bayes to Inverse Problems - 17&nbsp; Ensemble Kalman Inversion</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -30,8 +50,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../02examples/EnKF/032EnKFExample1.html" rel="next">
-<link href="../02examples/EKF/022EKFExample2.html" rel="prev">
+<link href="../01theory/041BIP.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -110,7 +129,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/031EnKF.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -248,7 +267,7 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/031EnKF.html" class="sidebar-item-text sidebar-link active">
+  <a href="../01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></span></a>
   </div>
 </li>
@@ -295,7 +314,7 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
+  <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
   </div>
 </li>
@@ -311,21 +330,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#stochastic-enkf---linear-observation-operator" id="toc-stochastic-enkf---linear-observation-operator" class="nav-link active" data-scroll-target="#stochastic-enkf---linear-observation-operator"><span class="header-section-number">11.1</span> Stochastic EnKF - linear observation operator</a>
-  <ul class="collapse">
-  <li><a href="#predictionforecast" id="toc-predictionforecast" class="nav-link" data-scroll-target="#predictionforecast"><span class="header-section-number">11.1.1</span> Prediction/Forecast</a></li>
-  <li><a href="#correctionanalysis" id="toc-correctionanalysis" class="nav-link" data-scroll-target="#correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</a></li>
-  </ul></li>
-  <li><a href="#full-nonlinear-formulation-of-the-ensemble-kalman-filter" id="toc-full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="nav-link" data-scroll-target="#full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</a></li>
+  <li><a href="#formulation" id="toc-formulation" class="nav-link active" data-scroll-target="#formulation"><span class="header-section-number">17.1</span> Formulation</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">17.2</span> Theory</a></li>
+  <li><a href="#algorithm" id="toc-algorithm" class="nav-link" data-scroll-target="#algorithm"><span class="header-section-number">17.3</span> Algorithm</a></li>
+  <li><a href="#mean-field-dynamical-system-approach" id="toc-mean-field-dynamical-system-approach" class="nav-link" data-scroll-target="#mean-field-dynamical-system-approach"><span class="header-section-number">17.4</span> Mean field dynamical system approach</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">17.5</span> Conclusions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/031EnKF.html">Ensemble Filters</a></li><li class="breadcrumb-item"><a href="../01theory/031EnKF.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></h1>
+<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></h1>
 </div>
 
 
@@ -342,93 +360,78 @@ window.Quarto = {
 </header>
 
 
-<p>The idea behind the EnKF is</p>
-<ol type="1">
-<li>permit fully nonlinear process and observation models;</li>
-<li>avoid gradient calculations for linearization, as in the EKF,</li>
-<li>by replacing mean and covariance with empirical, ensemble averaging.</li>
-</ol>
-<p>The EnKF is obtained by - replacing the exact covariance <span class="math inline">\(P\)</span> by the ensemble sample covariance, and - adding noise to the data in order to avoid a shrinking of the ensemble spread and to obtain the correct filtering covariance in the limit</p>
-<p>Here are the steps for the so-called <strong>stochastic EnKF</strong>, where we add an artificial, random perturbation to the observations, and we assume we have a linear observation operator, <span class="math inline">\(H.\)</span></p>
-<section id="stochastic-enkf---linear-observation-operator" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="stochastic-enkf---linear-observation-operator"><span class="header-section-number">11.1</span> Stochastic EnKF - linear observation operator</h2>
-<section id="predictionforecast" class="level3" data-number="11.1.1">
-<h3 data-number="11.1.1" class="anchored" data-anchor-id="predictionforecast"><span class="header-section-number">11.1.1</span> Prediction/Forecast</h3>
-<p><span class="math display">\[
-\begin{align}
-\hat{v}_{k+1}^{n} &amp;= \Psi ( {v}_{k}^{n} ) +  \xi_{k}^{n} , \quad n=1, \ldots, N, \\
-\hat{m}_{k+1} &amp; =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n}  \\
-\hat{C}_{k+1} &amp; = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
-                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}
-\end{align}
-\]</span></p>
+<p>This theoretical approach was originally formulated in <span class="citation" data-cites="Stuart2013">(<a href="../index.html#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span> and refined in the review <span class="citation" data-cites="Stuart2022">(<a href="../index.html#ref-Stuart2022" role="doc-biblioref">Calvello, Reich, and Stuart 2022</a>)</span> (to appear in Acta Numerica 2025). A shorter versioncan be found in the recent preprint <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, where extensive numerical tests were performed.</p>
+<section id="formulation" class="level2" data-number="17.1">
+<h2 data-number="17.1" class="anchored" data-anchor-id="formulation"><span class="header-section-number">17.1</span> Formulation</h2>
+<p>Conceptually, the idea of EKI is very simple. Just apply the standard EnKF to an augmented system, for a given number of iterations, to invert for <span class="math inline">\(u.\)</span></p>
 </section>
-<section id="correctionanalysis" class="level3" data-number="11.1.2">
-<h3 data-number="11.1.2" class="anchored" data-anchor-id="correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</h3>
-<p><span class="math display">\[
-\begin{align}
-  {S}_{k+1} &amp;= H \hat{C}_{k+1} H^{\mathrm{T}} + \Gamma ,\\
-  {K}_{k+1} &amp;= \hat{C}_{k+1} H^{\mathrm{T}} {S}_{k+1}^{-1} , \\
-  {y}_{k+1}^{n} &amp;= {y}_{k+1} + \eta^n_{k+1} , \quad n=1, \ldots, N, \\
-  {v}_{k+1}^{n} &amp;= (I - K_{k+1}H )\hat{v}_{k+1}^{n} + K_{k+1} y^n_{k+1} , \quad n=1, \ldots, N.
-\end{align}
-\]</span></p>
-<p>Alternatively, defining the innovation <span class="math inline">\(d = {y}_{k+1}^{n} - H \hat{v}_{k+1}^{n},\)</span> we can write the state update more simply as</p>
-<p><span class="math display">\[
-  {v}_{k+1}^{n} = \hat{v}_{k+1}^{n} + K_{k+1} d .
-\]</span></p>
-<p>In words:</p>
-<ol type="1">
-<li>For a given <span class="math inline">\(N_e \in  \mathbb{N}\)</span> generate i.i.d. ensemble of states random variables from the distribution of <span class="math inline">\(X(0).\)</span></li>
-<li>For <span class="math inline">\(t \in  \mathbb{N}\)</span> recursively repeat the following steps:</li>
-</ol>
+<section id="theory" class="level2" data-number="17.2">
+<h2 data-number="17.2" class="anchored" data-anchor-id="theory"><span class="header-section-number">17.2</span> Theory</h2>
+<p>This approach aims to finding the <em>best</em> Gaussian approximation of the posterior distribution of <span class="math inline">\(\theta\)</span> for ill-posed inverse problems, where the prior is a Gaussian <span class="math inline">\(\mathcal{N}(r_0, \Sigma_0)\)</span>.</p>
+<p>Consider the case :</p>
 <ul>
-<li>Advance each ensemble member in time, using the nonlinear state equation with independently generated random state noise</li>
-<li>Compute the forecast sample mean and the forecast sample covariance</li>
-<li>Compute the sample Kalman gain</li>
-<li>Add additional perturbation to the observation vector <span class="math inline">\(Y\)</span> using independently generated random variables <span class="math inline">\(\eta(t)\)</span></li>
-<li>Update each forecast ensemble member</li>
+<li><span class="math inline">\(\alpha = 1\)</span>, <span class="math inline">\(\Sigma_{\omega} = \frac{\Delta t}{1 - \Delta t} C_{n}\)</span>, where <span class="math inline">\(C_{n}\)</span> is the covariance estimation at the current step.<br>
+</li>
+<li><span class="math inline">\(x_{n+1} = \begin{bmatrix} y \\ r_0 \end{bmatrix}, \quad
+\mathcal{F}(\theta) = \begin{bmatrix} \mathcal{G}(\theta) \\ \theta  \end{bmatrix},\quad
+\textrm{and}\quad \Sigma_{\nu} = \frac{1}{\Delta t} \begin{bmatrix} \Sigma_{\eta} &amp; 0 \\ 0 &amp; \Sigma_0\end{bmatrix}\)</span></li>
 </ul>
-<p>Burgers et al.&nbsp;[1998] shows that without the data perturbation, the covariance of the ensemble would go to the zero matrix as <span class="math inline">\(t\)</span> goes to infinity. The data perturbation also guarantees that the relation between the forecast sample covariance and the analysis sample covariance is analogous to the relation between the forecast and analysis covariances in the standard KF.</p>
+<p>where <span class="math inline">\(r_0\)</span> and <span class="math inline">\(\Sigma_0\)</span> are prior mean and covariance, and the hyperparameter <span class="math inline">\(0 &lt; \Delta t &lt; 1\)</span> is set to be <span class="math inline">\(1/2.\)</span></p>
+<p><strong>Linear Analysis</strong></p>
+<p>In the linear setting,</p>
+<p><span class="math display">\[ \mathcal{G}(\theta) = G\cdot \theta \qquad F = \begin{bmatrix} G \\ I  \end{bmatrix} \]</span></p>
+<p>The update equations become <span class="math display">\[
+\begin{align*}
+    \hat{m}_{n+1} &amp;=  m_n\\
+    \hat{C}_{n+1} &amp;=  \frac{1}{1 - \Delta t} C_{n}
+\end{align*}
+\]</span> and <span class="math display">\[
+\begin{align*}
+        m_{n+1} &amp;= m_{n+1} + \hat{C}_{n+1} F^T (F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} (x_{n+1} - F m_{n}) \\
+         C_{n+1}&amp;= \hat{C}_{n+1} - \hat{C}_{n+1} F^T(F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} F \hat{C}_{n+1},
+\end{align*}
+\]</span></p>
+<p>We have the following theorem about the convergence of the algorithm in the setting of the linear forward model:</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Theorem (EKI)">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Theorem (EKI)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Assume that the prior covariance matrix <span class="math inline">\(\Sigma_{0} \succ 0\)</span> and initial covariance matrix <span class="math inline">\(C_{0} \succ 0.\)</span> The iteration for the conditional mean <span class="math inline">\(m_n\)</span> and covariance matrix <span class="math inline">\(C_{n}\)</span> characterizing the distribution of <span class="math inline">\(\theta_n|Y_n\)</span> converges exponentially fast to the posterior mean, <span class="math inline">\(m_{\rm post},\)</span> and covariance, <span class="math inline">\(C_{\rm post}.\)</span></p>
+</div>
+</div>
+<p><strong>Reference</strong></p>
+<p>Please see <a href="https://arxiv.org/abs/2204.04386">Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems</a>.</p>
 </section>
+<section id="algorithm" class="level2" data-number="17.3">
+<h2 data-number="17.3" class="anchored" data-anchor-id="algorithm"><span class="header-section-number">17.3</span> Algorithm</h2>
+<p>TBC</p>
 </section>
-<section id="full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</h2>
-<p>There are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,</p>
-<p><span class="math display">\[
-\begin{align}
-x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
-{y}_{k+1}    &amp;=  \mathcal{H} (x_{k+1}) +  v_{k+1}.  \\
-\end{align}
-\]</span></p>
-<p>To fix notation:</p>
-<ul>
-<li>state forecast <span class="math inline">\(X^f,\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
-<li><em>ensemble</em> state forecast <span class="math inline">\(\mathbf{X}^f,\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span></li>
-<li>observation, <span class="math inline">\(Y,\)</span> dimension $ (N_t N_y)$</li>
-<li>ensemble state anomaly, <span class="math inline">\(\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span> with <span class="math inline">\(\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e\)</span></li>
-<li>ensemble observation anomaly, <span class="math inline">\(\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },\)</span> dimension <span class="math inline">\((N_t \times N_y \times N_e)\)</span> with <span class="math inline">\(\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).\)</span></li>
-</ul>
-<p>Then, the Kalman analysis update is</p>
-<p><span class="math display">\[
-\mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
-\]</span></p>
-<p>with</p>
-<p><span class="math display">\[  \begin{align}
-S &amp;= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
-D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
-\end{align} \]</span></p>
-<p>where <span class="math inline">\(y \sim \mathcal{N}(0,R)\)</span> is the stochastic perturbation, and <span class="math inline">\(R\)</span> is the measurement noise covariance matrix.</p>
-<p>Or, defining the Kalman gain matrix as</p>
-<p><span class="math display">\[
-   K = \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
-\]</span></p>
-<p>we obtain the classical KF update,</p>
-<p><span class="math display">\[
-   \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f}  + K D.
-\]</span></p>
+<section id="mean-field-dynamical-system-approach" class="level2" data-number="17.4">
+<h2 data-number="17.4" class="anchored" data-anchor-id="mean-field-dynamical-system-approach"><span class="header-section-number">17.4</span> Mean field dynamical system approach</h2>
+<p>TBC</p>
+</section>
+<section id="conclusions" class="level2" data-number="17.5">
+<h2 data-number="17.5" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">17.5</span> Conclusions</h2>
+<p>TBC</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Stuart2022" class="csl-entry" role="listitem">
+Calvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022. <span>“Ensemble <span>Kalman</span> <span>Methods</span>: <span>A</span> <span>Mean</span> <span>Field</span> <span>Perspective</span>.”</span> arXiv. <a href="http://arxiv.org/abs/2209.11371">http://arxiv.org/abs/2209.11371</a>.
+</div>
+<div id="ref-Huang2022" class="csl-entry" role="listitem">
+Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M. Stuart. 2022. <span>“Efficient <span>Derivative</span>-Free <span>Bayesian</span> <span>Inference</span> for <span>Large</span>-<span>Scale</span> <span>Inverse</span> <span>Problems</span>.”</span> arXiv. <a href="http://arxiv.org/abs/2204.04386">http://arxiv.org/abs/2204.04386</a>.
+</div>
+<div id="ref-Stuart2013" class="csl-entry" role="listitem">
+Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -843,14 +846,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../02examples/EKF/022EKFExample2.html" class="pagination-link" aria-label="Example 2 - tracking a noisy pendulum">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Example 2 - tracking a noisy pendulum</span></span>
+      <a href="../01theory/041BIP.html" class="pagination-link" aria-label="Bayesian Inversion">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../02examples/EnKF/032EnKFExample1.html" class="pagination-link" aria-label="Example 1: noisy pendulum">
-        <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example 1: noisy pendulum</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

@@ -1,6 +1,6 @@
 # Ensemble Kalman Inversion
 
-This theoretical approach was formulated in {cite}`Stuart2013` and refined in the review {cite}`Stuart2022` (to appear in Acta Numerica 2025) and in the recent preprint {cite}`Huang2022`, where extensive numerical tests were performed.
+This theoretical approach was originally formulated in [@Stuart2013] and refined in the review [@Stuart2022] (to appear in Acta Numerica 2025). A shorter versioncan be found in the recent preprint [@Huang2022], where extensive numerical tests were performed.
 
 
 ## Formulation
@@ -14,15 +14,16 @@ This approach aims to finding the *best* Gaussian approximation of the posterior
 
 
 Consider the case :
-* $\alpha = 1$,  $\Sigma_{\omega} = \frac{\Delta t}{1 - \Delta t} C_{n}$, where  $C_{n}$ is the covariance estimation at the current step.  
-* $x_{n+1} = \begin{bmatrix} y \\ r_0 \end{bmatrix}, \quad 
+
+- $\alpha = 1$,  $\Sigma_{\omega} = \frac{\Delta t}{1 - \Delta t} C_{n}$, where  $C_{n}$ is the covariance estimation at the current step.  
+- $x_{n+1} = \begin{bmatrix} y \\ r_0 \end{bmatrix}, \quad 
 \mathcal{F}(\theta) = \begin{bmatrix} \mathcal{G}(\theta) \\ \theta  \end{bmatrix},\quad 
 \textrm{and}\quad \Sigma_{\nu} = \frac{1}{\Delta t} \begin{bmatrix} \Sigma_{\eta} & 0 \\ 0 & \Sigma_0\end{bmatrix}
 $ 
 
-where $r_0$ and $\Sigma_0$ are prior mean and covariance, and the hyperparameter $0 < \Delta t < 1$ is set to be $1/2$. 
+where $r_0$ and $\Sigma_0$ are prior mean and covariance, and the hyperparameter $0 < \Delta t < 1$ is set to be $1/2.$ 
 
-* Linear Analysis *
+**Linear Analysis**
 
 In the linear setting, 
 
@@ -46,15 +47,16 @@ $$
 We have the following theorem about the convergence of the 
 algorithm in the setting of the linear forward model:
 
-* Theorem *
+::: {.callout-important title="Theorem (EKI)"}
 
 Assume that the prior covariance matrix $\Sigma_{0} \succ 0$ and initial covariance matrix 
 $C_{0} \succ 0.$
-The iteration for the conditional mean $m_n$ and covariance matrix $C_{n}$ characterizing the distribution of $\theta_n|Y_n$ converges exponentially fast to posterior mean $m_{\rm post}$ and covariance $C_{\rm post}.$
-            
-            
-* Reference *            
-2. [Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems](https://arxiv.org/abs/2204.04386)
+The iteration for the conditional mean $m_n$ and covariance matrix $C_{n}$ characterizing the distribution of $\theta_n|Y_n$ converges exponentially fast to the posterior mean, $m_{\rm post},$ and covariance, $C_{\rm post}.$
+:::        
+         
+**Reference**    
+
+Please see  [Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems](https://arxiv.org/abs/2204.04386).
 
 
 ## Algorithm

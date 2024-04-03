@@ -79,12 +79,11 @@ $$
 
 To fix notation: 
 
-- state forecast $X^f,$ dimension $ (N_t \times N_x)$
-- *ensemble* state forecast $\mathbf{X}^f,$ dimension $ (N_t \times N_x \times N_e)$
+- state forecast $X^f,$ dimension $(N_t \times N_x)$
+- *ensemble* state forecast $\mathbf{X}^f,$ dimension $(N_t \times N_x \times N_e)$
 - observation, $Y,$ dimension $ (N_t \times N_y)$
-- ensemble state anomaly, $\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},$ dimension $ (N_t \times N_x \times N_e)$ with $ \overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e$
-- ensemble observation anomaly,  $\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },$ dimension $ (N_t \times N_y \times N_e)$ with  $ \overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)
- \sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).$
+- ensemble state anomaly, $\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},$ dimension $(N_t \times N_x \times N_e)$ with $\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e$
+- ensemble observation anomaly,  $\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },$ dimension $(N_t \times N_y \times N_e)$ with  $\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).$
 
 Then, the Kalman analysis update is
 
