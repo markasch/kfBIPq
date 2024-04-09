@@ -317,6 +317,7 @@ window.Quarto = {
   <li><a href="#correctionanalysis" id="toc-correctionanalysis" class="nav-link" data-scroll-target="#correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</a></li>
   </ul></li>
   <li><a href="#full-nonlinear-formulation-of-the-ensemble-kalman-filter" id="toc-full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="nav-link" data-scroll-target="#full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</a></li>
+  <li><a href="#summary-of-enkf-properties" id="toc-summary-of-enkf-properties" class="nav-link" data-scroll-target="#summary-of-enkf-properties"><span class="header-section-number">11.3</span> Summary of EnKF properties</a></li>
   </ul>
 </nav>
     </div>
@@ -405,7 +406,7 @@ x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \
 <ul>
 <li>state forecast <span class="math inline">\(X^f,\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
 <li><em>ensemble</em> state forecast <span class="math inline">\(\mathbf{X}^f,\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span></li>
-<li>observation, <span class="math inline">\(Y,\)</span> dimension $ (N_t N_y)$</li>
+<li>observation, <span class="math inline">\(Y,\)</span> dimension <span class="math inline">\((N_t \times N_y)\)</span></li>
 <li>ensemble state anomaly, <span class="math inline">\(\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span> with <span class="math inline">\(\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e\)</span></li>
 <li>ensemble observation anomaly, <span class="math inline">\(\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },\)</span> dimension <span class="math inline">\((N_t \times N_y \times N_e)\)</span> with <span class="math inline">\(\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).\)</span></li>
 </ul>
@@ -427,6 +428,17 @@ D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
 <p><span class="math display">\[
    \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f}  + K D.
 \]</span></p>
+</section>
+<section id="summary-of-enkf-properties" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="summary-of-enkf-properties"><span class="header-section-number">11.3</span> Summary of EnKF properties</h2>
+<ul>
+<li>EnKF represents error statistics by ensembles of (nonlinear) model and (nonlinear) measurement realizations.</li>
+<li>EnKF performs sequential DA that processes measurements recursively in time.</li>
+<li>EnKF is suitable for weather-prediction and any other complex, chaotiic dynamic systems.</li>
+<li>Error propagation is nonlinear (see point 1).</li>
+<li>Filter update is linear and computed in the low rank, ensemble subspace.</li>
+<li>EnKF does not require any gradients, adjoints, linearizations.</li>
+</ul>
 
 
 </section>

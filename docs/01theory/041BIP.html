@@ -296,7 +296,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
       </ul>
@@ -375,10 +375,10 @@ p(\theta\mid\mathcal{D})=\frac{p(\mathcal{D}\mid\theta)p(\theta)}{p(\mathcal{D})
 </section>
 <section id="inverse-problem" class="level2" data-number="16.3">
 <h2 data-number="16.3" class="anchored" data-anchor-id="inverse-problem"><span class="header-section-number">16.3</span> Inverse Problem</h2>
-<p>We consider the inverse problem of recovering an unknown function <span class="math inline">\(u\)</span> from knwn data <span class="math inline">\(y\)</span> related by</p>
+<p>We consider the inverse problem of recovering an unknown function <span class="math inline">\(u\)</span> from known data <span class="math inline">\(y\)</span> related by</p>
 <p><span class="math display">\[
 y = \mathcal{G}(u) + \eta,
-\]</span> where <span class="math inline">\(\mathcal{G}\)</span> denotes the forward model from inouts to observables, <span class="math inline">\(\eta \sim \mathcal{N}(0, \Gamma)\)</span> represents the model error and observation noise, with <span class="math inline">\(\Gamma\)</span> a positive definite noise covariance matrix. In the Bayesian approachn <span class="math inline">\(u\)</span> is a random variable with <em>prior</em> distribution <span class="math inline">\(p_u(u).\)</span> Then, the Bayesian solution of the inverse problem is the <em>posterior</em> distribution <span class="math inline">\(p_{u\vert y}(u)\)</span> of <span class="math inline">\(u\)</span> given <span class="math inline">\(y,\)</span> which by formal applicatiuon of Bayes’ Theorem can be characterized by</p>
+\]</span> where <span class="math inline">\(\mathcal{G}\)</span> denotes the forward model from inputs to observables, <span class="math inline">\(\eta \sim \mathcal{N}(0, \Gamma)\)</span> represents the model error and observation noise, with <span class="math inline">\(\Gamma\)</span> a positive definite noise covariance matrix. In the Bayesian approach, <span class="math inline">\(u\)</span> is a random variable with <em>prior</em> distribution <span class="math inline">\(p_u(u).\)</span> Then, the Bayesian solution of the inverse problem is the <em>posterior</em> distribution <span class="math inline">\(p_{u\vert y}(u)\)</span> of <span class="math inline">\(u\)</span> given <span class="math inline">\(y,\)</span> which by formal application of Bayes’ Theorem can be characterized by</p>
 <p><span class="math display">\[
   p_{u\vert y}(u) \propto \exp \left(  -\Phi(u;y) \right) p_u (u),
 \]</span> with <span class="math display">\[
@@ -809,8 +809,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../01theory/042EKI.html" class="pagination-link" aria-label="Ensemble Kalman Inversion">
-        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../01theory/042EKI.html" class="pagination-link" aria-label="Ensemble Kalman Inversion (EKI)">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

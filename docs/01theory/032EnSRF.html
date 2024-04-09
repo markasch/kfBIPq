@@ -296,7 +296,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
       </ul>
@@ -311,9 +311,9 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-filterng-problem." id="toc-the-filterng-problem." class="nav-link active" data-scroll-target="#the-filterng-problem."><span class="header-section-number">15.1</span> The filterng problem.</a></li>
+  <li><a href="#the-filtering-problem." id="toc-the-filtering-problem." class="nav-link active" data-scroll-target="#the-filtering-problem."><span class="header-section-number">15.1</span> The filtering problem.</a></li>
   <li><a href="#recall-ensemble-kalman-filter-enkf" id="toc-recall-ensemble-kalman-filter-enkf" class="nav-link" data-scroll-target="#recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</a></li>
-  <li><a href="#ensemble-square-root-filters-ensrf" id="toc-ensemble-square-root-filters-ensrf" class="nav-link" data-scroll-target="#ensemble-square-root-filters-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</a></li>
+  <li><a href="#sec-ensrf" id="toc-sec-ensrf" class="nav-link" data-scroll-target="#sec-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</a></li>
   <li><a href="#etkf-in-practice" id="toc-etkf-in-practice" class="nav-link" data-scroll-target="#etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</a></li>
   </ul>
 </nav>
@@ -340,9 +340,9 @@ window.Quarto = {
 </header>
 
 
-<p>We have seen the stochastic ensemble Kalman filter in the previous section. It has the advantage of great simplicity, but is known to have unreliable statistical behaviour and can suffer from sampling errors. In particular, it does not converge in the ensemble Kalman inversion (EKI) context - see next section. Filters that do not use (stochastically) perturbed observations are called <em>deterministic</em> filters. The family of <em>ensemble square root filters</em> are deterministic, in this sense. These filters exhibit exponential conversion in the EKI context.</p>
-<section id="the-filterng-problem." class="level2" data-number="15.1">
-<h2 data-number="15.1" class="anchored" data-anchor-id="the-filterng-problem."><span class="header-section-number">15.1</span> The filterng problem.</h2>
+<p>We have seen the stochastic ensemble Kalman filter in the previous section. It has the advantage of great simplicity, but is known to have unreliable statistical behaviour and can suffer from sampling errors. In particular, it does not converge in the ensemble Kalman inversion (EKI) context - see next section. Filters that do not use (stochastically) perturbed observations are called <em>deterministic</em> filters. The family of <em>ensemble square root filters</em> are deterministic, in this sense. These filters exhibit exponential convergence in the EKI context.</p>
+<section id="the-filtering-problem." class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="the-filtering-problem."><span class="header-section-number">15.1</span> The filtering problem.</h2>
 <p>Nonlinear state equation and observations are given by,</p>
 <p><span class="math display">\[\begin{align}
 x_{k+1}^{n} &amp;=  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
@@ -369,14 +369,14 @@ Filtering problem
 </section>
 <section id="recall-ensemble-kalman-filter-enkf" class="level2" data-number="15.2">
 <h2 data-number="15.2" class="anchored" data-anchor-id="recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</h2>
-<p>Just to recall the notation, here are the two steps (forecast/analysis, or predict/correct) of the EnKF.</p>
+<p>Just to recall the notation, here are the two steps (forecast-analysis, or predict-correct) of the EnKF.</p>
 <p><em>Prediction/Forecast Step</em></p>
 <ul>
 <li><p>evolve each ensemble member forward <span class="math display">\[ x_{k+1}^{n} =  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n}, \quad n=1,
 \ldots, N_e\]</span></p></li>
 <li><p>compute ensemble mean <span class="math display">\[ \bar{x} = \frac{1}{N_e} \sum_{n=1}^{N_e}  x_{n}^{\mathrm{f}} \]</span></p></li>
 <li><p>compute covariance <span class="math display">\[ P^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} , \]</span></p>
-<p>where <span class="math inline">\(X'^{\mathrm{f}} = x^{\mathrm{f}} - \bar{x}\)</span> is the ensemble state perturbation matrix.</p></li>
+<p>where <span class="math inline">\(X'^{\mathrm{f}} = x^{\mathrm{f}} - \bar{x}\)</span> is the ensemble state perturbation/anomaly matrix.</p></li>
 </ul>
 <p><em>Correction/Analysis Step</em></p>
 <ul>
@@ -386,8 +386,8 @@ Filtering problem
 \]</span> where <span class="math inline">\(\epsilon_n\)</span> is the stochastic perturbation of the observations <span class="math inline">\(y.\)</span></li>
 </ul>
 </section>
-<section id="ensemble-square-root-filters-ensrf" class="level2" data-number="15.3">
-<h2 data-number="15.3" class="anchored" data-anchor-id="ensemble-square-root-filters-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</h2>
+<section id="sec-ensrf" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="sec-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</h2>
 <div class="callout callout-style-default callout-tip callout-titled" title="Idea">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -402,7 +402,7 @@ Idea
 \]</span></p>
 </div>
 </div>
-<p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomailies,</p>
+<p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies,</p>
 <p><span class="math display">\[ K_n =  \frac{1}{N_e - 1} \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1},
 \]</span> where <span class="math display">\[ S = \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R.
 \]</span></p>
@@ -412,19 +412,19 @@ Idea
 \]</span> we can substitute in the definition of <span class="math inline">\(P_n^{\mathrm{a}}\)</span> to obtain <span class="math display">\[\begin{align}
 P_n^{\mathrm{a}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} T ( X'^{\mathrm{f}} T )^{\mathrm{T}} \\
                  &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} (T T^{\mathrm{T}} ) ( X'^{\mathrm{f}}  )^{\mathrm{T}}.
-\end{align}\]</span> And, on the other hand, for the consistency, we want to obtain <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}}
+\end{align}\]</span> And, on the other hand, for the consistency, we require <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}}
      \left[ I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}}   \right] ( X'^{\mathrm{f}}  )^{\mathrm{T}},
 \]</span> where we have used the relations <span class="math display">\[\begin{align}
   K &amp;=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
   P_n^{\mathrm{f}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} \\
   Y'^{\mathrm{f}}  &amp;= H X'^{\mathrm{f}}.
 \end{align}\]</span></p>
-<p>Hence, <span class="math inline">\(T\)</span> must satisfy the so-called square root condition, <span class="math display">\[\begin{align}
+<p>Hence, <span class="math inline">\(T\)</span> must satisfy the so-called <em>square root condition</em>, <span class="math display">\[\begin{align}
 T T^{\mathrm{T}}  &amp;= I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}} \\
                   &amp;=  I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  
                       \left( \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right)^{-1}  Y'^{\mathrm{f}}
 \end{align}\]</span></p>
-<p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula <span class="math display">\[ (A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
+<p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula, <span class="math display">\[ (A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
 \]</span></p>
 <p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = Y^{\mathrm{T}},\)</span> <span class="math inline">\(V=Y,\)</span> we obtain the simpler form of the square root condition <span class="math display">\[ T T^{\mathrm{T}}  = \left[I +  \frac{1}{N_e - 1}( Y'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  Y'^{\mathrm{f}} \right]^{-1}.
 \]</span> This form is the basis of the ETKF, or <em>transform filter.</em></p>

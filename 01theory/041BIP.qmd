@@ -55,12 +55,12 @@ This is depicted in the flowchart.
 
 ## Inverse Problem
 
-We consider the inverse problem of recovering an unknown function $u$ from knwn data $y$ related by
+We consider the inverse problem of recovering an unknown function $u$ from known data $y$ related by
 
 $$
  y = \mathcal{G}(u) + \eta,
 $$
-where $\mathcal{G}$ denotes the forward model from inouts to observables, $\eta \sim \mathcal{N}(0, \Gamma)$ represents the model error and observation noise, with $\Gamma$ a positive definite noise covariance matrix. In the Bayesian approachn $u$ is a random variable with _prior_ distribution $p_u(u).$ Then, the Bayesian solution of the inverse problem is the _posterior_ distribution $p_{u\vert y}(u)$ of $u$ given $y,$ which by formal applicatiuon of Bayes' Theorem can be characterized by
+where $\mathcal{G}$ denotes the forward model from inputs to observables, $\eta \sim \mathcal{N}(0, \Gamma)$ represents the model error and observation noise, with $\Gamma$ a positive definite noise covariance matrix. In the Bayesian approach, $u$ is a random variable with _prior_ distribution $p_u(u).$ Then, the Bayesian solution of the inverse problem is the _posterior_  distribution $p_{u\vert y}(u)$ of $u$ given $y,$ which by formal application of Bayes' Theorem can be characterized by
 
 $$
   p_{u\vert y}(u) \propto \exp \left(  -\Phi(u;y) \right) p_u (u),

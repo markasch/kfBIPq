@@ -9,6 +9,16 @@ The Kalman filter can be used for
 
 Kalman filters are linear (and Gaussian) or nonlinear. Among the nonlinear approaches, the Ensemble Kalman filter (EnKF) provides a *derivative-free* approach to the solution of inverse problems.
 
+::: {.callout-note title="Definition: filtering problem" icon="false"}
+
+Filtering is the sequential updating of the probability distribution of the state of a (possibly stochastic) dynamical system, given partial (or sparse), noisy observations.
+
+The KF provides an explicit, optimal solution to this problem in the setting of linear dynamical systems, linear observations, and additive Gaussian noise. In this case, we obtain explicit update formulas for the mean and covariance of the resulting posterior Gaussian probability distribution.
+
+::: 
+
+
+
 ## Kalman filter problem - General formulation
 
 We present a very general formulation that will later be convenient for joint state and parameter estimation problems.

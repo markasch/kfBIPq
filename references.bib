@@ -56,19 +56,19 @@
 }
 
 
-@misc{Huang2022,
-	title = {Efficient {Derivative}-free {Bayesian} {Inference} for {Large}-{Scale} {Inverse} {Problems}},
-	url = {http://arxiv.org/abs/2204.04386},
-	abstract = {We consider Bayesian inference for large scale inverse problems, where computational challenges arise from the need for repeated evaluations of an expensive forward model. This renders most Markov chain Monte Carlo approaches infeasible, since they typically require \$O(10{\textasciicircum}4)\$ model runs, or more. Moreover, the forward model is often given as a black box or is impractical to differentiate. Therefore derivative-free algorithms are highly desirable. We propose a framework, which is built on Kalman methodology, to efficiently perform Bayesian inference in such inverse problems. The basic method is based on an approximation of the filtering distribution of a novel mean-field dynamical system into which the inverse problem is embedded as an observation operator. Theoretical properties of the mean-field model are established for linear inverse problems, demonstrating that the desired Bayesian posterior is given by the steady state of the law of the filtering distribution of the mean-field dynamical system, and proving exponential convergence to it. This suggests that, for nonlinear problems which are close to Gaussian, sequentially computing this law provides the basis for efficient iterative methods to approximate the Bayesian posterior. Ensemble methods are applied to obtain interacting particle system approximations of the filtering distribution of the mean-field model; and practical strategies to further reduce the computational and memory cost of the methodology are presented, including low-rank approximation and a bi-fidelity approach. The effectiveness of the framework is demonstrated in several numerical experiments, including proof-of-concept linear/nonlinear examples and two large-scale applications: learning of permeability parameters in subsurface flow; and learning subgrid-scale parameters in a global climate model from time-averaged statistics.},
-	language = {en},
-	urldate = {2024-01-03},
-	publisher = {arXiv},
-	author = {Huang, Daniel Zhengyu and Huang, Jiaoyang and Reich, Sebastian and Stuart, Andrew M.},
-	month = aug,
-	year = {2022},
-	note = {arXiv:2204.04386 [cs, math]},
-	keywords = {Mathematics - Numerical Analysis},
-	file = {Huang et al. - 2022 - Efficient Derivative-free Bayesian Inference for L.pdf:/Users/markasch/Zotero/storage/D29DHZW8/Huang et al. - 2022 - Efficient Derivative-free Bayesian Inference for L.pdf:application/pdf},
+@article{Huang2022,
+doi = {10.1088/1361-6420/ac99fa},
+url = {https://dx.doi.org/10.1088/1361-6420/ac99fa},
+year = {2022},
+month = {oct},
+publisher = {IOP Publishing},
+volume = {38},
+number = {12},
+pages = {125006},
+author = {Daniel Zhengyu Huang and Jiaoyang Huang and Sebastian Reich and Andrew M Stuart},
+title = {Efficient derivative-free Bayesian inference for large-scale inverse problems},
+journal = {Inverse Problems},
+abstract = {We consider Bayesian inference for large-scale inverse problems, where computational challenges arise from the need for repeated evaluations of an expensive forward model. This renders most Markov chain Monte Carlo approaches infeasible, since they typically require  model runs, or more. Moreover, the forward model is often given as a black box or is impractical to differentiate. Therefore derivative-free algorithms are highly desirable. We propose a framework, which is built on Kalman methodology, to efficiently perform Bayesian inference in such inverse problems. The basic method is based on an approximation of the filtering distribution of a novel mean-field dynamical system, into which the inverse problem is embedded as an observation operator. Theoretical properties are established for linear inverse problems, demonstrating that the desired Bayesian posterior is given by the steady state of the law of the filtering distribution of the mean-field dynamical system, and proving exponential convergence to it. This suggests that, for nonlinear problems which are close to Gaussian, sequentially computing this law provides the basis for efficient iterative methods to approximate the Bayesian posterior. Ensemble methods are applied to obtain interacting particle system approximations of the filtering distribution of the mean-field model; and practical strategies to further reduce the computational and memory cost of the methodology are presented, including low-rank approximation and a bi-fidelity approach. The effectiveness of the framework is demonstrated in several numerical experiments, including proof-of-concept linear/nonlinear examples and two large-scale applications: learning of permeability parameters in subsurface flow; and learning subgrid-scale parameters in a global climate model. Moreover, the stochastic ensemble Kalman filter and various ensemble square-root Kalman filters are all employed and are compared numerically. The results demonstrate that the proposed method, based on exponential convergence to the filtering distribution of a mean-field dynamical system, is competitive with pre-existing Kalman-based methods for inverse problems.}
 }
 
 
@@ -119,11 +119,39 @@
 	abstract = {This paper provides a unifying mean ﬁeld based framework for the derivation and analysis of ensemble Kalman methods. Both state estimation and parameter estimation problems are considered, and formulations in both discrete and continuous time are employed. For state estimation problems both the control and ﬁltering approaches are studied; analogously, for parameter estimation (inverse) problems the optimization and Bayesian perspectives are both studied. The approach taken uniﬁes a wide-ranging literature in the ﬁeld, provides a framework for analysis of ensemble Kalman methods, and suggests open problems.},
 	language = {en},
 	urldate = {2024-01-03},
-	publisher = {arXiv},
+	publisher = {arXiv (to appear in Acta Numerica 2025)},
 	author = {Calvello, Edoardo and Reich, Sebastian and Stuart, Andrew M.},
 	month = sep,
 	year = {2022},
 	note = {arXiv:2209.11371 [cs, math]},
 	keywords = {Mathematics - Numerical Analysis, Mathematics - Optimization and Control, EnKF, EKI, mean field},
 	file = {Calvello et al. - 2022 - Ensemble Kalman Methods A Mean Field Perspective.pdf:/Users/markasch/Zotero/storage/HB5SG9SH/Calvello et al. - 2022 - Ensemble Kalman Methods A Mean Field Perspective.pdf:application/pdf},
+}
+
+@misc{carrillo2024mean,
+      title={The Mean Field Ensemble Kalman Filter: Near-Gaussian Setting}, 
+      author={J. A. Carrillo and F. Hoffmann and A. M. Stuart and U. Vaes},
+      year={2024},
+      eprint={2212.13239},
+      archivePrefix={arXiv},
+      primaryClass={math.OC}
+}
+
+@misc{carrillo2024statistical,
+      title={Statistical Accuracy of Approximate Filtering Methods}, 
+      author={J. A. Carrillo and F. Hoffmann and A. M. Stuart and U. Vaes},
+      year={2024},
+      eprint={2402.01593},
+      archivePrefix={arXiv},
+      primaryClass={math.NA}
+}
+
+
+@misc{wu2023learning,
+      title={Learning About Structural Errors in Models of Complex Dynamical Systems}, 
+      author={Jin-Long Wu and Matthew E. Levine and Tapio Schneider and Andrew Stuart},
+      year={2023},
+      eprint={2401.00035},
+      archivePrefix={arXiv},
+      primaryClass={physics.comp-ph}
 }
