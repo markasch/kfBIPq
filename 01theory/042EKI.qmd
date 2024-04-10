@@ -21,9 +21,13 @@ Recall the inverse problem: recover an unknown function $\theta$ from known data
 $$
  y = \mathcal{G}(\theta) + \eta,
 $$
-where $\mathcal{G}$ denotes the forward model from inputs to observables, $\eta \sim \mathcal{N}(0, \Sigma_{\eta})$ represents the model error and observation noise, with $\Gamma$ a positive definite noise covariance matrix.
+where $\mathcal{G}$ denotes the forward model from inputs to observables, $\eta \sim \mathcal{N}(0, \Sigma_{\eta})$ 
+represents the model error and observation noise, with $\Sigma_{\eta}$ a positive definite noise covariance matrix.
 
-Conceptually, the idea of EKI is very simple. Just apply the standard EnKF to an augmented system of state plus parameters, for a given number of iterations, to invert for $\theta.$  We begin by pairing the parameter-to-data map with a dynamical system for the parameter, and then employ techniques from filtering to estimate the parameter given the data.
+Conceptually, the idea of EKI is very simple. Just apply the standard EnKF to an augmented system of 
+state plus parameters, for a given number of iterations, to invert for $\theta.$ 
+ We begin by pairing the parameter-to-data map with a dynamical system for the parameter, and then 
+ employ techniques from filtering to estimate the parameter given the data.
 
 The system for EKI is written as,
 $$
@@ -44,7 +48,8 @@ $$
 $$
 
 
-We seek the *best* Gaussian approximation of the posterior distribution of $\theta$ for ill-posed inverse problems, where the prior is a Gaussian, $\theta_0 \sim \mathcal{N}(r_0, \Sigma_0).$
+We seek the *best* Gaussian approximation of the posterior distribution of $\theta$ for ill-posed 
+inverse problems, where the prior is a Gaussian, $\theta_0 \sim \mathcal{N}(r_0, \Sigma_0).$
 
 
 Consider the case:
@@ -55,7 +60,8 @@ Consider the case:
 \textrm{and}\quad \Sigma_{\nu} = \frac{1}{\Delta t} \begin{bmatrix} \Sigma_{\eta} & 0 \\ 0 & \Sigma_0\end{bmatrix}
 $ 
 
-where $r_0$ and $\Sigma_0$ are prior mean and covariance, and the hyperparameter $0 < \Delta t < 1$ is set to $1/2.$ 
+where $r_0$ and $\Sigma_0$ are prior mean and covariance, and the hyperparameter 
+$0 < \Delta t < 1$ is set to $1/2.$ 
 
 **Linear Analysis**
 
@@ -85,7 +91,9 @@ algorithm in the setting of the linear forward model:
 
 Assume that the prior covariance matrix $\Sigma_{0} \succ 0$ and initial covariance matrix 
 $C_{0} \succ 0.$
-The iteration for the conditional mean $m_n$ and covariance matrix $C_{n}$ characterizing the distribution of $\theta_n|Y_n$ converges exponentially fast to the posterior mean, $m_{\rm post},$ and covariance, $C_{\rm post}.$
+The iteration for the conditional mean $m_n$ and covariance matrix $C_{n}$ characterizing 
+the distribution of $\theta_n|Y_n$ converges exponentially fast to the posterior mean, 
+$m_{\rm post},$ and covariance, $C_{\rm post}.$
 :::        
          
 **Reference**    
@@ -193,4 +201,22 @@ $$
 ## Conclusions
 
 
-To be continued...
+Kalman-based inversion has been widely used to construct derivative-free optimization and s
+ampling methods for nonlinear inverse problems. In the paper [@Huang2022], the authors
+developed new Kalman-based 
+inversion methods, for Bayesian inference and uncertainty quantification, which build on the 
+work in both optimization and sampling. They propose a new method for Bayesian inference based 
+on filtering a novel mean-field dynamical system subject to partial noisy observations, and 
+which depends on the law of its own filtering distribution, together with application of the 
+Kalman methodology. Theoretical guarantees are presented: for linear inverse problems, the 
+mean and covariance obtained by the method converge exponentially fast to the posterior mean 
+and covariance. For nonlinear inverse problems, numerical studies indicate the method delivers 
+an excellent approximation of the posterior distribution for problems which are not too far 
+from Gaussian.
+
+In terms of performance:
+
+1. The methods are shown to be superior to existing coupling/transport methods, collectively known as
+iterative Kalman methods.
+2. Deterministic, such as ETKF, rather than stochastic implementations of Kalman 
+methodology are found to be favorable.

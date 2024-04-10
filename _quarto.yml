@@ -40,6 +40,7 @@ book:
       chapters:
          - 01theory/041BIP.qmd
          - 01theory/042EKI.qmd
+         - 02examples/EKI/one_dim_EKI.ipynb
 
 bibliography: references.bib
 
