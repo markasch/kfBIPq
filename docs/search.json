@@ -56,7 +56,7 @@
     "href": "index.html#references",
     "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "References",
-    "text": "References\n\n\nAsch, Mark. 2022. A Toolbox for Digital\nTwins: From\nModel-Based to\nData-Driven. Philadelphia, PA: Society\nfor Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data\nAssimilation: Methods,\nAlgorithms, and Applications.\nPhiladelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.\n“Ensemble Kalman Methods: A\nMean Field Perspective.”\narXiv (to appear in Acta Numerica 2025). http://arxiv.org/abs/2209.11371.\n\n\nDashti, Masoumeh, and Andrew M. Stuart. 2015. “The\nBayesian Approach to Inverse\nProblems.” In Handbook of\nUncertainty Quantification, edited by\nRoger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-319-11259-6_7-1.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M\nStuart. 2022. “Efficient Derivative-Free Bayesian Inference for\nLarge-Scale Inverse Problems.” Inverse Problems 38 (12):\n125006. https://doi.org/10.1088/1361-6420/ac99fa.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.\n“Ensemble Kalman Methods for Inverse\nProblems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data\nAssimilation: A Mathematical\nIntroduction. Vol. 62. Texts in Applied\nMathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
+    "text": "References\n\n\nAsch, Mark. 2022. A Toolbox for Digital\nTwins: From\nModel-Based to\nData-Driven. Philadelphia, PA: Society\nfor Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data\nAssimilation: Methods,\nAlgorithms, and Applications.\nPhiladelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.\n“Ensemble Kalman Methods: A\nMean Field Perspective.”\narXiv (to appear in Acta Numerica 2025). http://arxiv.org/abs/2209.11371.\n\n\nCarrillo, J. A., F. Hoffmann, A. M. Stuart, and U. Vaes. 2024a.\n“Statistical Accuracy of Approximate Filtering Methods.” https://arxiv.org/abs/2402.01593.\n\n\n———. 2024b. “The Mean Field Ensemble Kalman Filter: Near-Gaussian\nSetting.” https://arxiv.org/abs/2212.13239.\n\n\nDashti, Masoumeh, and Andrew M. Stuart. 2015. “The\nBayesian Approach to Inverse\nProblems.” In Handbook of\nUncertainty Quantification, edited by\nRoger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-319-11259-6_7-1.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M\nStuart. 2022. “Efficient Derivative-Free Bayesian Inference for\nLarge-Scale Inverse Problems.” Inverse Problems 38 (12):\n125006. https://doi.org/10.1088/1361-6420/ac99fa.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.\n“Ensemble Kalman Methods for Inverse\nProblems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data\nAssimilation: A Mathematical\nIntroduction. Vol. 62. Texts in Applied\nMathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.",
     "crumbs": [
       "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
     ]
@@ -231,7 +231,7 @@
     "href": "01theory/011BayesTheory.html",
     "title": "1  Bayes’ Theorem",
     "section": "",
-    "text": "1.1 Introduction\nBayes’ theorem is at the core of modern uncertainty quantification.\nSee Theorem 1.1.",
+    "text": "1.1 Introduction\nBayes’ theorem is at the core of modern uncertainty quantification.\nSee Theorem thm-bayes.",
     "crumbs": [
       "Bayes' Theory",
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Bayes' Theorem</span>"
@@ -273,12 +273,12 @@
   {
     "objectID": "01theory/012BayesFilters.html",
     "href": "01theory/012BayesFilters.html",
-    "title": "4  Bayesian Filters",
+    "title": "2  Bayesian Filters",
     "section": "",
     "text": "All filters can be expressed in a Bayesian form.\n\n\n\n\n\n\nImportant\n\n\n\nKalman filters are a special case of the more general Bayesian filter formulation\n\n\nComing soon…",
     "crumbs": [
       "Bayes' Theory",
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Bayesian Filters</span>"
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Bayesian Filters</span>"
     ]
   },
   {
@@ -906,6 +906,17 @@
     "crumbs": [
       "Inverse Problems",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Example 1: One-dimensional EKI</span>"
+    ]
+  },
+  {
+    "objectID": "01theory/032EnSRF.html#sec-ensrf",
+    "href": "01theory/032EnSRF.html#sec-ensrf",
+    "title": "15  Deterministic Ensemble Kalman Filters",
+    "section": "15.3 Ensemble Square Root Filters (EnSRF)",
+    "text": "15.3 Ensemble Square Root Filters (EnSRF)\n\n\n\n\n\n\nIdea\n\n\n\nUpdate the ensemble to preserve the covariance that is consistent with the KF theoretical covariance \\[ P_n^{\\mathrm{a}} = (I - K_n H) P_n^{\\mathrm{f}}.\n\\]\n\n\nRecall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies,\n\\[ K_n =  \\frac{1}{N_e - 1} \\mathbf{X}'^{\\mathrm{f}}(\\mathbf{Y}'^{\\mathrm{f}})^\\mathrm{T} S^{-1},\n\\] where \\[ S = \\frac{1}{N_e - 1} Y'^{\\mathrm{f}} ( Y'^{\\mathrm{f}} )^{\\mathrm{T}} +  R.\n\\]\nThen, to compute the posterior variance, we need to evaluate \\[ P_n^{\\mathrm{a}} =  \\frac{1}{N_e - 1} X'^{\\mathrm{a}} ( X'^{\\mathrm{a}} )^{\\mathrm{T}}.\n\\]\nSo supposing there is a transform matrix, \\(T,\\) such that \\[  X'^{\\mathrm{a}} =  X'^{\\mathrm{f}} T,\n\\] we can substitute in the definition of \\(P_n^{\\mathrm{a}}\\) to obtain \\[\\begin{align}\nP_n^{\\mathrm{a}} &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} T ( X'^{\\mathrm{f}} T )^{\\mathrm{T}} \\\\\n                 &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} (T T^{\\mathrm{T}} ) ( X'^{\\mathrm{f}}  )^{\\mathrm{T}}.\n\\end{align}\\] And, on the other hand, for the consistency, we require \\[ (I - K_n H) P_n^{\\mathrm{f}} = \\frac{1}{N_e - 1} X'^{\\mathrm{f}}\n     \\left[ I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  S^{-1}  Y'^{\\mathrm{f}}   \\right] ( X'^{\\mathrm{f}}  )^{\\mathrm{T}},\n\\] where we have used the relations \\[\\begin{align}\n  K &=   P^{\\mathrm{f}} H^{\\mathrm{T}} (H P^{\\mathrm{f}} H^{\\mathrm{T}} + R)^{-1}, \\\\\n  P_n^{\\mathrm{f}} &=  \\frac{1}{N_e - 1} X'^{\\mathrm{f}} ( X'^{\\mathrm{f}} )^{\\mathrm{T}} \\\\\n  Y'^{\\mathrm{f}}  &= H X'^{\\mathrm{f}}.\n\\end{align}\\]\nHence, \\(T\\) must satisfy the so-called square root condition, \\[\\begin{align}\nT T^{\\mathrm{T}}  &= I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  S^{-1}  Y'^{\\mathrm{f}} \\\\\n                  &=  I - ( Y'^{\\mathrm{f}})^{\\mathrm{T}}  \n                      \\left( \\frac{1}{N_e - 1} Y'^{\\mathrm{f}} ( Y'^{\\mathrm{f}} )^{\\mathrm{T}} +  R  \\right)^{-1}  Y'^{\\mathrm{f}}\n\\end{align}\\]\nWe can replace the inversion of \\(S\\) by the much simpler and more stable inversion of the diagonal measurement error covariance \\(R\\) using the Sherman-Woodbury-Morrison formula, \\[ (A + UCV^{\\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.\n\\]\nIdentifying \\(A=I,\\) \\(C = R^{-1},\\) \\(U = Y^{\\mathrm{T}},\\) \\(V=Y,\\) we obtain the simpler form of the square root condition \\[ T T^{\\mathrm{T}}  = \\left[I +  \\frac{1}{N_e - 1}( Y'^{\\mathrm{f}})^{\\mathrm{T}}  R^{-1}  Y'^{\\mathrm{f}} \\right]^{-1}.\n\\] This form is the basis of the ETKF, or transform filter.\nFinally, the square root \\(T\\) can be obtained from the eigenvalue factorization, \\[  T T^{\\mathrm{T}}  = (U \\Sigma U^{\\mathrm{T}})^{-1}\n\\] and thus \\[ T = U \\Sigma^{-1/2} U^{\\mathrm{T}}.\n\\]\nNote that \\(T\\) is not unique, since for any orthogonal matrix \\(\\tilde{U},\\) the product \\(T \\tilde{U}\\) will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for \\(T\\) and the resulting square root filters.\nIt can be shown that in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that \\(T\\) is symmetric, which is the case in the above derivation.",
+    "crumbs": [
+      "Ensemble Filters",
+      "<span class='chapter-number'>15</span>  <span class='chapter-title'>Deterministic Ensemble Kalman Filters</span>"
     ]
   }
 ]

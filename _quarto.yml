@@ -5,7 +5,7 @@ project:
 book:
   title: "Kalman Filters: from Bayes to Inverse Problems"
   author: "Mark Asch"
-  date: "4/3/2024"
+  date: "April 2024"
   sidebar: 
     background: "#EAECEE"
     logo: kf.png
