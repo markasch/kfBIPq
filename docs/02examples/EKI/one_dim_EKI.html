@@ -398,7 +398,7 @@ window.Quarto = {
 </header>
 
 
-<p>We implement here the original, iterative ensemble Kalman filter as formulated in <span class="citation" data-cites="Stuart2013">(<a href="#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span>.</p>
+<p>We implement here the original, iterative ensemble Kalman filter as formulated in <span class="citation" data-cites="Stuart2013">(<a href="../../index.html#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span>.</p>
 <p>Recall the inverse problem: recover the unknown <span class="math inline">\(u\)</span> from noisy measurements <span class="math inline">\(y\)</span> related by</p>
 <p><span class="math display">\[
   y = \mathcal{G}(u) + \eta,
@@ -409,15 +409,13 @@ window.Quarto = {
                     \left( y_{n+1}^{(j)} -  \mathcal{G}(u_n^{(j)}) \right),
 \]</span></p>
 <p>where</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
    C^{pp}(u) &amp;= \frac{1}{J-1} \sum_{j=1}^{J} \left(  \mathcal{G}(u^{(j)} - \hat{\mathcal{G}}  \right) \otimes
                  \left(  \mathcal{G}(u^{(j)} - \hat{\mathcal{G}}  \right) \\
    C^{up}(u) &amp;= \frac{1}{J-1} \sum_{j=1}^{J} \left( u^{(j)} - \hat{u}  \right) \otimes
                  \left(  \mathcal{G}(u^{(j)} - \hat{\mathcal{G}}  \right)  \\
    \hat{u} &amp;= \frac{1}{J} \sum_{j=1}^{J} u^{(j)}, \qquad  \hat{\mathcal{G}} =  \frac{1}{J} \sum_{j=1}^{J}  \mathcal{G}(u^{(j)}) .
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <div id="d19e5b8e" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> functools</span>
@@ -641,7 +639,7 @@ window.Quarto = {
 <p>The convergence is very slow, and not very accurate. This will be remedied by the mean-field approach.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Stuart2013" class="csl-entry" role="listitem">
 Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
 </div>

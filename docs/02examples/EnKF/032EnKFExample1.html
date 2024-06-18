@@ -409,10 +409,10 @@ window.Quarto = {
     y_k = \sin \theta_k + v_k,
     \]</span></p>
 <p>where <span class="math inline">\(v_k\)</span> is a zero-mean Gaussian random variable with variance <span class="math inline">\(R.\)</span> The system is thus nonlinear in state and measurement and the state-space system is of the general form seen above. A simple discretization, based on Euler’s method produces</p>
-<p><span class="math display">\[  \begin{align*}
-        \mathbf{x}_{k} &amp; =\mathcal{M}(\mathbf{x}_{k-1})+\mathbf{w}_{k-1}\\
-          {y}_{k} &amp; = \mathcal{H}_{k}(\mathbf{x}_{k}) + {v}_{k},
-    \end{align*} \]</span></p>
+<p><span class="math display">\[\begin{align*}
+        \mathbf{x}_{k} &amp; =\mathcal{M}(\mathbf{x}_{k-1})+\mathbf{w}_{k-1},\\
+          {y}_{k}      &amp; = \mathcal{H}_{k}(\mathbf{x}_{k}) + {v}_{k},
+\end{align*}\]</span></p>
 <p>where</p>
 <p><span class="math display">\[
 \mathbf{x}_{k}=\left[\begin{array}{c}

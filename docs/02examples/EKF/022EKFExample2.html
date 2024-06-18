@@ -417,10 +417,10 @@ window.Quarto = {
     y_k = \sin \theta_k + v_k,
     \]</span></p>
 <p>where <span class="math inline">\(v_k\)</span> is a zero-mean Gaussian random variable with variance <span class="math inline">\(R.\)</span> The system is thus nonlinear in state and measurement and the state-space system is of the general form seen above. A simple discretization, based on Euler’s method produces</p>
-<p><span class="math display">\[  \begin{align*}
+<p><span class="math display">\[\begin{align*}
         \mathbf{x}_{k} &amp; =\mathcal{M}(\mathbf{x}_{k-1})+\mathbf{w}_{k-1}\\
           {y}_{k} &amp; = \mathcal{H}_{k}(\mathbf{x}_{k}) + {v}_{k},
-    \end{align*} \]</span></p>
+    \end{align*}\]</span></p>
 <p>where</p>
 <p><span class="math display">\[
 \mathbf{x}_{k}=\left[\begin{array}{c}
@@ -447,7 +447,7 @@ Q=\left[\begin{array}{cc}
 q_{11}=q_{c}\frac{\Delta t^{3}}{3},\quad q_{12}=q_{21}=q_{c}\frac{\Delta t^{2}}{2},\quad q_{22}=q_{c}\Delta t,
 \]</span></p>
 <p>and <span class="math inline">\(q_c\)</span> is the continuous process noise spectral density.</p>
-<p>For the first-order EKF—higher orders are possible—we will need the Jacobian matrices of $ ()$ and <span class="math inline">\(\mathcal{H}(\mathbf{x})\)</span> evaluated at <span class="math inline">\(\mathbf{x} = \mathbf{\hat{m}}_{k-1}\)</span> and <span class="math inline">\(\mathbf{x} = \mathbf{\hat{m}}_{k}\)</span> . These are easily obtained here, in an explicit form,</p>
+<p>For the first-order EKF—higher orders are possible—we will need the Jacobian matrices of <span class="math inline">\(\mathcal{M}(\mathbf{x})\)</span> and <span class="math inline">\(\mathcal{H}(\mathbf{x})\)</span> evaluated at <span class="math inline">\(\mathbf{x} = \mathbf{\hat{m}}_{k-1}\)</span> and <span class="math inline">\(\mathbf{x} = \mathbf{\hat{m}}_{k}\)</span> . These are easily obtained here, in an explicit form,</p>
 <p><span class="math display">\[
 \mathbf{M}_{\mathbf{x}}=\left[\frac{\partial\mathcal{M}}{\partial\mathbf{x}}\right]_{\mathbf{x}=\mathbf{m}}=\left[\begin{array}{cc}
     1 &amp; \Delta t\\

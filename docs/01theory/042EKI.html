@@ -368,7 +368,7 @@ window.Quarto = {
 
 <p>Estimating the statistics of the state of a dynamical system from partial/sparse and noisy measurements is both mathematically challenging and the subject of numerous real-life applications. These can have great societal impact, such as in the cases of numerical weather forecasting, epidemic evolution modelling, just to name a few.</p>
 <p>Ensemble Kalman filtering methodology is known to be effective in high dimensions and in nonlinear settings, as opposed to regular Kalman filters. Moreover, ensemble Kalman filters can be used to solve quite general inverse problems.</p>
-<p>The theoretical approach, known as EKI, was originally formulated in <span class="citation" data-cites="Stuart2013">(<a href="#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span> and refined in the review <span class="citation" data-cites="Stuart2022">(<a href="#ref-Stuart2022" role="doc-biblioref">Calvello, Reich, and Stuart 2022</a>)</span> (to appear in Acta Numerica 2025). A shorter version can be found in the recent preprint <span class="citation" data-cites="Huang2022">(<a href="#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, where extensive numerical tests were performed.</p>
+<p>The theoretical approach, known as EKI, was originally formulated in <span class="citation" data-cites="Stuart2013">(<a href="../index.html#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span> and refined in the review <span class="citation" data-cites="Stuart2022">(<a href="../index.html#ref-Stuart2022" role="doc-biblioref">Calvello, Reich, and Stuart 2022</a>)</span> (to appear in Acta Numerica 2025). A shorter version can be found in the recent preprint <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, where extensive numerical tests were performed.</p>
 <section id="properties-of-eki" class="level2" data-number="17.1">
 <h2 data-number="17.1" class="anchored" data-anchor-id="properties-of-eki"><span class="header-section-number">17.1</span> Properties of EKI</h2>
 <ul>
@@ -385,19 +385,17 @@ window.Quarto = {
 y = \mathcal{G}(\theta) + \eta,
 \]</span> where <span class="math inline">\(\mathcal{G}\)</span> denotes the forward model from inputs to observables, <span class="math inline">\(\eta \sim \mathcal{N}(0, \Sigma_{\eta})\)</span> represents the model error and observation noise, with <span class="math inline">\(\Sigma_{\eta}\)</span> a positive definite noise covariance matrix.</p>
 <p>Conceptually, the idea of EKI is very simple. Just apply the standard EnKF to an augmented system of state plus parameters, for a given number of iterations, to invert for <span class="math inline">\(\theta.\)</span> We begin by pairing the parameter-to-data map with a dynamical system for the parameter, and then employ techniques from filtering to estimate the parameter given the data.</p>
-<p>The system for EKI is written as, <span class="math display">\[
-\begin{align*}
+<p>The system for EKI is written as,</p>
+<p><span class="math display">\[\begin{align*}
     \theta_{n+1} &amp;=  \theta_n\\
     y_{n+1} &amp;=  \mathcal{G}(\theta_{n+1}) + \eta_{n+1},
-\end{align*}
-\]</span> where the operator <span class="math inline">\(\mathcal{G}\)</span> contains both the system dynamics and the observation function.</p>
+\end{align*}\]</span></p>
+<p>where the operator <span class="math inline">\(\mathcal{G}\)</span> contains both the system dynamics and the observation function.</p>
 <p>Consider the stochastic dynamical system</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
   &amp;\textrm{evolution:}    &amp;&amp; \theta_{n+1} = \theta_{n}  +  \omega_{n+1}, &amp;&amp;\omega_{n+1} \sim \mathcal{N}(0,\Sigma_{\omega}),\\
   &amp;\textrm{observation:}  &amp;&amp; x_{n+1} = \mathcal{F}(\theta_{n+1}) + \nu_{n+1}, &amp;&amp;\nu_{n+1} \sim \mathcal{N}(0,\Sigma_{\nu}).
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>We seek the <em>best</em> Gaussian approximation of the posterior distribution of <span class="math inline">\(\theta\)</span> for ill-posed inverse problems, where the prior is a Gaussian, <span class="math inline">\(\theta_0 \sim \mathcal{N}(r_0, \Sigma_0).\)</span></p>
 <p>Consider the case:</p>
 <ul>
@@ -411,17 +409,16 @@ y = \mathcal{G}(\theta) + \eta,
 <p><strong>Linear Analysis</strong></p>
 <p>In the linear setting,</p>
 <p><span class="math display">\[ \mathcal{G}(\theta) = G\cdot \theta \qquad F = \begin{bmatrix} G \\ I  \end{bmatrix} \]</span></p>
-<p>The update equations become <span class="math display">\[
-\begin{align*}
+<p>The update equations become</p>
+<p><span class="math display">\[\begin{align*}
     \hat{m}_{n+1} &amp;=  m_n\\
     \hat{C}_{n+1} &amp;=  \frac{1}{1 - \Delta t} C_{n}
-\end{align*}
-\]</span> and <span class="math display">\[
-\begin{align*}
+\end{align*}\]</span></p>
+<p>and</p>
+<p><span class="math display">\[\begin{align*}
         m_{n+1} &amp;= m_{n} + \hat{C}_{n+1} F^T (F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} (x_{n+1} - F m_{n}) \\
          C_{n+1}&amp;= \hat{C}_{n+1} - \hat{C}_{n+1} F^T(F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} F \hat{C}_{n+1},
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 <p>We have the following theorem about the convergence of the algorithm in the setting of the linear forward model:</p>
 <div class="callout callout-style-default callout-important no-icon callout-titled" title="Theorem (EKI)">
 <div class="callout-header d-flex align-content-center">
@@ -433,14 +430,13 @@ Theorem (EKI)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Assume that the prior covariance matrix <span class="math inline">\(\Sigma_{0} \succ 0\)</span> and initial covariance matrix <span class="math inline">\(C_{0} \succ 0.\)</span> The iteration for the conditional mean <span class="math inline">\(m_n\)</span> and covariance matrix <span class="math inline">\(C_{n}\)</span> characterizing the distribution of <span class="math inline">\(\theta_n|Y_n\)</span> converges exponentially fast to the posterior mean, <span class="math inline">\(m_{\rm post},\)</span> and covariance, <span class="math inline">\(C_{\rm post}.\)</span></p>
+<p>Assume that the prior covariance matrix <span class="math inline">\(\Sigma_{0} \succ 0\)</span> and initial covariance matrix <span class="math inline">\(C_{0} \succ 0.\)</span> The iteration for the conditional mean <span class="math inline">\(m_n\)</span> and covariance matrix <span class="math inline">\(C_{n}\)</span> characterizing the distribution of <span class="math inline">\(\theta_n|Y_n\)</span> converges exponentially fast to the posterior mean, <span class="math inline">\(m_{\mathrm{post}},\)</span> and covariance, <span class="math inline">\(C_{\mathrm{post}}.\)</span></p>
 </div>
 </div>
 <p><strong>Reference</strong></p>
-<p>Please see <a href="https://arxiv.org/abs/2204.04386">Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems</a>, the arXiv version of <span class="citation" data-cites="Huang2022">(<a href="#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>.</p>
+<p>Please see <a href="https://arxiv.org/abs/2204.04386">Efficient Derivative-free Bayesian Inference for Large-Scale Inverse Problems</a>, the arXiv version of <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>.</p>
 <p><strong>Note</strong></p>
-<p>This result has been recently extended to near-Gaussian, nonlinear cases in <span class="citation" data-cites="carrillo2024statistical">(<a href="#ref-carrillo2024statistical" role="doc-biblioref">Carrillo et al. 2024a</a>)</span> and<br>
-<span class="citation" data-cites="carrillo2024mean">(<a href="#ref-carrillo2024mean" role="doc-biblioref">Carrillo et al. 2024b</a>)</span>.</p>
+<p>This result has been recently extended to near-Gaussian, nonlinear cases in <span class="citation" data-cites="carrillo2024statistical">(<a href="../index.html#ref-carrillo2024statistical" role="doc-biblioref">Carrillo et al. 2024a</a>)</span> and <span class="citation" data-cites="carrillo2024mean">(<a href="../index.html#ref-carrillo2024mean" role="doc-biblioref">Carrillo et al. 2024b</a>)</span>.</p>
 </section>
 <section id="algorithms-eki-etki" class="level2" data-number="17.3">
 <h2 data-number="17.3" class="anchored" data-anchor-id="algorithms-eki-etki"><span class="header-section-number">17.3</span> Algorithms: EKI, ETKI</h2>
@@ -460,34 +456,32 @@ EKI
 \hat{m}_{n+1} = m_n, \quad  
 \hat{\theta}^j_{n+1} = \hat{m}_{n+1} + \sqrt{\frac{1}{1-\Delta \tau}} \left(  \theta_n^j - m_n \right)
 \]</span></li>
-<li>Analysis step: <span class="math display">\[
-\begin{align*}
+<li>Analysis step:</li>
+</ul>
+<p><span class="math display">\[\begin{align*}
 &amp;\hat{x}_{n+1}^{j} = \mathcal{F}(\hat{\theta}_{n+1}^{j}) , \qquad \hat{x}_{n+1} = \frac{1}{J}\sum_{j=1}^{J}\hat{x}_{n+1}^{j},\\
 &amp;\hat{C}_{n+1}^{\theta x} = \frac{1}{J-1}\sum_{j=1}^{J}(\hat{\theta}_{n+1}^{j} - \hat{m}_{n+1})(\hat{x}_{n+1}^{j} - \hat{x}_{n+1})^\mathrm{T} , \\
 &amp;\hat{C}_{n+1}^{xx} = \frac{1}{J-1}\sum_{j=1}^{J}(\hat{x}_{n+1}^{j} - \hat{x}_{n+1})(\hat{x}_{n+1}^{j} - \hat{x}_{n+1})^\mathrm{T} +\Sigma_{\nu,n+1}, \\
 &amp;\theta_{n+1}^{j} = \hat{\theta}_{n+1}^{j} + \hat{C}_{n+1}^{\theta x}\left(\hat{C}_{n+1}^{xx}\right)^{-1}(x - \hat{x}_{n+1}^{j} - \nu_{n+1}^{j}),\\
 &amp;m_{n+1} = \frac{1}{J} \sum_{j=1}^{J} \theta_{n+1}^{j} ,
-\end{align*}
-\]</span> where <span class="math inline">\(\nu_{n+1}^{j} \sim \mathcal{N}(0,\Sigma_{\nu,n+1}).\)</span></li>
-</ul>
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(\nu_{n+1}^{j} \sim \mathcal{N}(0,\Sigma_{\nu,n+1}).\)</span></p>
 </div>
 </div>
 <p>A few remarks.</p>
 <ol type="1">
 <li>The covariance update equation, <span class="math display">\[
-C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) {\hat{C}_{n+1}^{\theta x}}^\mathrm{T}
+C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
 \]</span> does not hold here. This will be remedied by the ETKF.</li>
 <li>The factor <span class="math inline">\(\sqrt{1/(1-\Delta \tau)}\)</span> produces <em>covariance inflation</em> and prevents filter collapse.</li>
 <li>In the analysis step, noise is added in the <span class="math inline">\(\theta\)</span> update instead of in the <span class="math inline">\(\hat{x}\)</span> step to ensure symmetry and positive-definiteness of <span class="math inline">\(\hat{C}_{n+1}^{xx}.\)</span></li>
 </ol>
-<p>For the ensemble transform filter (described above in <a href="#sec-ensrf" class="quarto-xref"><span class="quarto-unresolved-ref">sec-ensrf</span></a>), we need to define some matrix square roots for the covariance matrices <span class="math inline">\(\hat{C}_{n+1}^{xx}\)</span> and <span class="math inline">\(\hat{C}_{n+1}^{\theta x},\)</span> as follows. We denote the matrix square roots <span class="math inline">\(\hat{Z}_{n+1},\, Z_{n+1} \in \mathbb{R}^{N_{\theta}\times J}\)</span> of <span class="math inline">\(\hat{C}_{n+1}^{\theta x},\,C_{n+1}^{\theta x}\)</span> and <span class="math inline">\(\hat{\mathcal{Y}}_{n+1}\)</span> of <span class="math inline">\(\hat{C}_{n+1}^{x x},\)</span> and define,</p>
-<p><span class="math display">\[
-\begin{align*}
+<p>For the ensemble transform filter (described above in <a href="032EnSRF.html#sec-ensrf" class="quarto-xref"><span>Section 15.3</span></a>), we need to define some matrix square roots for the covariance matrices <span class="math inline">\(\hat{C}_{n+1}^{xx}\)</span> and <span class="math inline">\(\hat{C}_{n+1}^{\theta x},\)</span> as follows. We denote the matrix square roots <span class="math inline">\(\hat{Z}_{n+1},\, Z_{n+1} \in \mathbb{R}^{N_{\theta}\times J}\)</span> of <span class="math inline">\(\hat{C}_{n+1}^{\theta x},\,C_{n+1}^{\theta x}\)</span> and <span class="math inline">\(\hat{\mathcal{Y}}_{n+1}\)</span> of <span class="math inline">\(\hat{C}_{n+1}^{x x},\)</span> and define,</p>
+<p><span class="math display">\[\begin{align*}
     \hat{Z}_{n+1} &amp;= \frac{1}{\sqrt{J-1}}\Big(\hat{\theta}_{n+1}^{1} - \hat{m}_{n+1}\quad \hat{\theta}_{n+1}^{2} - \hat{m}_{n+1}\quad...\quad\hat{\theta}_{n+1}^{J} - \hat{m}_{n+1} \Big),\\
     Z_{n+1} &amp;= \frac{1}{\sqrt{J-1}}\Big(\theta_{n+1}^{1} - m_{n+1}\quad \theta_{n+1}^{2} - m_{n+1}\quad...\quad\theta_{n+1}^{J} - m_{n+1} \Big),\\
     \hat{\mathcal{Y}}_{n+1} &amp;= \frac{1}{\sqrt{J-1}}\Big(\hat{x}_{n+1}^{1} - \hat{x}_{n+1}\quad \hat{x}_{n+1}^{2} - \hat{x}_{n+1}\quad...\quad\hat{x}_{n+1}^{J} - \hat{x}_{n+1} \Big).
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 <div class="callout callout-style-default callout-tip no-icon callout-titled" title="ETKI">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -501,39 +495,33 @@ ETKI
 <ul>
 <li>Prediction step :</li>
 </ul>
-<p><span class="math display">\[
-\begin{align*}
+<p><span class="math display">\[\begin{align*}
 \hat{\theta}_{n+1}^{j} &amp;= \theta_{n}^{j}  + \omega_{n+1}^{j},\\
 \hat{m}_{n+1} &amp;= \frac{1}{J}\sum_{j=1}^{J}\hat{\theta}_{n+1}^{j}
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 <ul>
 <li>Analysis step :</li>
 </ul>
-<p><span class="math display">\[
-\begin{align*}
+<p><span class="math display">\[\begin{align*}
 &amp;m_{n+1} = \hat{m}_{n+1} + \hat{C}_{n+1}^{\theta x}\left(\hat{C}_{n+1}^{xx}\right)^{-1}(x - \hat{x}_{n+1})\\
 &amp;Z_{n+1} = \hat{Z}_{n+1} T
-\end{align*}
-\]</span> where <span class="math inline">\(T = P(\Gamma + I)^{-\frac{1}{2}}P^\mathrm{T}\)</span>, with <span class="math display">\[
-\begin{align*}
+\end{align*}\]</span></p>
+<p>where <span class="math inline">\(T = P(\Gamma + I)^{-\frac{1}{2}}P^\mathrm{T}\)</span>, with</p>
+<p><span class="math display">\[\begin{align*}
 \textrm{SVD:} \quad \hat{\mathcal{Y}}_{n+1} \Sigma_{\nu,n+1}^{-1} \hat{\mathcal{Y}}_{n+1} = P\Gamma P^\mathrm{T}
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 <p><strong>Remark</strong></p>
 <p>When <span class="math inline">\(\Sigma_{\omega} = \gamma C_n\)</span>, the prediction step can be treated deterministically, as follows,</p>
-<p><span class="math display">\[
-\begin{align*}
+<p><span class="math display">\[\begin{align*}
 \hat{m}_{n+1} &amp;= m_n \\
 \hat{\theta}_{n+1}^{j} &amp;= \hat{m}_{n+1} + \sqrt{1 + \gamma} \; (\theta_n^{j} - m_n)\\
-\end{align*}
-\]</span></p>
+\end{align*}\]</span></p>
 </div>
 </div>
 </section>
 <section id="conclusions" class="level2" data-number="17.4">
 <h2 data-number="17.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">17.4</span> Conclusions</h2>
-<p>Kalman-based inversion has been widely used to construct derivative-free optimization and s ampling methods for nonlinear inverse problems. In the paper <span class="citation" data-cites="Huang2022">(<a href="#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, the authors developed new Kalman-based inversion methods, for Bayesian inference and uncertainty quantification, which build on the work in both optimization and sampling. They propose a new method for Bayesian inference based on filtering a novel mean-field dynamical system subject to partial noisy observations, and which depends on the law of its own filtering distribution, together with application of the Kalman methodology. Theoretical guarantees are presented: for linear inverse problems, the mean and covariance obtained by the method converge exponentially fast to the posterior mean and covariance. For nonlinear inverse problems, numerical studies indicate the method delivers an excellent approximation of the posterior distribution for problems which are not too far from Gaussian.</p>
+<p>Kalman-based inversion has been widely used to construct derivative-free optimization and s ampling methods for nonlinear inverse problems. In the paper <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, the authors developed new Kalman-based inversion methods, for Bayesian inference and uncertainty quantification, which build on the work in both optimization and sampling. They propose a new method for Bayesian inference based on filtering a novel mean-field dynamical system subject to partial noisy observations, and which depends on the law of its own filtering distribution, together with application of the Kalman methodology. Theoretical guarantees are presented: for linear inverse problems, the mean and covariance obtained by the method converge exponentially fast to the posterior mean and covariance. For nonlinear inverse problems, numerical studies indicate the method delivers an excellent approximation of the posterior distribution for problems which are not too far from Gaussian.</p>
 <p>In terms of performance:</p>
 <ol type="1">
 <li>The methods are shown to be superior to existing coupling/transport methods, collectively known as iterative Kalman methods.</li>
@@ -541,7 +529,7 @@ ETKI
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-Stuart2022" class="csl-entry" role="listitem">
 Calvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022. <span>“Ensemble <span>Kalman</span> <span>Methods</span>: <span>A</span> <span>Mean</span> <span>Field</span> <span>Perspective</span>.”</span> arXiv (to appear in Acta Numerica 2025). <a href="http://arxiv.org/abs/2209.11371">http://arxiv.org/abs/2209.11371</a>.
 </div>

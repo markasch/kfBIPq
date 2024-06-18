@@ -347,13 +347,11 @@ window.Quarto = {
     \end{array}\right],
 \]</span></p>
 <p>where the <span class="math inline">\(\theta\)</span> is the angle, <span class="math inline">\(\omega\)</span> the angular velocity and <span class="math inline">\(a\)</span> the amplitude of the sine function. The model is then</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
 \frac{\mathrm{d} \theta}{\mathrm{d}t} &amp;=  \omega \\
 \frac{\mathrm{d} \omega}{\mathrm{d}t} &amp;=  w_{\omega}(t) \\
 \frac{\mathrm{d} a}{\mathrm{d}t} &amp;=  w_a(t)
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>In matrix form, we have</p>
 <p><span class="math display">\[
   \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = F \mathbf{x}(t) + L \mathbf{w}(t) , \quad \mathbf{x}(0) = \mathbf{x}_0,
@@ -369,12 +367,10 @@ L =  \begin{bmatrix} 0 &amp; 0\\ 1 &amp; 0 \\ 0 &amp; 1  \end{bmatrix}, \quad
 Q^c = \begin{bmatrix} q_1 &amp; 1\\ 0 &amp; q_2 \end{bmatrix}.
 \]</span></p>
 <p>Using the matrix exponential formulas (see <a href="./KF-tutorial.ipynb">KF-tutorial</a>), we get the discrete system</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
 \mathbf{x}_{k+1 } &amp;= A_k  \mathbf{x}_{k} + \mathbf{q}_{k}, \\
 y_k &amp;= a_k \sin \theta_k + r_k
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>where <span class="math inline">\(r_k \sim \mathcal{N}(0, \sigma_r)\)</span> is univariate Gaussian noise,</p>
 <p><span class="math display">\[
 A_k = \begin{bmatrix} 0 &amp; \Delta t &amp; 0\\ 0 &amp; 1 &amp; 0 \\  0 &amp; 0 &amp; 1 \end{bmatrix},

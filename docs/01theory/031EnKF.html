@@ -361,25 +361,21 @@ window.Quarto = {
 <h2 data-number="11.1" class="anchored" data-anchor-id="stochastic-enkf---linear-observation-operator"><span class="header-section-number">11.1</span> Stochastic EnKF - linear observation operator</h2>
 <section id="predictionforecast" class="level3" data-number="11.1.1">
 <h3 data-number="11.1.1" class="anchored" data-anchor-id="predictionforecast"><span class="header-section-number">11.1.1</span> Prediction/Forecast</h3>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
 \hat{v}_{k+1}^{n} &amp;= \Psi ( {v}_{k}^{n} ) +  \xi_{k}^{n} , \quad n=1, \ldots, N, \\
-\hat{m}_{k+1} &amp; =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n}  \\
-\hat{C}_{k+1} &amp; = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
-                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}
-\end{align}
-\]</span></p>
+\hat{m}_{k+1}     &amp; =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n} , \\
+\hat{C}_{k+1}     &amp; = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
+                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}.
+\end{align}\]</span></p>
 </section>
 <section id="correctionanalysis" class="level3" data-number="11.1.2">
 <h3 data-number="11.1.2" class="anchored" data-anchor-id="correctionanalysis"><span class="header-section-number">11.1.2</span> Correction/Analysis</h3>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
   {S}_{k+1} &amp;= H \hat{C}_{k+1} H^{\mathrm{T}} + \Gamma ,\\
   {K}_{k+1} &amp;= \hat{C}_{k+1} H^{\mathrm{T}} {S}_{k+1}^{-1} , \\
   {y}_{k+1}^{n} &amp;= {y}_{k+1} + \eta^n_{k+1} , \quad n=1, \ldots, N, \\
   {v}_{k+1}^{n} &amp;= (I - K_{k+1}H )\hat{v}_{k+1}^{n} + K_{k+1} y^n_{k+1} , \quad n=1, \ldots, N.
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>Alternatively, defining the innovation <span class="math inline">\(d = {y}_{k+1}^{n} - H \hat{v}_{k+1}^{n},\)</span> we can write the state update more simply as</p>
 <p><span class="math display">\[
   {v}_{k+1}^{n} = \hat{v}_{k+1}^{n} + K_{k+1} d .
@@ -402,12 +398,10 @@ window.Quarto = {
 <section id="full-nonlinear-formulation-of-the-ensemble-kalman-filter" class="level2" data-number="11.2">
 <h2 data-number="11.2" class="anchored" data-anchor-id="full-nonlinear-formulation-of-the-ensemble-kalman-filter"><span class="header-section-number">11.2</span> Full nonlinear formulation of the ensemble Kalman filter</h2>
 <p>There are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
 x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
-{y}_{k+1}    &amp;=  \mathcal{H} (x_{k+1}) +  v_{k+1}.  \\
-\end{align}
-\]</span></p>
+{y}_{k+1}    &amp;=  \mathcal{H} (x_{k+1}) +  v_{k+1}.
+\end{align}\]</span></p>
 <p>To fix notation:</p>
 <ul>
 <li>state forecast <span class="math inline">\(X^f,\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
@@ -421,10 +415,10 @@ x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \
 \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
 \]</span></p>
 <p>with</p>
-<p><span class="math display">\[  \begin{align}
-S &amp;= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
-D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
-\end{align} \]</span></p>
+<p><span class="math display">\[\begin{align}
+   S &amp;= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
+   D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
+\end{align}\]</span></p>
 <p>where <span class="math inline">\(y \sim \mathcal{N}(0,R)\)</span> is the stochastic perturbation, and <span class="math inline">\(R\)</span> is the measurement noise covariance matrix.</p>
 <p>Or, defining the Kalman gain matrix as</p>
 <p><span class="math display">\[

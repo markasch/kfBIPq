@@ -389,12 +389,10 @@ window.Quarto = {
 </figure>
 </div>
 <p>Assume that a car is represented by a point mass at its centre <span class="math inline">\((x_1, x_2),\)</span> and moves in the <span class="math inline">\(x_1\)</span>-<span class="math inline">\(x_2\)</span> plane subject to noisy forces <span class="math inline">\(g_1(t),\)</span> <span class="math inline">\(g_2(t).\)</span> Then, according to Newton’s law of motion, <span class="math inline">\(F=ma,\)</span> we can simply write <span class="math inline">\(g_i(t)=ma_i(t),\)</span> where <span class="math inline">\(a_i = \ddot{x_i}.\)</span> Now, since <span class="math inline">\(g_i(t)\)</span> are badly known, or unknown, we can model <span class="math inline">\(g_i(t)/m\)</span> as random processes, and more precisely as independent, white noise (Wiener) processes. We thus obtain the 2nd order system</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
    \ddot{x}_1 &amp;= w_1(t), \\
    \ddot{x}_2 &amp;= w_2(t),
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>where <span class="math inline">\(w_i \sim \mathcal{N} ( 0, \sigma^2_{w_{i}} ).\)</span> Defining the velocities, <span class="math inline">\(x_3 = \dot{x}_1,\)</span> and <span class="math inline">\(x_4 = \dot{x}_2,\)</span> we can write this as a first order system,</p>
 <p><span class="math display">\[ \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = F \mathbf{x} + L \mathbf{w} , \quad \mathbf{x}(0) = \mathbf{x}_0,\]</span></p>
 <p>where</p>
@@ -426,12 +424,10 @@ Q = \begin{bmatrix} q_1 \Delta t^3 / 3  &amp; 0 &amp; q_1 \Delta t^2 / 2  &amp; 
 <section id="state-space-model" class="level2" data-number="7.1">
 <h2 data-number="7.1" class="anchored" data-anchor-id="state-space-model"><span class="header-section-number">7.1</span> State-space model</h2>
 <p>Assuming the above dynamics, and adding a noisy position measurement model, we obtain the linear state-space model</p>
-<p><span class="math display">\[
-\begin{align}
+<p><span class="math display">\[\begin{align}
   \mathbf{x}_{k+1 } &amp;= F  \mathbf{x}_{k} + \mathbf{q}_{k}, \quad \mathbf{q}_{k} \sim \mathcal{N} (0, Q), \\
    \mathbf{y}_{k+1 } &amp;= H \mathbf{x}_{k} + \mathbf{r}_{k}, \quad \mathbf{r}_{k} \sim \mathcal{N} (0, R),
-\end{align}
-\]</span></p>
+\end{align}\]</span></p>
 <p>with</p>
 <p><span class="math display">\[
   H = \begin{bmatrix} 1 &amp; 0 &amp; 0 &amp; 0\\  0 &amp; 1 &amp; 0 &amp; 0 \end{bmatrix}, \quad

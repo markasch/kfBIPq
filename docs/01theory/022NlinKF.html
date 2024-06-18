@@ -389,13 +389,14 @@ window.Quarto = {
 <section id="recall-kalman-filter-problem---general-formulation" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="recall-kalman-filter-problem---general-formulation"><span class="header-section-number">8.2</span> Recall: Kalman filter problem - general formulation</h2>
 <p>We present a very general formulation that will later be convenient for joint state and parameter estimation problems. Consider a discrete-time nonlinear dynamical system with noisy state transitions and noisy observations that are also noinlinear.</p>
+<p>We consider a discrete-time dynamical system with noisy state transitions and noisy observations.</p>
 <ul>
 <li><p>Dynamics:</p>
-<p><span class="math display">\[\quad v_{j+1} = \Psi(v_j) + \xi_j, \quad j \in \mathbb{Z}^+ \]</span></p></li>
+<p><span class="math display">\[v_{j+1} = \Psi(v_j) + \xi_j, \quad j \in \mathbb{Z}^+\]</span></p></li>
 <li><p>Observations:</p>
-<p><span class="math display">\[y_{j+1} = h (v_{j+1}) + \eta_{j+1}, \quad j \in \mathbb{Z}^+ \]</span></p></li>
+<p><span class="math display">\[y_{j+1} = h (v_{j+1}) + \eta_{j+1}, \quad j \in \mathbb{Z}^+\]</span></p></li>
 <li><p>Probability (densities):</p>
-<p><span class="math display">\[v_0 \sim \mathcal{N}(m_0,C_0), \quad \xi_j \sim \mathcal{N}(0,\Sigma),  \quad \eta_j \sim \mathcal{N}(0,\Gamma)\]</span></p></li>
+<p><span class="math display">\[v_0 \sim \mathcal{N}(m_0,C_0), \quad \xi_j \sim \mathcal{N}(0,\Sigma), \quad \eta_j \sim \mathcal{N}(0,\Gamma)\]</span></p></li>
 <li><p>Probability (independence):</p>
 <p><span class="math display">\[v_0 \perp {\xi_j} \perp {\eta_j}\]</span></p></li>
 <li><p>Operators:</p>
@@ -412,12 +413,10 @@ window.Quarto = {
 <li>all distributions are Gaussian.</li>
 </ul>
 <p>Suppose the Jacobian matrices of <span class="math inline">\(\Psi\)</span> and <span class="math inline">\(h\)</span> exist, and are denoted by</p>
-<p><span class="math display">\[
-\begin{eqnarray}
-   \Psi_x(v) &amp;= \left[ \frac{\partial \Psi}{\partial x} \right]_{x=m}\\
+<p><span class="math display">\[\begin{eqnarray}
+   \Psi_x(v) &amp;= \left[ \frac{\partial \Psi}{\partial x} \right]_{x=m},\\
    h_x(v)    &amp;= \left[ \frac{\partial h}{\partial x} \right]_{x=m}.
-\end{eqnarray}
-\]</span></p>
+\end{eqnarray}\]</span></p>
 <ol type="1">
 <li>Let <span class="math inline">\((m_j, C_j)\)</span> denote the mean and covariance of <span class="math inline">\(v_j \vert Y_j\)</span> and note that these entirely characterize the random variable since it is Gaussian.</li>
 <li>Let <span class="math inline">\((\hat{m}_{j+1}, \hat{C}_{j+1})\)</span> denote the mean and covariance of <span class="math inline">\(v_{j+1} \vert Y_j\)</span> and note that these entirely characterize the random variable since it is Gaussian.</li>
@@ -429,19 +428,15 @@ window.Quarto = {
 <ul>
 <li><p>P0: initialize <span class="math inline">\((m_0, C_0)\)</span> and compute <span class="math inline">\(v_0\)</span></p></li>
 <li><p>P1: predict the state, measurement</p>
-<p><span class="math display">\[
-   \begin{align}
+<p><span class="math display">\[\begin{align}
    v_{j+1} &amp;= \Psi (v_j) + \xi_j \\
    y_{j+1} &amp;= h (v_{j+1}) + \eta_{j+1}
-   \end{align}
-   \]</span></p></li>
+   \end{align}\]</span></p></li>
 <li><p>P2: predict the mean and covariance</p>
-<p><span class="math display">\[
-   \begin{align}
+<p><span class="math display">\[\begin{align}
    \hat{m}_{j+1}  &amp;= \Psi (m_j) \\
    \hat{C}_{j+1}  &amp;= \Psi_x C_j \Psi_x^{\mathrm{T}} + \Sigma
-   \end{align}
-   \]</span></p></li>
+   \end{align}\]</span></p></li>
 </ul>
 </section>
 <section id="correctionanalysis" class="level3" data-number="8.2.2">
@@ -455,12 +450,10 @@ window.Quarto = {
 <li><p>C3: compute the (optimal) Kalman gain</p>
 <p><span class="math display">\[ K_{j+1} = \hat{C}_{j+1} h_x^{\mathrm{T}}  S_{j+1}^{-1} \]</span></p></li>
 <li><p>C4: update/correct the mean and covariance</p>
-<p><span class="math display">\[
-   \begin{align}
+<p><span class="math display">\[\begin{align}
    {m}_{j+1}  &amp;= \hat{m}_{j+1} + K_{j+1} d_{j+1}, \\
    {C}_{j+1}  &amp;= \hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\mathrm{T}}.
-   \end{align}
-   \]</span></p></li>
+   \end{align}\]</span></p></li>
 </ul>
 </section>
 <section id="loop-over-time" class="level3" data-number="8.2.3">
@@ -474,12 +467,10 @@ window.Quarto = {
 <section id="state-space-formulation" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="state-space-formulation"><span class="header-section-number">8.3</span> State-space formulation</h2>
 <p>In classical filter theory, a state space formulation is usually used.</p>
-<p><span class="math display">\[
-\begin{eqnarray}
+<p><span class="math display">\[\begin{eqnarray}
 &amp;&amp; x_{k+1}  = f (x_k)  + w_k \\
 &amp;&amp; y_{k+1}  = h (x_k) + v_k,
-\end{eqnarray}
-\]</span></p>
+\end{eqnarray}\]</span></p>
 <p>where <span class="math inline">\(f\)</span> and <span class="math inline">\(h\)</span> are nonlinear, differentiable functions with Jacobian matrices <span class="math inline">\(D_f\)</span> and <span class="math inline">\(D_h\)</span> respectively, <span class="math inline">\(w_k \sim \mathcal{N}(0,Q),\)</span> <span class="math inline">\(v_k \sim \mathcal{N}(0,R).\)</span></p>
 <p>The 2-step filter:</p>
 <section id="initialization" class="level3" data-number="8.3.1">
@@ -488,24 +479,20 @@ window.Quarto = {
 </section>
 <section id="prediction" class="level3" data-number="8.3.2">
 <h3 data-number="8.3.2" class="anchored" data-anchor-id="prediction"><span class="header-section-number">8.3.2</span> 1. Prediction</h3>
-<p><span class="math display">\[
-\begin{eqnarray}
+<p><span class="math display">\[\begin{eqnarray}
 &amp;&amp; x_{k+1}^- = f (x_k) \\
 &amp;&amp; P_{k+1}^- = D_f P_k D_f^{\mathrm{T}} + Q
-\end{eqnarray}
-\]</span></p>
+\end{eqnarray}\]</span></p>
 </section>
 <section id="correction" class="level3" data-number="8.3.3">
 <h3 data-number="8.3.3" class="anchored" data-anchor-id="correction"><span class="header-section-number">8.3.3</span> 2. Correction</h3>
-<p><span class="math display">\[
-\begin{eqnarray}
+<p><span class="math display">\[\begin{eqnarray}
   K_{k+1} &amp;&amp; = P_{k+1}^{-} D_h^{\mathrm{T}} ( D_h  P_{k+1}^{-} D_h^{\mathrm{T}} + R )^{-1}
                  \quad (= P_{k+1}^- D_h^{\mathrm{T}} S^{-1}) \\
   x_{k+1} &amp;&amp;= x_{k+1}^{-} + K_{k+1} (y_{k+1} - h (x_{k+1}^-) ) \\
   P_{k+1} &amp;&amp;= (I -  K_{k+1} D_h ) P_{k+1}^-
             \quad (= P_{k+1}^- - K_{k+1} S K^{\mathrm{T}}_{k+1})
-\end{eqnarray}
-\]</span></p>
+\end{eqnarray}\]</span></p>
 </section>
 <section id="loop" class="level3" data-number="8.3.4">
 <h3 data-number="8.3.4" class="anchored" data-anchor-id="loop"><span class="header-section-number">8.3.4</span> Loop</h3>
