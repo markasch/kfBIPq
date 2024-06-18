@@ -439,14 +439,25 @@ Q=\left[\begin{array}{cc}
 q_{11}=q_{c}\frac{\Delta t^{3}}{3},\quad q_{12}=q_{21}=q_{c}\frac{\Delta t^{2}}{2},\quad q_{22}=q_{c}\Delta t,
 \]</span></p>
 <p>and <span class="math inline">\(q_c\)</span> is the continuous process noise spectral density.</p>
-<p>:::{admonition} Simulations :class: tip</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Simulations">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Simulations
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In the simulations, we take: (see also Extended Kalman Filter example)</p>
 <ul>
 <li>500 time steps with <span class="math inline">\(\Delta t = 0.01.\)</span></li>
 <li>Noise levels <span class="math inline">\(q_c=0.01\)</span> and <span class="math inline">\(R=0.1.\)</span></li>
 <li>Initial angle <span class="math inline">\(x_1 = 1.8\)</span> and initial angular velocity <span class="math inline">\(x_2 = 0.\)</span></li>
-<li>Initial diagonal state covariance of <span class="math inline">\(0.1.\)</span> :::</li>
+<li>Initial diagonal state covariance of <span class="math inline">\(0.1.\)</span></li>
 </ul>
+</div>
+</div>
 <div id="2ae938f6-cd20-4ce0-a2be-f002d5f6b341" class="cell" data-editable="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -704,10 +715,20 @@ q_{11}=q_{c}\frac{\Delta t^{3}}{3},\quad q_{12}=q_{21}=q_{c}\frac{\Delta t^{2}}{
 </div>
 </div>
 </div>
-<p>:::{admonition} Observations :class: warning</p>
+<div class="callout callout-style-default callout-important no-icon callout-titled" title="Observations">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Observations
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>The ensemble Kalman filter tracks rapidly, smoothly and accurately the noisy trajectory of the pendulum. This can be compared to the performance of the EKF (extended Kalman filter) in Example 2, Section 4, that was less accurate (took longer to catch up) and was more noisy.</p>
 <p>Note that the error/anomaly covariance elements, <span class="math inline">\(P_{ii},\)</span> are noisy, since they are empirically averaged quantities.</p>
-<p>:::</p>
+</div>
+</div>
 
 
 </section>

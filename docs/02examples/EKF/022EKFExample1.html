@@ -296,7 +296,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -379,7 +385,7 @@ Q_k = \begin{bmatrix} q_1 \Delta t^3 / 3   &amp; q_1 \Delta t^2 / 2  &amp; 0 \\
         q_1 \Delta t^2 / 2  &amp;  q_1 \Delta t  &amp; 0 \\
         0 &amp;   0 &amp;  q_2 \Delta t \end{bmatrix}.
 \]</span></p>
-<p>Finally, the Jacobian of $h(_{k}) = a_k _k $ is easily seen to be</p>
+<p>Finally, the Jacobian of <span class="math inline">\(h(\mathbf{x}_{k}) = a_k \sin \theta_k\)</span> is easily seen to be</p>
 <p><span class="math display">\[
   Dh_k = [ a_k \cos \theta_k \quad 0 \quad \sin \theta_k ]
 \]</span></p>

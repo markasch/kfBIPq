@@ -330,7 +330,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -453,14 +459,25 @@ q_{11}=q_{c}\frac{\Delta t^{3}}{3},\quad q_{12}=q_{21}=q_{c}\frac{\Delta t^{2}}{
 \mathbf{H}_{\mathbf{x}}=\left[\frac{\partial\mathcal{H}}{\partial\mathbf{x}}\right]_{\mathbf{x}=\mathbf{m}}=\left[\begin{array}{cc}
     \cos x_{1} &amp; 0\end{array}\right]_k.
 \]</span></p>
-<p>:::{admonition} Simulations :class: tip</p>
+<div class="callout callout-style-default callout-tip no-icon callout-titled" title="Simulations">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Simulations
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>In the simulations, we take:</p>
 <ul>
 <li>500 time steps with <span class="math inline">\(\Delta t = 0.01.\)</span></li>
 <li>Noise levels <span class="math inline">\(q_c=0.01\)</span> and <span class="math inline">\(R=0.1.\)</span></li>
 <li>Initial angle <span class="math inline">\(x_1 = 1.8\)</span> and initial angular velocity <span class="math inline">\(x_2 = 0.\)</span></li>
-<li>Initial diagonal state covariance of <span class="math inline">\(0.1.\)</span> :::</li>
+<li>Initial diagonal state covariance of <span class="math inline">\(0.1.\)</span></li>
 </ul>
+</div>
+</div>
 <p>Results are plotted in Figure. We notice that despite the very noisy, nonlinear measurements, the EKF rapidly approaches the true state and then tracks it extremely well.</p>
 <div id="dac04488-7d4e-4c5d-b015-ff6e24c3f714" class="cell" data-editable="true" data-slideshow="{&quot;slide_type&quot;:&quot;&quot;}" data-tags="[]" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
@@ -630,7 +647,23 @@ ERTS RMSE: 0.027612762479911554</code></pre>
 </section>
 <section id="conclusions-on-extended-kalman-filters" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="conclusions-on-extended-kalman-filters"><span class="header-section-number">10.3</span> Conclusions on Extended Kalman Filters</h2>
-<p>The pros and cons of the EKF are: - Pros: - Relative simplicity, based on well-known linearization methods. - Maintains the simple, elegant, and computationally efficient KF update equations. - Good performance for such a simple method. - Ability to treat nonlinear process and observation models. - Ability to treat both additive and more general nonlinear Gaussian noise. - Cons: - Performance can suffer in presence of strong nonlinearity because of the local validity of the linear approximation (valid for small perturbations around the linear term). - Cannot deal with non-Gaussian noise, such as discrete-valued random variables. - Requires differentiable process and measurement operators and evaluation of Jacobian matrices, which might be problematic in very high dimensions.</p>
+<p>The pros and cons of the EKF are:</p>
+<ul>
+<li><p>Pros:</p>
+<ul>
+<li>Relative simplicity, based on well-known linearization methods.</li>
+<li>Maintains the simple, elegant, and computationally efficient KF update equations.</li>
+<li>Good performance for such a simple method.</li>
+<li>Ability to treat nonlinear process and observation models.</li>
+<li>Ability to treat both additive and more general nonlinear Gaussian noise.</li>
+</ul></li>
+<li><p>Cons:</p>
+<ul>
+<li>Performance can suffer in presence of strong nonlinearity because of the local validity of the linear approximation (valid for small perturbations around the linear term).</li>
+<li>Cannot deal with non-Gaussian noise, such as discrete-valued random variables.</li>
+<li>Requires differentiable process and measurement operators and evaluation of Jacobian matrices, which might be problematic in very high dimensions.</li>
+</ul></li>
+</ul>
 <p>In spite of this, the EKF remains a solid filter and remains the basis of most GPS and navigation systems.</p>
 </section>
 <section id="references" class="level2" data-number="10.4">

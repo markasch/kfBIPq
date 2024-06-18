@@ -330,7 +330,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -446,7 +452,7 @@ window.Quarto = {
 </div>
 <section id="implementation-of-the-kf" class="level2" data-number="5.1">
 <h2 data-number="5.1" class="anchored" data-anchor-id="implementation-of-the-kf"><span class="header-section-number">5.1</span> Implementation of the KF</h2>
-<p>Here is a straigthforward, matrix-based implementation of teh KF that follows exactly the thoeretical formulation above.</p>
+<p>Here is a straigthforward, matrix-based implementation of the KF that follows exactly the thoeretical formulation above.</p>
 <p>For more generality, below we will rewrite the Kalman filter as a class.</p>
 <div id="5def5e0d-2129-4f8e-b645-126699903460" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># scalar KF</span></span>
