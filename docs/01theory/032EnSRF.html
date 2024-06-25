@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -407,7 +427,7 @@ Idea
 \]</span></p>
 </div>
 </div>
-<p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies,</p>
+<p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies described in <a href="031EnKF.html#sec-EnKFNonLin" class="quarto-xref"><span>Section 11.2</span></a>,</p>
 <p><span class="math display">\[ K_n =  \frac{1}{N_e - 1} \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1},
 \]</span> where <span class="math display">\[ S = \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R.
 \]</span></p>
@@ -420,7 +440,7 @@ P_n^{\mathrm{a}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} T ( X'^{\mathrm{f}} T
 \end{align}\]</span> And, on the other hand, for the consistency, we require <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}}
      \left[ I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}}   \right] ( X'^{\mathrm{f}}  )^{\mathrm{T}},
 \]</span> where we have used the relations <span class="math display">\[\begin{align}
-  K &amp;=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
+  K                &amp;=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
   P_n^{\mathrm{f}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} \\
   Y'^{\mathrm{f}}  &amp;= H X'^{\mathrm{f}}.
 \end{align}\]</span></p>
@@ -429,29 +449,68 @@ T T^{\mathrm{T}}  &amp;= I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathr
                   &amp;=  I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  
                       \left( \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right)^{-1}  Y'^{\mathrm{f}}
 \end{align}\]</span></p>
-<p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula, <span class="math display">\[ (A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
+<p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula, <span class="math display">\[
+(A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
 \]</span></p>
-<p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = Y^{\mathrm{T}},\)</span> <span class="math inline">\(V=Y,\)</span> we obtain the simpler form of the square root condition <span class="math display">\[ T T^{\mathrm{T}}  = \left[I +  \frac{1}{N_e - 1}( Y'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  Y'^{\mathrm{f}} \right]^{-1}.
+<p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = Y^{\mathrm{T}},\)</span> <span class="math inline">\(V=Y,\)</span> we obtain the simpler form of the square root condition <span class="math display">\[
+T T^{\mathrm{T}}  = \left[I +  \frac{1}{N_e - 1}( Y'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  Y'^{\mathrm{f}} \right]^{-1}.
 \]</span> This form is the basis of the ETKF, or <em>transform filter.</em></p>
-<p>Finally, the square root <span class="math inline">\(T\)</span> can be obtained from the eigenvalue factorization, <span class="math display">\[  T T^{\mathrm{T}}  = (U \Sigma U^{\mathrm{T}})^{-1}
-\]</span> and thus <span class="math display">\[ T = U \Sigma^{-1/2} U^{\mathrm{T}}.
+<p>Finally, the square root <span class="math inline">\(T\)</span> can be obtained from the eigenvalue factorization, <span class="math display">\[  
+T T^{\mathrm{T}}  = (U \Sigma U^{\mathrm{T}})^{-1}
+\]</span> and thus <span class="math display">\[
+T = U \Sigma^{-1/2} U^{\mathrm{T}}.
 \]</span></p>
 <p>Note that <span class="math inline">\(T\)</span> is not unique, since for any orthogonal matrix <span class="math inline">\(\tilde{U},\)</span> the product <span class="math inline">\(T \tilde{U}\)</span> will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for <span class="math inline">\(T\)</span> and the resulting square root filters.</p>
-<p>It can be shown that in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that <span class="math inline">\(T\)</span> is symmetric, which is the case in the above derivation.</p>
+<p>It can be shown that, in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that <span class="math inline">\(T\)</span> is symmetric, which is the case in the above derivation.</p>
 </section>
 <section id="etkf-in-practice" class="level2" data-number="15.4">
 <h2 data-number="15.4" class="anchored" data-anchor-id="etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</h2>
 <p>There are a number of possible simplifications that render the filter</p>
 <ul>
-<li>unbiased</li>
-<li>non-collapsing</li>
-<li>computationally more stable</li>
-<li>computationally cheaper</li>
+<li>unbiased,</li>
+<li>non-collapsing,</li>
+<li>computationally more stable,</li>
+<li>computationally cheaper.</li>
 </ul>
-<p>One pathway is to scale the forecast observation ensemble perturbation matrix <span class="math inline">\(Y^{\mathrm{f}}\)</span> to normalize the standard deviation, which then equals one, and thus reduce loss of accuracy due to roundoff errors.</p>
+<p>One pathway is to scale the forecast observation ensemble perturbation matrix <span class="math inline">\(Y^{\mathrm{f}}\)</span> so as to normalize the standard deviation—which then equals one—and thus reduce loss of accuracy due to roundoff errors.</p>
 <p>A second path is to avoid the eigenvalue decompostion of <span class="math inline">\(T T^{\mathrm{T}}\)</span> and replace it by an SVD of <span class="math inline">\(T\)</span> alone. This is particularly advantageous in high dimensions and in the presence of bad conditioning.</p>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Asch2022" class="csl-entry" role="listitem">
+Asch, Mark. 2022. <em>A <span>Toolbox</span> for <span>Digital</span> <span>Twins</span>: <span>From</span> <span>Model</span>-<span>Based</span> to <span>Data</span>-<span>Driven</span></em>. Philadelphia, PA: Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611976977">https://doi.org/10.1137/1.9781611976977</a>.
+</div>
+<div id="ref-Asch2016" class="csl-entry" role="listitem">
+Asch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. <em>Data <span>Assimilation</span>: <span>Methods</span>, <span>Algorithms</span>, and <span>Applications</span></em>. Philadelphia, PA: Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611974546">https://doi.org/10.1137/1.9781611974546</a>.
+</div>
+<div id="ref-Stuart2022" class="csl-entry" role="listitem">
+Calvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022. <span>“Ensemble <span>Kalman</span> <span>Methods</span>: <span>A</span> <span>Mean</span> <span>Field</span> <span>Perspective</span>.”</span> arXiv (to appear in Acta Numerica 2025). <a href="http://arxiv.org/abs/2209.11371">http://arxiv.org/abs/2209.11371</a>.
+</div>
+<div id="ref-carrillo2024statistical" class="csl-entry" role="listitem">
+Carrillo, J. A., F. Hoffmann, A. M. Stuart, and U. Vaes. 2024a. <span>“Statistical Accuracy of Approximate Filtering Methods.”</span> <a href="https://arxiv.org/abs/2402.01593">https://arxiv.org/abs/2402.01593</a>.
+</div>
+<div id="ref-carrillo2024mean" class="csl-entry" role="listitem">
+———. 2024b. <span>“The Mean Field Ensemble Kalman Filter: Near-Gaussian Setting.”</span> <a href="https://arxiv.org/abs/2212.13239">https://arxiv.org/abs/2212.13239</a>.
+</div>
+<div id="ref-Stuart2015" class="csl-entry" role="listitem">
+Dashti, Masoumeh, and Andrew M. Stuart. 2015. <span>“The <span>Bayesian</span> <span>Approach</span> to <span>Inverse</span> <span>Problems</span>.”</span> In <em>Handbook of <span>Uncertainty</span> <span>Quantification</span></em>, edited by Roger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-11259-6_7-1">https://doi.org/10.1007/978-3-319-11259-6_7-1</a>.
+</div>
+<div id="ref-Huang2022" class="csl-entry" role="listitem">
+Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M Stuart. 2022. <span>“Efficient Derivative-Free Bayesian Inference for Large-Scale Inverse Problems.”</span> <em>Inverse Problems</em> 38 (12): 125006. <a href="https://doi.org/10.1088/1361-6420/ac99fa">https://doi.org/10.1088/1361-6420/ac99fa</a>.
+</div>
+<div id="ref-Stuart2013" class="csl-entry" role="listitem">
+Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
+</div>
+<div id="ref-LSZ2015" class="csl-entry" role="listitem">
+Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+<div id="ref-Sarkka2023" class="csl-entry" role="listitem">
+Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 2nd ed. Institute of Mathematical Statistics Textbooks. Cambridge University Press. <a href="https://doi.org/10.1017/9781108917407">https://doi.org/10.1017/9781108917407</a>.
+</div>
+<div id="ref-wu2023learning" class="csl-entry" role="listitem">
+Wu, Jin-Long, Matthew E. Levine, Tapio Schneider, and Andrew Stuart. 2023. <span>“Learning about Structural Errors in Models of Complex Dynamical Systems.”</span> <a href="https://arxiv.org/abs/2401.00035">https://arxiv.org/abs/2401.00035</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
