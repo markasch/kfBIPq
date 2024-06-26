@@ -340,7 +340,8 @@ window.Quarto = {
   <li><a href="#the-filtering-problem." id="toc-the-filtering-problem." class="nav-link active" data-scroll-target="#the-filtering-problem."><span class="header-section-number">15.1</span> The filtering problem.</a></li>
   <li><a href="#recall-ensemble-kalman-filter-enkf" id="toc-recall-ensemble-kalman-filter-enkf" class="nav-link" data-scroll-target="#recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</a></li>
   <li><a href="#sec-ensrf" id="toc-sec-ensrf" class="nav-link" data-scroll-target="#sec-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</a></li>
-  <li><a href="#etkf-in-practice" id="toc-etkf-in-practice" class="nav-link" data-scroll-target="#etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</a></li>
+  <li><a href="#etkf-algorithm" id="toc-etkf-algorithm" class="nav-link" data-scroll-target="#etkf-algorithm"><span class="header-section-number">15.4</span> ETKF Algorithm</a></li>
+  <li><a href="#etkf-in-practice" id="toc-etkf-in-practice" class="nav-link" data-scroll-target="#etkf-in-practice"><span class="header-section-number">15.5</span> ETKF in practice</a></li>
   </ul>
 </nav>
     </div>
@@ -423,49 +424,78 @@ Idea
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Update the ensemble to preserve the covariance that is consistent with the KF <em>theoretical</em> covariance <span class="math display">\[ P_n^{\mathrm{a}} = (I - K_n H) P_n^{\mathrm{f}}.
+<p>Update the ensemble to preserve a covariance that is consistent with the KF <em>theoretical</em> covariance <span class="math display">\[ P_n^{\mathrm{a}} = (I - K_n H) P_n^{\mathrm{f}}.
 \]</span></p>
 </div>
 </div>
 <p>Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies described in <a href="031EnKF.html#sec-EnKFNonLin" class="quarto-xref"><span>Section 11.2</span></a>,</p>
-<p><span class="math display">\[ K_n =  \frac{1}{N_e - 1} \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1},
-\]</span> where <span class="math display">\[ S = \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R.
+<p><span class="math display">\[ K =  \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1},
+\]</span> where <span class="math display">\[ S = \mathbf{Y}'^{\mathrm{f}} ( \mathbf{Y}'^{\mathrm{f}} )^{\mathrm{T}} +  R.
 \]</span></p>
-<p>Then, to compute the posterior variance, we need to evaluate <span class="math display">\[ P_n^{\mathrm{a}} =  \frac{1}{N_e - 1} X'^{\mathrm{a}} ( X'^{\mathrm{a}} )^{\mathrm{T}}.
+<p>Then, to compute the posterior variance, we need to evaluate <span class="math display">\[ P_n^{\mathrm{a}} =   \mathbf{X}'^{\mathrm{a}} (  \mathbf{X}'^{\mathrm{a}} )^{\mathrm{T}}.
 \]</span></p>
-<p>So supposing there is a transform matrix, <span class="math inline">\(T,\)</span> such that <span class="math display">\[  X'^{\mathrm{a}} =  X'^{\mathrm{f}} T,
+<p>So supposing there is a transform matrix, <span class="math inline">\(T,\)</span> such that <span class="math display">\[   \mathbf{X}'^{\mathrm{a}} =   \mathbf{X}'^{\mathrm{f}} T,
 \]</span> we can substitute in the definition of <span class="math inline">\(P_n^{\mathrm{a}}\)</span> to obtain <span class="math display">\[\begin{align}
-P_n^{\mathrm{a}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} T ( X'^{\mathrm{f}} T )^{\mathrm{T}} \\
-                 &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} (T T^{\mathrm{T}} ) ( X'^{\mathrm{f}}  )^{\mathrm{T}}.
-\end{align}\]</span> And, on the other hand, for the consistency, we require <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}}
-     \left[ I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}}   \right] ( X'^{\mathrm{f}}  )^{\mathrm{T}},
+P_n^{\mathrm{a}} &amp;=  \mathbf{X}'^{\mathrm{f}} T (  \mathbf{X}'^{\mathrm{f}} T )^{\mathrm{T}} \\
+                 &amp;=  \mathbf{X}'^{\mathrm{f}} (T T^{\mathrm{T}} ) (  \mathbf{X}'^{\mathrm{f}}  )^{\mathrm{T}}.
+\end{align}\]</span> And, on the other hand, for the consistency, we require <span class="math display">\[ (I - K_n H) P_n^{\mathrm{f}} =   \mathbf{X}'^{\mathrm{f}}
+     \left[ I - (  \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}   \mathbf{Y}'^{\mathrm{f}}   \right] (  \mathbf{X}'^{\mathrm{f}}  )^{\mathrm{T}},
 \]</span> where we have used the relations <span class="math display">\[\begin{align}
   K                &amp;=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
-  P_n^{\mathrm{f}} &amp;=  \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} \\
-  Y'^{\mathrm{f}}  &amp;= H X'^{\mathrm{f}}.
+  P_n^{\mathrm{f}} &amp;=    \mathbf{X}'^{\mathrm{f}} (  \mathbf{X}'^{\mathrm{f}} )^{\mathrm{T}} \\
+   \mathbf{Y}'^{\mathrm{f}}  &amp;= H  \mathbf{X}'^{\mathrm{f}}.
 \end{align}\]</span></p>
 <p>Hence, <span class="math inline">\(T\)</span> must satisfy the so-called <em>square root condition</em>, <span class="math display">\[\begin{align}
-T T^{\mathrm{T}}  &amp;= I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  Y'^{\mathrm{f}} \\
-                  &amp;=  I - ( Y'^{\mathrm{f}})^{\mathrm{T}}  
-                      \left( \frac{1}{N_e - 1} Y'^{\mathrm{f}} ( Y'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right)^{-1}  Y'^{\mathrm{f}}
+T T^{\mathrm{T}}  &amp;= I - (  \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  \mathbf{Y}'^{\mathrm{f}} \\
+                  &amp;= I - ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}   
+                     \left[ \mathbf{Y}'^{\mathrm{f}} ( \mathbf{Y}'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right]^{-1}  \mathbf{Y}'^{\mathrm{f}}
 \end{align}\]</span></p>
 <p>We can replace the inversion of <span class="math inline">\(S\)</span> by the much simpler and more stable inversion of the diagonal measurement error covariance <span class="math inline">\(R\)</span> using the Sherman-Woodbury-Morrison formula, <span class="math display">\[
 (A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
 \]</span></p>
-<p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = Y^{\mathrm{T}},\)</span> <span class="math inline">\(V=Y,\)</span> we obtain the simpler form of the square root condition <span class="math display">\[
-T T^{\mathrm{T}}  = \left[I +  \frac{1}{N_e - 1}( Y'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  Y'^{\mathrm{f}} \right]^{-1}.
-\]</span> This form is the basis of the ETKF, or <em>transform filter.</em></p>
-<p>Finally, the square root <span class="math inline">\(T\)</span> can be obtained from the eigenvalue factorization, <span class="math display">\[  
+<p>Identifying <span class="math inline">\(A=I,\)</span> <span class="math inline">\(C = R^{-1},\)</span> <span class="math inline">\(U = \mathbf{Y}^{\mathrm{T}},\)</span> <span class="math inline">\(V=\mathbf{Y},\)</span> we obtain the simpler form of the square root condition <span id="eq-sqrt-condition"><span class="math display">\[
+T T^{\mathrm{T}}  = \left[I +  ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  \mathbf{Y}'^{\mathrm{f}} \right]^{-1}.
+\tag{15.1}\]</span></span> This form is the basis of the ETKF, or <em>transform filter.</em></p>
+<p>Finally, the square root <span class="math inline">\(T\)</span> can be obtained from the eigenvalue factorization, <span id="eq-sqrt-factor"><span class="math display">\[  
 T T^{\mathrm{T}}  = (U \Sigma U^{\mathrm{T}})^{-1}
-\]</span> and thus <span class="math display">\[
+\tag{15.2}\]</span></span> and thus <span class="math display">\[
 T = U \Sigma^{-1/2} U^{\mathrm{T}}.
 \]</span></p>
 <p>Note that <span class="math inline">\(T\)</span> is not unique, since for any orthogonal matrix <span class="math inline">\(\tilde{U},\)</span> the product <span class="math inline">\(T \tilde{U}\)</span> will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for <span class="math inline">\(T\)</span> and the resulting square root filters.</p>
 <p>It can be shown that, in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that <span class="math inline">\(T\)</span> is symmetric, which is the case in the above derivation.</p>
 </section>
-<section id="etkf-in-practice" class="level2" data-number="15.4">
-<h2 data-number="15.4" class="anchored" data-anchor-id="etkf-in-practice"><span class="header-section-number">15.4</span> ETKF in practice</h2>
-<p>There are a number of possible simplifications that render the filter</p>
+<section id="etkf-algorithm" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="etkf-algorithm"><span class="header-section-number">15.4</span> ETKF Algorithm</h2>
+<p>The ensemble transform Kalman filter is one possible implementation of a square root filter. For greater generality, we will use the consistent formulation of <span class="citation" data-cites="vetra2018">(<a href="../index.html#ref-vetra2018" role="doc-biblioref">Sanita Vetra-Carvalho and Beckers 2018</a>)</span>. The analysis update is given by the general, linear transformation <span class="math display">\[
+   \mathbf{X}^{\mathrm{a}} = \overline{\mathbf{X}}^{\mathrm{f}} + \mathbf{X}'^{\mathrm{f}} (\overline{W} + W'),
+\]</span> where the anomaly weight matrix, <span class="math inline">\(W',\)</span> is computed from the square root condition (<a href="#eq-sqrt-condition" class="quarto-xref">Equation&nbsp;<span>15.1</span></a>), and the weight matrix, <span class="math inline">\(\overline{W},\)</span> is obtained from the formula for the Kalman gain matrix expressed in terms of the square root factorization (<a href="#eq-sqrt-factor" class="quarto-xref">Equation&nbsp;<span>15.2</span></a>). Each square root filter will just have different forms of these two matrices—all the rest will be the same.</p>
+<p>The steps of the ETKF algorithm are as follows.</p>
+<ol type="1">
+<li>Forecast the state.</li>
+<li>Compute the means and anomalies of the state forecast and the observations.</li>
+<li>Setup the square root condition matrix and compute it’s eigenvalue decomposition.</li>
+<li>Compute the two weight matrices.</li>
+<li>Update the state analysis.</li>
+</ol>
+<p><strong>Steps 3 and 4:</strong></p>
+<p><span class="math display">\[
+  U \Sigma U^{\mathrm{T}} =  I +  ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  \mathbf{Y}'^{\mathrm{f}},
+\]</span></p>
+<p><span class="math display">\[
+   W' =  U \Sigma^{-1/2} U^{\mathrm{T}}
+\]</span></p>
+<p>and</p>
+<p><span class="math display">\[
+  \overline{W} =  U \Sigma^{-1} U^{\mathrm{T}}  (\mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  D,
+\]</span></p>
+<p>where the innovation (observations - average)</p>
+<p><span class="math display">\[
+   D \doteq Y - \overline{\mathbf{Y}}.
+\]</span></p>
+</section>
+<section id="etkf-in-practice" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="etkf-in-practice"><span class="header-section-number">15.5</span> ETKF in practice</h2>
+<p>There are a number of possible modifications that render the filter</p>
 <ul>
 <li>unbiased,</li>
 <li>non-collapsing,</li>
@@ -503,6 +533,9 @@ Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <s
 </div>
 <div id="ref-LSZ2015" class="csl-entry" role="listitem">
 Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+<div id="ref-vetra2018" class="csl-entry" role="listitem">
+Sanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and Jean-Marie Beckers. 2018. <span>“State-of-the-Art Stochastic Data Assimilation Methods for High-Dimensional Non-Gaussian Problems.”</span> <em>Tellus A: Dynamic Meteorology and Oceanography</em> 70 (1): 1–43. <a href="https://doi.org/10.1080/16000870.2018.1445364">https://doi.org/10.1080/16000870.2018.1445364</a>.
 </div>
 <div id="ref-Sarkka2023" class="csl-entry" role="listitem">
 Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 2nd ed. Institute of Mathematical Statistics Textbooks. Cambridge University Press. <a href="https://doi.org/10.1017/9781108917407">https://doi.org/10.1017/9781108917407</a>.

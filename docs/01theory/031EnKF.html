@@ -424,25 +424,26 @@ x_{k+1}^{n} &amp;= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \
 \end{align}\]</span></p>
 <p>To fix notation:</p>
 <ul>
-<li>state forecast <span class="math inline">\(X^f,\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
-<li><em>ensemble</em> state forecast <span class="math inline">\(\mathbf{X}^f,\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span></li>
+<li>state forecast <span class="math inline">\(X^{\mathrm{f}},\)</span> dimension <span class="math inline">\((N_t \times N_x)\)</span></li>
+<li><em>ensemble</em> state forecast <span class="math inline">\(\mathbf{X}^{\mathrm{f}},\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span></li>
 <li>observation, <span class="math inline">\(Y,\)</span> dimension <span class="math inline">\((N_t \times N_y)\)</span></li>
-<li>ensemble state anomaly, <span class="math inline">\(\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},\)</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span> with <span class="math inline">\(\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e\)</span></li>
-<li>ensemble observation anomaly, <span class="math inline">\(\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },\)</span> dimension <span class="math inline">\((N_t \times N_y \times N_e)\)</span> with <span class="math inline">\(\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).\)</span></li>
+<li>ensemble state <em>anomaly</em>, <span class="math display">\[\mathbf{X}' = \frac{1}{\sqrt{N_e - 1}} \left(\mathbf{X} - \overline{{X}}\right),\]</span> dimension <span class="math inline">\((N_t \times N_x \times N_e)\)</span> with <span class="math inline">\(\overline{{X}} = (1/N_e) \sum_{e=1}^{N_e} {X}_e\)</span></li>
+<li>ensemble observation <em>anomaly</em>,<br>
+<span class="math display">\[\mathbf{Y}' = \frac{1}{\sqrt{N_e - 1}} \left( \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) } \right),\]</span> dimension <span class="math inline">\((N_t \times N_y \times N_e)\)</span> with <span class="math inline">\(\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}({X}_e).\)</span></li>
 </ul>
 <p>Then, the Kalman analysis update is</p>
 <p><span class="math display">\[
-\mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
+\mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
 \]</span></p>
 <p>with</p>
 <p><span class="math display">\[\begin{align}
-   S &amp;= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
-   D &amp;= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
+   S &amp;=  \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R &amp; \quad \text{(observation covariance)}, \\
+   D &amp;= ( \mathbf{Y} +  \mathbf{y}) - \mathcal{H}(\mathbf{X}) &amp; \quad \text{(innovation)},
 \end{align}\]</span></p>
 <p>where <span class="math inline">\(y \sim \mathcal{N}(0,R)\)</span> is the stochastic perturbation, and <span class="math inline">\(R\)</span> is the measurement noise covariance matrix.</p>
 <p>Or, defining the Kalman gain matrix as</p>
 <p><span class="math display">\[
-   K = \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
+   K = \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
 \]</span></p>
 <p>we obtain the classical KF update,</p>
 <p><span class="math display">\[
@@ -488,6 +489,9 @@ Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <s
 </div>
 <div id="ref-LSZ2015" class="csl-entry" role="listitem">
 Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+<div id="ref-vetra2018" class="csl-entry" role="listitem">
+Sanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and Jean-Marie Beckers. 2018. <span>“State-of-the-Art Stochastic Data Assimilation Methods for High-Dimensional Non-Gaussian Problems.”</span> <em>Tellus A: Dynamic Meteorology and Oceanography</em> 70 (1): 1–43. <a href="https://doi.org/10.1080/16000870.2018.1445364">https://doi.org/10.1080/16000870.2018.1445364</a>.
 </div>
 <div id="ref-Sarkka2023" class="csl-entry" role="listitem">
 Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 2nd ed. Institute of Mathematical Statistics Textbooks. Cambridge University Press. <a href="https://doi.org/10.1017/9781108917407">https://doi.org/10.1017/9781108917407</a>.
