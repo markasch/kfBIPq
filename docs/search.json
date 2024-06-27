@@ -683,7 +683,7 @@
     "href": "index.html#citation",
     "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "Citation",
-    "text": "Citation\nAsch, Mark. Kalman Filters: from Bayes to Inverse Problems. (2024) https://github.com/markasch/kfBIPq/",
+    "text": "Citation\nAsch, Mark. Kalman Filters: from Bayes to Inverse Problems. (2024) https://markasch.github.io/kfBIPq/",
     "crumbs": [
       "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
     ]
@@ -693,7 +693,7 @@
     "href": "index.html#license",
     "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "License",
-    "text": "License\nThis work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.",
+    "text": "License\nThis online book is frequently updated and edited. It content is free to use, licensed under a Creative Commons licence, and the code can be found on GitHub.\nLicense: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.",
     "crumbs": [
       "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
     ]
