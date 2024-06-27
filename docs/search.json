@@ -667,5 +667,35 @@
       "Inverse Problems",
       "<span class='chapter-number'>18</span>  <span class='chapter-title'>Example 1: One-dimensional EKI</span>"
     ]
+  },
+  {
+    "objectID": "index.html#author",
+    "href": "index.html#author",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
+    "section": "Author",
+    "text": "Author\nMark Asch is Emeritus Professor at the Université de Picardie Jules Verne in the mathematics department.\nhttps://markasch.github.io/DT-tbx-v1/, http://masch.perso.math.cnrs.fr/",
+    "crumbs": [
+      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+    ]
+  },
+  {
+    "objectID": "index.html#citation",
+    "href": "index.html#citation",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
+    "section": "Citation",
+    "text": "Citation\nAsch, Mark. Kalman Filters: from Bayes to Inverse Problems. (2024) https://github.com/markasch/kfBIPq/",
+    "crumbs": [
+      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+    ]
+  },
+  {
+    "objectID": "index.html#license",
+    "href": "index.html#license",
+    "title": "Kalman Filters: from Bayes to Inverse Problems",
+    "section": "License",
+    "text": "License\nThis work is licensed under a Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.",
+    "crumbs": [
+      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+    ]
   }
 ]
