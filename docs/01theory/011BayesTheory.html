@@ -296,6 +296,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Example 4: ETKF for Lorenz63 system</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -310,19 +316,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -338,8 +344,16 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1.1</span> Introduction</a></li>
-  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">1.2</span> Theory</a></li>
-  <li><a href="#some-examples" id="toc-some-examples" class="nav-link" data-scroll-target="#some-examples"><span class="header-section-number">1.3</span> Some Examples</a></li>
+  <li><a href="#bayesian-regression" id="toc-bayesian-regression" class="nav-link" data-scroll-target="#bayesian-regression"><span class="header-section-number">1.2</span> Bayesian Regression</a>
+  <ul class="collapse">
+  <li><a href="#classical-linear-regression" id="toc-classical-linear-regression" class="nav-link" data-scroll-target="#classical-linear-regression"><span class="header-section-number">1.2.1</span> Classical Linear Regression</a></li>
+  <li><a href="#bayesian-linear-regression" id="toc-bayesian-linear-regression" class="nav-link" data-scroll-target="#bayesian-linear-regression"><span class="header-section-number">1.2.2</span> Bayesian Linear Regression</a></li>
+  </ul></li>
+  <li><a href="#some-examples" id="toc-some-examples" class="nav-link" data-scroll-target="#some-examples"><span class="header-section-number">1.3</span> Some Examples</a>
+  <ul class="collapse">
+  <li><a href="#bayesian-linear-regressionunivariate-scalar-parameter-case" id="toc-bayesian-linear-regressionunivariate-scalar-parameter-case" class="nav-link" data-scroll-target="#bayesian-linear-regressionunivariate-scalar-parameter-case"><span class="header-section-number">1.3.1</span> Bayesian Linear Regression—Univariate, Scalar Parameter Case</a></li>
+  <li><a href="#other-examples" id="toc-other-examples" class="nav-link" data-scroll-target="#other-examples"><span class="header-section-number">1.3.2</span> Other Examples</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -376,19 +390,202 @@ P(b \vert a) = \frac{P(a\vert b) P(b)}{P(a)},
 \pi_X(x \vert y_{\mathrm{obs}}) = \frac{ \pi_Y( y_{\mathrm{obs}} \vert x) \pi_X(x)} {\pi_Y(y_{\mathrm{obs}}) }.
 \]</span></p>
 </div>
-<p>Here, <span class="math inline">\(\pi_X,\)</span> the <em>prior</em> PDF, quantifies our uncertainty about the state/parameters <span class="math inline">\(X\)</span> <strong>before</strong> observing <span class="math inline">\(y_{\mathrm{obs}},\)</span> while <span class="math inline">\(\pi_X(x \vert y_{\mathrm{obs}}),\)</span> the <em>posterior</em> PDF, quantifies our uncertainty <strong>after</strong> observing <span class="math inline">\(y_{\mathrm{obs}}.\)</span> The conditional PDF <span class="math inline">\(\pi_Y( y_{\mathrm{obs}} \vert x)\)</span> quantifies the likelihood of observing <span class="math inline">\(y\)</span> given a particular value of <span class="math inline">\(x.\)</span> The denominator, <span class="math inline">\(\pi_Y(y_{\mathrm{obs}}),\)</span> is simply a normalizing factor, and can be computed in a post-processing step.</p>
+<p>Here,</p>
+<ul>
+<li><span class="math inline">\(\pi_X,\)</span> the <em>prior</em> PDF, quantifies our uncertainty about the state/parameters <span class="math inline">\(X\)</span> <strong>before</strong> observing <span class="math inline">\(y_{\mathrm{obs}},\)</span> while</li>
+<li><span class="math inline">\(\pi_X(x \vert y_{\mathrm{obs}}),\)</span> the <em>posterior</em> PDF, quantifies our uncertainty <strong>after</strong> observing <span class="math inline">\(y_{\mathrm{obs}}.\)</span></li>
+<li>The conditional PDF <span class="math inline">\(\pi_Y( y_{\mathrm{obs}} \vert x)\)</span> quantifies the likelihood of observing <span class="math inline">\(y\)</span> given a particular value of <span class="math inline">\(x.\)</span></li>
+<li>Finally, the denominator, <span class="math inline">\(\pi_Y(y_{\mathrm{obs}}),\)</span> is simply a normalizing factor, and can be computed in a post-processing step.</li>
+</ul>
 <p>We thus rewrite the formula in <a href="#thm-bayes" class="quarto-xref">Theorem&nbsp;<span>1.1</span></a> as</p>
 <p><span class="math display">\[
-  \pi_X(x \vert y_{\mathrm{obs}})  \propto \pi_Y( y_{\mathrm{obs}} \vert x) \pi_X(x).
+  \pi_X(x \vert y_{\mathrm{obs}})  \propto \pi_Y( y_{\mathrm{obs}} \vert x) \pi_X(x),
 \]</span></p>
+<p>or,</p>
+<p><span class="math display">\[
+    p(\mathrm{parameter}\mid\mathrm{data})\propto p(\mathrm{data}\mid\mathrm{parameter})\, p(\mathrm{parameter}),
+\]</span></p>
+<p>if we are dealing with a parameter-identification inverse problem.</p>
 </section>
-<section id="theory" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="theory"><span class="header-section-number">1.2</span> Theory</h2>
-<p>Still to come…</p>
+<section id="bayesian-regression" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="bayesian-regression"><span class="header-section-number">1.2</span> Bayesian Regression</h2>
+<section id="classical-linear-regression" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="classical-linear-regression"><span class="header-section-number">1.2.1</span> Classical Linear Regression</h3>
+<p>We recall the classical linear regression models. We present a general formulation that will prepare the terrain for the Bayesian approach.</p>
+<p>Recall that in a regression problem we want to model the relationship between a dependent variable, <span class="math inline">\(y,\)</span> that is observed and independent variables, <span class="math inline">\({x_1,x_2, \ldots, x_p},\)</span> that represent the properties of a process. We have at our disposal <span class="math inline">\(n\)</span> data samples <span class="math display">\[\begin{equation}\label{eq:linreg_data}
+{\cal D}=\{ (\mathbf {x}_i,\,y_i),\; i=1,\dots, n \} ,
+\end{equation}\]</span> from which we can estimate the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x,\)</span> where <span class="math inline">\(\mathbf {x}_i = [x_{i1}, x_{i2}, \ldots, x_{ip}]\)</span>.</p>
+<p>The data pairs come from observations, and we postulate a linear relationship between them of the form <span class="math display">\[\begin{align*}
+y_{i} &amp; =\mathbf{x}_{i} \boldsymbol{\beta}+\epsilon_{i}, \quad i=1,\ldots,n,\\
+&amp; =\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}+\epsilon_{i},
+\end{align*}\]</span> where</p>
+<ul>
+<li><span class="math inline">\(x_{ij}\)</span> is the <span class="math inline">\(i\)</span>-th value of the <span class="math inline">\(j\)</span>-th covariate, <span class="math inline">\(j=1,\ldots,p,\)</span></li>
+<li><span class="math inline">\(\boldsymbol{\beta}=[\beta_0,\beta_1,\ldots,\beta_p]^\mathrm{T},\)</span></li>
+<li>and <span class="math inline">\(\epsilon_i\)</span> are independent, identically distributed normal random variables, with mean zero and variance <span class="math inline">\(\sigma^2,\)</span> <span class="math display">\[
+  \epsilon_{i}\sim\mathcal{N}(0,\sigma^{2}).
+  \]</span></li>
+</ul>
+<p>We rewrite this in matrix-vector notation as <span class="math display">\[\begin{equation}
+\mathbf{y} = X \boldsymbol{\beta}+\boldsymbol{\epsilon},
+\end{equation}\]</span> where the augmented matrix <span id="eq-LSR"><span class="math display">\[
+X=\left[\begin{array}{ccccc}
+1      &amp; x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1p}\\
+1      &amp; x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2p}\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+1      &amp; x_{1p} &amp; x_{2p} &amp;  \cdots &amp; x_{np}
+\end{array}\right]
+\tag{1.1}\]</span></span> and <span class="math display">\[
+\mathbf{y} = \left[\begin{array}{c}
+      y_1 \\
+      \vdots \\
+      y_n
+      \end{array}\right].
+\]</span> An alternative way of writing this system, that will be needed below, is obtained by noticing that <span class="math display">\[
+y_{i}  - \mathbf{x}_{i} \boldsymbol{\beta} = \epsilon_{i},
+\]</span> which implies that the probability distribution of <span class="math display">\[
+y_{i} - \mathbf{x}_{i} \boldsymbol{\beta} \sim \mathcal{N}(0,\sigma^{2})
+\]</span> and hence that the probability distribution of each observation is Gaussian, <span class="math display">\[
+y_{i} \sim \mathcal{N}(\mathbf{x}_{i} \boldsymbol{\beta},\sigma^{2}),
+\]</span> or, in vector form, <span class="math display">\[
+\mathbf{y} \sim \mathcal{N}(X \boldsymbol{\beta},\sigma^{2}I),
+\]</span> where <span class="math inline">\(I\)</span> is the identity matrix.</p>
+<p>For simplicity, let us consider the special case of a straight line regression for a single covariate, <span class="math inline">\(x,\)</span> <span class="math display">\[
+  y_i = \beta_{0}+\beta_{1}x_{i},\quad i=1,\ldots,n.
+\]</span> Then classical least squares regression consists of finding <span class="math inline">\((\beta_{0},\beta_{1})\)</span> that minimizes the sum of the squared errors <span class="math display">\[
+E=\sum_{i=1}^{m}\epsilon_{i}^{2},
+\]</span> where <span class="math display">\[
+\epsilon_{i} = \left|\beta_0+ \beta_1 x_{i}-y_{i}\right|.
+\]</span> The minimum was found by solving the equations for the optimum, <span class="math display">\[
+\frac{\partial E}{\partial\beta_0}=0\,,\quad\frac{\partial E}{\partial\beta_1}=0.
+\]</span> We find the two equations <span class="math display">\[\begin{eqnarray*}
+    \left(\sum_{i=1}^{m}1\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{m}y_{i},\\
+    \left(\sum_{i=1}^{m}x_{i}\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}^{2}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{m}x_{i}y_{i}.
+\end{eqnarray*}\]</span> This can be rewritten as the following matrix system, <span id="eq-normeq"><span class="math display">\[
+X^{\mathrm{T}} X \boldsymbol{\beta} = X^{\mathrm{T}}  \mathbf{y} ,
+\tag{1.2}\]</span></span> with <span class="math display">\[
+X=\left[\begin{array}{cc}
+1      &amp; x_{1} \\
+1      &amp; x_{2} \\
+\vdots &amp; \vdots \\
+1      &amp; x_{n}
+\end{array}\right],
+\quad  \mathbf{y} =\left[\begin{array}{c}
+y_{1}\\
+\vdots\\
+y_{n}
+\end{array}\right]
+\quad\mathrm{and}\quad
+\boldsymbol{\beta} =\left[\begin{array}{c}
+\beta_0\\
+\beta_1
+\end{array}\right].
+\]</span></p>
+<p>In this univariate case, the system (<a href="#eq-normeq" class="quarto-xref">Equation&nbsp;<span>1.2</span></a>) can be solved explicitly. We obtain the optimal, least-squares parameter estimations, <span class="math display">\[
+\beta_0 =  \bar{y}-\bar{x} \beta_1 , \quad \beta_1 = \sigma_{xy}/\sigma_{x}^{2},
+\]</span> where the empirical means and variances are given by <span class="math display">\[
+\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_{i},\quad\bar{x}=\frac{1}{n}\sum_{i=1}^{n}x_{i}
+\]</span> and <span class="math display">\[
+\sigma^2_{xy}=\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)\left(y_{i}-\bar{y}\right),\quad\sigma_{x}^{2}=\frac{1}{n}\sum_{i=1}^{n}\left(x_{i}-\bar{x}\right)^{2}.
+\]</span></p>
+<p>Recall the general result expressed now in terms of linear regression.</p>
+<div id="thm-linreg" class="theorem">
+<p><span class="theorem-title"><strong>Theorem 1.2 (Linear Regression)</strong></span> For <span class="math inline">\(X \in \mathbb{R}^{n \times p},\)</span> <span class="math inline">\(\boldsymbol{\beta} \in \mathbb{R}^{p},\)</span> and <span class="math inline">\(\mathbf{y} \in\mathbb{R}^{n},\)</span> let <span class="math inline">\(\epsilon=\epsilon(x)= X \boldsymbol{\beta} - \mathbf{y}.\)</span> The general least-squares problem for linear regression is to find the vector <span class="math inline">\(\boldsymbol{\beta}\)</span> that minimizes the residual sum of squares, <span class="math display">\[
+    \sum_{i=1}^{n}\epsilon_{i}^{2}=\epsilon^{\mathrm{T}}\epsilon=( X \boldsymbol{\beta} - \mathbf{y})^{\mathrm{T}}( X \boldsymbol{\beta} - \mathbf{y}).
+    \]</span> Any vector that provides a minimal value is called a least-squares solution. The set of all least-squares solutions is precisely the set of solutions of the normal equations, <span class="math display">\[
+       X^{\mathrm{T}}X \boldsymbol{\beta} = X^{\mathrm{T}}\mathbf{y}.
+    \]</span><br>
+There exists a unique least-squares solution, given by <span class="math inline">\(\boldsymbol{\beta}  =\left(X^{\mathrm{T}}X\right)^{-1}X^{\mathrm{T}}\mathbf{y},\)</span> if and only if <span class="math inline">\(\mathrm{rank}(X)=p.\)</span></p>
+</div>
+</section>
+<section id="bayesian-linear-regression" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="bayesian-linear-regression"><span class="header-section-number">1.2.2</span> Bayesian Linear Regression</h3>
+<p>We can now generalize to the case of Bayesian regression. In the Bayesian approach, not only the error term is random, but the elements of the model parameter vector <span class="math inline">\(\boldsymbol{\beta}\)</span> are also considered to be random variables. We also suppose that we have a prior distribution <span class="math inline">\(p(\boldsymbol{\beta})\)</span> available before any data are observed. Then, as observation data <span class="math inline">\(X\)</span> become available, the initial probabilities of the parameters can be updated to a posterior probability distribution, according to Bayes’ Law. This posterior is a refined, narrower distribution and provides not only a better estimate of the parameters, but also a complete uncertainty quantification.</p>
+<p>Recall our linear model (<a href="#eq-LSR" class="quarto-xref">Equation&nbsp;<span>1.1</span></a>), <span class="math display">\[
+\mathbf{y} = X \boldsymbol{\beta} + \boldsymbol{\epsilon},
+\]</span> where the noise term is assumed to be Gaussian. The probabilistic model for regression is then a conditional probability, <span class="math display">\[
+p(\mathbf{y} \mid X, \boldsymbol{\beta} ) = \mathcal{N} \left(\mathbf{y} \mid \mu_X , \Sigma_X  \right)
+\]</span> and the Bayesian regression problem is to estimate the posterior probability distribution of the parameters, <span class="math inline">\(p(\boldsymbol{\theta} \mid \mathbf{y}),\)</span> where <span class="math inline">\(\boldsymbol{\theta}\)</span> includes <span class="math inline">\(\boldsymbol{\beta}\)</span> and can also include the constant noise variance <span class="math inline">\(\sigma^2,\)</span> where <span class="math inline">\(\Sigma_X = \sigma^2 I\)</span> and <span class="math inline">\(I\)</span> is the identity matrix. In the above case, <span class="math inline">\(\mu_X = X \boldsymbol{\beta}\)</span> is a linear function of <span class="math inline">\(X,\)</span> but, in general, linear regression can be extended to non-linear cases by simply replacing <span class="math inline">\(X\)</span> by a non-linear function of the inputs, <span class="math inline">\(\phi(X).\)</span> This is called basis function expansion, and in particular, when <span class="math inline">\(\phi(X)=[1,x,x^2,\ldots,x^d],\)</span> we obtain polynomial regression.</p>
+<p>In general, we need to perform the following steps:</p>
+<ol type="1">
+<li>Specify the prior distribution of the parameters, <span class="math inline">\(\boldsymbol{\beta}.\)</span> Note that the prior law can either be known (from historical data or models, for example), or its parameters can be included in the estimation process.</li>
+<li>Specify the distribution of the noise term. This is always taken as Gaussian in the case of regression analysis. As before, its parameter (variance) is either known, or can be inferred.</li>
+<li>Compute the likelihood function of the parameters, using the noise distribution and the independence of each observation.</li>
+<li>Calculate the posterior distribution of the parameters from the prior and the likelihood.</li>
+</ol>
+</section>
 </section>
 <section id="some-examples" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="some-examples"><span class="header-section-number">1.3</span> Some Examples</h2>
-<p>Coming soon…</p>
+<section id="bayesian-linear-regressionunivariate-scalar-parameter-case" class="level3" data-number="1.3.1">
+<h3 data-number="1.3.1" class="anchored" data-anchor-id="bayesian-linear-regressionunivariate-scalar-parameter-case"><span class="header-section-number">1.3.1</span> Bayesian Linear Regression—Univariate, Scalar Parameter Case</h3>
+<p>As seen above, the simplest linear regression problem for a univariate independent variable, <span class="math inline">\(x,\)</span> is defined as <span class="math display">\[
+y_i = \beta_{0}+\beta_{1}x_{i} + \epsilon_{i},\quad i=1,\ldots,n,
+\]</span> where <span class="math display">\[
+\epsilon_{i}\sim\mathcal{N}(0,\sigma^{2})
+\]</span> and we assume that the individual observations are independent and identically distributed (i.i.d.). As a first step, we consider the case of estimating a noisy scalar, with <span class="math inline">\(\beta_0 = \beta,\)</span> <span class="math inline">\(\beta_1 =0\)</span> and <span class="math display">\[
+y_i = \beta + \epsilon_{i},\quad i=1,\ldots,n.
+\]</span> We are in possession of a Gaussian prior distribution for <span class="math inline">\(\beta,\)</span> <span class="math display">\[
+\beta \sim\mathcal{N}(\mu_{\beta },\sigma_{\beta }^{2})
+\]</span> with expectation <span class="math inline">\(\mu_{\beta }\)</span> and variance <span class="math inline">\(\sigma^2_{\beta },\)</span> which could come from historical data or some other model, for example. We also have <span class="math inline">\(n\)</span> independent, noisy observations, <span class="math display">\[
+\mathbf{y}=\left(y_{1},y_{2},\ldots,y_{n}\right).
+\]</span></p>
+<p>The conditional distribution of the observations, given the data, is thus the distribution of the noise term, shifted by the data value (since the expectation of <span class="math inline">\(\beta\)</span> is equal to <span class="math inline">\(\beta\)</span> and the expectation of the noise is zero), <span class="math display">\[
+y_{i}\mid \beta \sim\mathcal{N}(\beta,\sigma^{2})
+\]</span> where we have conditioned on the true value of the parameter <span class="math inline">\(\beta.\)</span> Then, thanks to the i.i.d. property, the conditional distribution of the observations, or likelihood, is a product of Gaussians, <span class="math display">\[\begin{eqnarray} \label{eq:Gauss_likeli_scalar}
+    p(\mathbf{y}\mid \beta) &amp; = &amp; \prod_{i=1}^{n}\frac{1}{\sqrt{2\pi\sigma^{2}}}\exp\left\{ -\frac{1}{2\sigma^{2}}\left(y_{i}-\beta\right)^{2}\right\} \\
+    &amp; \propto &amp; \exp\left\{ -\frac{1}{2\sigma^{2}}\sum_{i=1}^{n}\left(y_{i}-\beta\right)^{2}\right\}
+     \nonumber.
+\end{eqnarray}\]</span> Now, according to Bayes’ Law (<span class="math inline">\(\ref{eq:Bayes-2}\)</span>), the posterior (inverse) distribution of the data given the measurements is <span class="math display">\[
+p(\beta \mid\mathbf{y})\propto p(\mathbf{y}\mid \beta)p(\beta),
+\]</span> so, using the data likelihood and the prior distributions, we have <span class="math display">\[\begin{eqnarray*}
+    p(\beta \mid \mathbf{y}) &amp; \propto &amp; \exp\left\{ -\frac{1}{2}\sum_{i=1}^{n} \frac{ \left(y_{i}-\beta\right)^{2}}{\sigma^{2}} + \frac{\left(\beta-\mu_{\beta}\right)^{2}}{\sigma_{\beta}^{2}}\right\} \\
+    &amp; \propto &amp; \exp\left\{ -\frac{1}{2}\left[\beta^{2}\left(\frac{n}{\sigma^{2}}+\frac{1}{\sigma_{\beta}^{2}}\right)-2\left(\sum_{i=1}^{n}\frac{y_{i}}{\sigma^{2}}+\frac{\mu_{\beta}}{\sigma_{\beta}^{2}}\right)\beta\right]\right\} .
+\end{eqnarray*}\]</span> Notice that this is the product of two Gaussians which, by completing the square, can be show to be Gaussian itself. We obtain the posterior Gaussian distribution, <span class="math display">\[\begin{equation}
+\label{eq:post_gaussian_scalar1}
+\beta \mid \mathbf{y}\sim\mathcal{N}\left(\mu_{\beta\mid\mathbf{y}},\sigma_{\beta\mid\mathbf{y}}^{2}\right),
+\end{equation}\]</span> where <span class="math display">\[\begin{equation}\label{eq:post_gaussian_scalar1_mu}
+\mu_{\beta\mid\mathbf{y}}=\left(\frac{n}{\sigma^{2}}+\frac{1}{\sigma_{\beta}^{2}}\right)^{-1}\left(\sum_{i=1}^{n}\frac{y_{i}}{\sigma^{2}}+\frac{\mu_{\beta}}{\sigma_{\beta}^{2}}\right)
+\end{equation}\]</span> and <span class="math display">\[\begin{equation}\label{eq:post_gaussian_scalar1_sig}
+\sigma_{\beta\mid\mathbf{y}}^{2}=\left(\frac{n}{\sigma^{2}}+\frac{1}{\sigma_{\beta}^{2}}\right)^{-1}.
+\end{equation}\]</span> Let us now examine more closely these two parameters of the posterior law. There are two important observations here:</p>
+<ol type="1">
+<li>The inverse of the posterior variance, called the posterior , is equal to the sum of the prior precision, <span class="math inline">\(1/\sigma_{\beta}^{2},\)</span> and the data precision, <span class="math inline">\(n/\sigma^{2}.\)</span></li>
+<li>The posterior mean, or conditional expectation, can also be written as a sum of two terms, <span class="math display">\[\begin{eqnarray*}
+     \mathrm{E}(\beta\mid\mathbf{y}) &amp; = &amp;     
+     \frac{\sigma^{2}\sigma_{\beta}^{2}}{\sigma^{2}+n\sigma_{\beta}^{2}}\left(\frac{n}{\sigma^{2}}\bar
+     {y}+\frac{\mu_{\beta}}{\sigma_{\beta}^{2}}\right)\\
+     &amp; = &amp; w_{y}\bar{y}+w_{\mu_{\beta}}\mu_{\beta},
+\end{eqnarray*}\]</span> where the sample mean, <span class="math display">\[
+\bar{y}=\frac{1}{n}\sum_{i=1}^{n}y_{i}
+\]</span> and the two weights, <span class="math display">\[
+w_{y}=\frac{n\sigma_{\beta}^{2}}{\sigma^{2}+n\sigma_{\beta}^{2}}\,,\quad w_{\mu_{\beta}}=\frac{\sigma^{2}}{\sigma^{2}+n\sigma_{\beta}^{2}},
+\]</span> add up to <span class="math display">\[
+w_{y}+w_{\mu_{\beta}}=1.
+\]</span></li>
+</ol>
+<p>We observe immediately that the posterior mean is the weighted sum, or weighted average, of the data mean, <span class="math inline">\(\bar{y},\)</span> and the prior mean, <span class="math inline">\(\mu_{\beta}.\)</span> Now let us examine the weights themselves.</p>
+<ul>
+<li>If there is a large uncertaintyin the prior, then <span class="math inline">\(\sigma_{\beta}^{2}\rightarrow\infty\)</span> and hence <span class="math inline">\(w_{y}\rightarrow1,\)</span> <span class="math inline">\(w_{\mu_{\beta}}\rightarrow 0\)</span> and the likelihood dominates the prior,leading to what is known as the sampling distribution for the posterior, <span class="math display">\[
+p(\beta\mid\mathbf{y})\rightarrow\mathcal{N}(\bar{y},\sigma^{2}/n).
+\]</span></li>
+<li>If we have a large number of observations, then <span class="math inline">\(n\rightarrow\infty,\)</span> implying that <span class="math inline">\(w_{\mu_{\beta}}\rightarrow 0,\)</span> and the posterior now tends to the sample mean, whereas if we have few observations, then <span class="math inline">\(n \rightarrow 0\)</span> and the posterior <span class="math display">\[
+p(\beta\mid\mathbf{y})\rightarrow\mathcal{N}(\mu_{\beta},\sigma_{\beta}^{2})
+\]</span> tends to the prior.</li>
+<li>In the case of equal uncertainties between data and prior, <span class="math inline">\(\sigma^{2}=\sigma_{\beta}^{2}\)</span> and the prior mean has the weight of a single additional observation.</li>
+<li>Finally, if the uncertainties are small, either the prior is infinitely more precise than the data (<span class="math inline">\(\sigma_{\beta}^{2}\rightarrow0\)</span>) or the data are perfectly precise (<span class="math inline">\(\sigma^{2}\rightarrow0\)</span>).</li>
+</ul>
+<p>We end this example by rewriting the posterior mean and variance in a special form. Let us start with the mean <span id="eq-post_mean"><span class="math display">\[ \begin{eqnarray}
+\mathrm{E}(\beta\mid\mathbf{y}) &amp; = &amp; \mu_{\beta}+\frac{n\sigma_{\beta}^{2}}{\sigma^{2}+n\sigma_{\beta}^{2}}\left(\bar{y}-\mu_{\beta}\right),\nonumber \\
+&amp; = &amp; \mu_{\beta}+G\left(\bar{y}-\mu_{\beta}\right).  \end{eqnarray}
+\tag{1.3}\]</span></span> We conclude that the prior mean <span class="math inline">\(\mu_{\beta}\)</span> is adjusted towards the sample mean <span class="math inline">\(\bar{y}\)</span> by a gain (or amplification factor) of <span class="math inline">\(G=1/(1+\sigma^{2}/n\sigma_{\beta}^{2}),\)</span> multiplied by the innovation <span class="math inline">\(\bar{y}-\mu_{\beta},\)</span> and we observe that the variance ratio, between data and prior, plays the essential role. In the same way, the posterior variance can be reformulated as <span id="eq-post_var"><span class="math display">\[
+\sigma_{\beta\mid\mathbf{y}}^{2}=(1-G)\sigma_{\beta}^{2}
+\tag{1.4}\]</span></span> and the posterior variance is thus updated from the prior variance according to the same gain <span class="math inline">\(G.\)</span></p>
+<p>These last two equations, (<a href="#eq-post_mean" class="quarto-xref">Equation&nbsp;<span>1.3</span></a>) and (<a href="#eq-post_var" class="quarto-xref">Equation&nbsp;<span>1.4</span></a>), are fundamental for a good understanding of Bayesian parameter estimation (BPE) and of Data Assimilation, since they clearly express the interplay between prior and data, and the effect that each has on the posterior.</p>
+</section>
+<section id="other-examples" class="level3" data-number="1.3.2">
+<h3 data-number="1.3.2" class="anchored" data-anchor-id="other-examples"><span class="header-section-number">1.3.2</span> Other Examples</h3>
+<p>Many more examples can be found in <span class="citation" data-cites="Asch2022">(<a href="../index.html#ref-Asch2022" role="doc-biblioref">Asch 2022</a>)</span>.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -429,6 +626,7 @@ Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 
 Wu, Jin-Long, Matthew E. Levine, Tapio Schneider, and Andrew Stuart. 2023. <span>“Learning about Structural Errors in Models of Complex Dynamical Systems.”</span> <a href="https://arxiv.org/abs/2401.00035">https://arxiv.org/abs/2401.00035</a>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->

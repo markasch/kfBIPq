@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kalman Filters: from Bayes to Inverse Problems - 18&nbsp; Example 1: One-dimensional EKI</title>
+<title>Kalman Filters: from Bayes to Inverse Problems - 19&nbsp; Example 1: One-dimensional EKI</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -163,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/one_dim_EKI.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/one_dim_EKI.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -329,6 +329,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Example 4: ETKF for Lorenz63 system</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -343,19 +349,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -370,18 +376,18 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" id="toc-implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" class="nav-link active" data-scroll-target="#implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg"><span class="header-section-number">18.1</span> Implement the one-dimensional EKI for a linear forward operator <span class="math inline">\(\mathcal{G}\)</span></a></li>
-  <li><a href="#implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" id="toc-implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" class="nav-link" data-scroll-target="#implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg"><span class="header-section-number">18.2</span> Implement the one dimensional EKI for an arbitrary forward operator <span class="math inline">\(\mathcal{G}\)</span></a></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">18.3</span> Conclusions</a></li>
+  <li><a href="#implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" id="toc-implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" class="nav-link active" data-scroll-target="#implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg"><span class="header-section-number">19.1</span> Implement the one-dimensional EKI for a linear forward operator <span class="math inline">\(\mathcal{G}\)</span></a></li>
+  <li><a href="#implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" id="toc-implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" class="nav-link" data-scroll-target="#implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg"><span class="header-section-number">19.2</span> Implement the one dimensional EKI for an arbitrary forward operator <span class="math inline">\(\mathcal{G}\)</span></a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">19.3</span> Conclusions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/one_dim_EKI.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/one_dim_EKI.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></h1>
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></h1>
 </div>
 
 
@@ -422,8 +428,8 @@ window.Quarto = {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> functools <span class="im">import</span> partial</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" class="level2" data-number="18.1">
-<h2 data-number="18.1" class="anchored" data-anchor-id="implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg"><span class="header-section-number">18.1</span> Implement the one-dimensional EKI for a linear forward operator <span class="math inline">\(\mathcal{G}\)</span></h2>
+<section id="implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="implement-the-one-dimensional-eki-for-a-linear-forward-operator-mathcalg"><span class="header-section-number">19.1</span> Implement the one-dimensional EKI for a linear forward operator <span class="math inline">\(\mathcal{G}\)</span></h2>
 <div id="e5b6d124" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> eki_one_dim_lin(m_0, C_0, N, G, gamma, y, delt, h):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Inputs:</span></span>
@@ -516,8 +522,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" class="level2" data-number="18.2">
-<h2 data-number="18.2" class="anchored" data-anchor-id="implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg"><span class="header-section-number">18.2</span> Implement the one dimensional EKI for an arbitrary forward operator <span class="math inline">\(\mathcal{G}\)</span></h2>
+<section id="implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="implement-the-one-dimensional-eki-for-an-arbitrary-forward-operator-mathcalg"><span class="header-section-number">19.2</span> Implement the one dimensional EKI for an arbitrary forward operator <span class="math inline">\(\mathcal{G}\)</span></h2>
 <div id="c11d54e5" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> eki_one_dim(m_0, C_0, N, G, gamma, y, h):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Inputs:</span></span>
@@ -634,8 +640,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="conclusions" class="level2" data-number="18.3">
-<h2 data-number="18.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">18.3</span> Conclusions</h2>
+<section id="conclusions" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">19.3</span> Conclusions</h2>
 <p>The convergence is very slow, and not very accurate. This will be remedied by the mean-field approach.</p>
 
 
@@ -1092,7 +1098,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../../01theory/042EKI.html" class="pagination-link" aria-label="Ensemble Kalman Inversion (EKI)">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

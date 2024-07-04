@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kalman Filters: from Bayes to Inverse Problems - 17&nbsp; Ensemble Kalman Inversion (EKI)</title>
+<title>Kalman Filters: from Bayes to Inverse Problems - 18&nbsp; Ensemble Kalman Inversion (EKI)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -296,6 +296,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Example 4: ETKF for Lorenz63 system</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -310,19 +316,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
       </ul>
@@ -337,19 +343,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#properties-of-eki" id="toc-properties-of-eki" class="nav-link active" data-scroll-target="#properties-of-eki"><span class="header-section-number">17.1</span> Properties of EKI</a></li>
-  <li><a href="#formulation" id="toc-formulation" class="nav-link" data-scroll-target="#formulation"><span class="header-section-number">17.2</span> Formulation</a></li>
-  <li><a href="#algorithms-eki-etki" id="toc-algorithms-eki-etki" class="nav-link" data-scroll-target="#algorithms-eki-etki"><span class="header-section-number">17.3</span> Algorithms: EKI, ETKI</a></li>
-  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">17.4</span> Conclusions</a></li>
+  <li><a href="#properties-of-eki" id="toc-properties-of-eki" class="nav-link active" data-scroll-target="#properties-of-eki"><span class="header-section-number">18.1</span> Properties of EKI</a></li>
+  <li><a href="#formulation" id="toc-formulation" class="nav-link" data-scroll-target="#formulation"><span class="header-section-number">18.2</span> Formulation</a></li>
+  <li><a href="#algorithms-eki-etki" id="toc-algorithms-eki-etki" class="nav-link" data-scroll-target="#algorithms-eki-etki"><span class="header-section-number">18.3</span> Algorithms: EKI, ETKI</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions"><span class="header-section-number">18.4</span> Conclusions</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../01theory/042EKI.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></h1>
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></h1>
 </div>
 
 
@@ -369,8 +375,8 @@ window.Quarto = {
 <p>Estimating the statistics of the state of a dynamical system from partial/sparse and noisy measurements is both mathematically challenging and the subject of numerous real-life applications. These can have great societal impact, such as in the cases of numerical weather forecasting, epidemic evolution modelling, just to name a few.</p>
 <p>Ensemble Kalman filtering methodology is known to be effective in high dimensions and in nonlinear settings, as opposed to regular Kalman filters. Moreover, ensemble Kalman filters can be used to solve quite general inverse problems.</p>
 <p>The theoretical approach, known as EKI, was originally formulated in <span class="citation" data-cites="Stuart2013">(<a href="../index.html#ref-Stuart2013" role="doc-biblioref">Iglesias, Law, and Stuart 2013</a>)</span> and refined in the review <span class="citation" data-cites="Stuart2022">(<a href="../index.html#ref-Stuart2022" role="doc-biblioref">Calvello, Reich, and Stuart 2022</a>)</span> (to appear in Acta Numerica 2025). A shorter version can be found in the recent preprint <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, where extensive numerical tests were performed.</p>
-<section id="properties-of-eki" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="properties-of-eki"><span class="header-section-number">17.1</span> Properties of EKI</h2>
+<section id="properties-of-eki" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="properties-of-eki"><span class="header-section-number">18.1</span> Properties of EKI</h2>
 <ul>
 <li>a derivative- and gradient-free optimization method;</li>
 <li>full uncertainty quantification;</li>
@@ -378,8 +384,8 @@ window.Quarto = {
 <li>robust to noise in the evaluation of the model.</li>
 </ul>
 </section>
-<section id="formulation" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="formulation"><span class="header-section-number">17.2</span> Formulation</h2>
+<section id="formulation" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="formulation"><span class="header-section-number">18.2</span> Formulation</h2>
 <p>Recall the inverse problem: recover an unknown function <span class="math inline">\(\theta\)</span> from known data <span class="math inline">\(y\)</span> related by</p>
 <p><span class="math display">\[
 y = \mathcal{G}(\theta) + \eta,
@@ -438,8 +444,8 @@ Theorem (EKI)
 <p><strong>Note</strong></p>
 <p>This result has been recently extended to near-Gaussian, nonlinear cases in <span class="citation" data-cites="carrillo2024statistical">(<a href="../index.html#ref-carrillo2024statistical" role="doc-biblioref">Carrillo et al. 2024a</a>)</span> and <span class="citation" data-cites="carrillo2024mean">(<a href="../index.html#ref-carrillo2024mean" role="doc-biblioref">Carrillo et al. 2024b</a>)</span>.</p>
 </section>
-<section id="algorithms-eki-etki" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="algorithms-eki-etki"><span class="header-section-number">17.3</span> Algorithms: EKI, ETKI</h2>
+<section id="algorithms-eki-etki" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="algorithms-eki-etki"><span class="header-section-number">18.3</span> Algorithms: EKI, ETKI</h2>
 <p>We will formulate the inversion for the stochastic ensemble filter (EKI) and then for the ensemble transfer filter (ETKI), the latter having a better convergence behavior.</p>
 <div class="callout callout-style-default callout-note no-icon callout-titled" title="EKI">
 <div class="callout-header d-flex align-content-center">
@@ -519,8 +525,8 @@ ETKI
 </div>
 </div>
 </section>
-<section id="conclusions" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">17.4</span> Conclusions</h2>
+<section id="conclusions" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="conclusions"><span class="header-section-number">18.4</span> Conclusions</h2>
 <p>Kalman-based inversion has been widely used to construct derivative-free optimization and s ampling methods for nonlinear inverse problems. In the paper <span class="citation" data-cites="Huang2022">(<a href="../index.html#ref-Huang2022" role="doc-biblioref">Huang et al. 2022</a>)</span>, the authors developed new Kalman-based inversion methods, for Bayesian inference and uncertainty quantification, which build on the work in both optimization and sampling. They propose a new method for Bayesian inference based on filtering a novel mean-field dynamical system subject to partial noisy observations, and which depends on the law of its own filtering distribution, together with application of the Kalman methodology. Theoretical guarantees are presented: for linear inverse problems, the mean and covariance obtained by the method converge exponentially fast to the posterior mean and covariance. For nonlinear inverse problems, numerical studies indicate the method delivers an excellent approximation of the posterior distribution for problems which are not too far from Gaussian.</p>
 <p>In terms of performance:</p>
 <ol type="1">
@@ -982,12 +988,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../01theory/041BIP.html" class="pagination-link" aria-label="Bayesian Inversion">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="../02examples/EKI/one_dim_EKI.html" class="pagination-link" aria-label="Example 1: One-dimensional EKI">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
