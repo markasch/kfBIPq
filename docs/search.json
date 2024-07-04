@@ -4,9 +4,9 @@
     "href": "index.html",
     "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "",
-    "text": "Welcome to “Kalman Filters: from Bayes to Inverse Problems”\nThis book contains a presentation of Kalman filters, from basics to nonlinear and ensemble filters. To understand these well, examples are provided in the form of jupyter notebooks. Then the notion of Bayesian inverse problems (BIP) is introduced. Finally, there is a detailed presentation of the use of the ensemble Kalman filter as a basis for the solution of inverse problems. This is denoted EKI, or ensemble Kalman inversion, following the magnificent work of Andrew Stuart and his collaborators.\nThis book is based upon a number of sources. The original Bayesian formulation for inverse problems (Dashti and Stuart 2015) was the basis for the later ensemble Kalman inversion, presented in a series of papers (Iglesias, Law, and Stuart 2013; Calvello, Reich, and Stuart 2022; Huang et al. 2022).\nIn (Asch, Bocquet, and Nodet 2016) and (Law, Stuart, and Zygalakis 2015) the reader can find detailed presentations of Kalman filter approaches for data assimilation. In (Asch 2022) there are basic explanations of uncertainty quantification, inverse problems and their use for digital twins.",
+    "text": "Welcome\nThis book contains a presentation of Kalman filters, from basics to nonlinear and ensemble filters. To understand these well, examples are provided in the form of jupyter notebooks. Then the notion of Bayesian inverse problems (BIP) is introduced. Finally, there is a detailed presentation of the use of the ensemble Kalman filter as a basis for the solution of inverse problems. This is denoted EKI, or ensemble Kalman inversion, following the magnificent work of Andrew Stuart and his collaborators.\nThis book is based upon a number of sources. The original Bayesian formulation for inverse problems (Dashti and Stuart 2015) was the basis for the later ensemble Kalman inversion, presented in a series of papers (Iglesias, Law, and Stuart 2013; Calvello, Reich, and Stuart 2022; Huang et al. 2022).\nIn (Asch, Bocquet, and Nodet 2016) and (Law, Stuart, and Zygalakis 2015) the reader can find detailed presentations of Kalman filter approaches for data assimilation. In (Asch 2022) there are basic explanations of uncertainty quantification, inverse problems and their use for digital twins.",
     "crumbs": [
-      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+      "Welcome"
     ]
   },
   {
@@ -16,7 +16,7 @@
     "section": "Author",
     "text": "Author\nMark Asch is Emeritus Professor at the Université de Picardie Jules Verne in the mathematics department.\nhttps://markasch.github.io/DT-tbx-v1/, http://masch.perso.math.cnrs.fr/",
     "crumbs": [
-      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+      "Welcome"
     ]
   },
   {
@@ -26,7 +26,7 @@
     "section": "Citation",
     "text": "Citation\nAsch, Mark. Kalman Filters: from Bayes to Inverse Problems. Online (2024) https://markasch.github.io/kfBIPq/\n@book{Asch2024\n    title = {Kalman {F}ilters: from {B}ayes to {I}nverse {P}roblems},\n    author = {Asch, Mark},\n    url = {https://markasch.github.io/kfBIPq/},\n    year = {2024},\n    publisher = {Online}\n}",
     "crumbs": [
-      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+      "Welcome"
     ]
   },
   {
@@ -36,7 +36,7 @@
     "section": "License",
     "text": "License\nThis online book is frequently updated and edited. It’s content is free to use, licensed under a Creative Commons licence, and the code can be found on GitHub. A physical copy of the book will be available at a later date.\nLicense: Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.",
     "crumbs": [
-      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+      "Welcome"
     ]
   },
   {
@@ -44,9 +44,9 @@
     "href": "index.html#references",
     "title": "Kalman Filters: from Bayes to Inverse Problems",
     "section": "References",
-    "text": "References\n\n\nAsch, Mark. 2022. A Toolbox for Digital\nTwins: From\nModel-Based to\nData-Driven. Philadelphia, PA: Society\nfor Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data\nAssimilation: Methods,\nAlgorithms, and Applications.\nPhiladelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.\n“Ensemble Kalman Methods: A\nMean Field Perspective.”\narXiv (to appear in Acta Numerica 2025). http://arxiv.org/abs/2209.11371.\n\n\nCarrillo, J. A., F. Hoffmann, A. M. Stuart, and U. Vaes. 2024a.\n“Statistical Accuracy of Approximate Filtering Methods.” https://arxiv.org/abs/2402.01593.\n\n\n———. 2024b. “The Mean Field Ensemble Kalman Filter: Near-Gaussian\nSetting.” https://arxiv.org/abs/2212.13239.\n\n\nDashti, Masoumeh, and Andrew M. Stuart. 2015. “The\nBayesian Approach to Inverse\nProblems.” In Handbook of\nUncertainty Quantification, edited by\nRoger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-319-11259-6_7-1.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M\nStuart. 2022. “Efficient Derivative-Free Bayesian Inference for\nLarge-Scale Inverse Problems.” Inverse Problems 38 (12):\n125006. https://doi.org/10.1088/1361-6420/ac99fa.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.\n“Ensemble Kalman Methods for Inverse\nProblems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data\nAssimilation: A Mathematical\nIntroduction. Vol. 62. Texts in Applied\nMathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.\n\n\nSanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and\nJean-Marie Beckers. 2018. “State-of-the-Art Stochastic Data\nAssimilation Methods for High-Dimensional Non-Gaussian Problems.”\nTellus A: Dynamic Meteorology and Oceanography 70 (1): 1–43. https://doi.org/10.1080/16000870.2018.1445364.\n\n\nSärkkä, S., and L. Svensson. 2023. Bayesian Filtering and\nSmoothing. 2nd ed. Institute of Mathematical Statistics Textbooks.\nCambridge University Press. https://doi.org/10.1017/9781108917407.\n\n\nWu, Jin-Long, Matthew E. Levine, Tapio Schneider, and Andrew Stuart.\n2023. “Learning about Structural Errors in Models of Complex\nDynamical Systems.” https://arxiv.org/abs/2401.00035.",
+    "text": "References\n\n\nAsch, Mark. 2022. A Toolbox for Digital\nTwins: From\nModel-Based to\nData-Driven. Philadelphia, PA: Society\nfor Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611976977.\n\n\nAsch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. Data\nAssimilation: Methods,\nAlgorithms, and Applications.\nPhiladelphia, PA: Society for Industrial; Applied Mathematics. https://doi.org/10.1137/1.9781611974546.\n\n\nCalvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022.\n“Ensemble Kalman Methods: A\nMean Field Perspective.”\narXiv (to appear in Acta Numerica 2025). http://arxiv.org/abs/2209.11371.\n\n\nCarrillo, J. A., F. Hoffmann, A. M. Stuart, and U. Vaes. 2024a.\n“Statistical Accuracy of Approximate Filtering Methods.” https://arxiv.org/abs/2402.01593.\n\n\n———. 2024b. “The Mean Field Ensemble Kalman Filter: Near-Gaussian\nSetting.” https://arxiv.org/abs/2212.13239.\n\n\nDashti, Masoumeh, and Andrew M. Stuart. 2015. “The\nBayesian Approach to Inverse\nProblems.” In Handbook of\nUncertainty Quantification, edited by\nRoger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer\nInternational Publishing. https://doi.org/10.1007/978-3-319-11259-6_7-1.\n\n\nHuang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M\nStuart. 2022. “Efficient Derivative-Free Bayesian Inference for\nLarge-Scale Inverse Problems.” Inverse Problems 38 (12):\n125006. https://doi.org/10.1088/1361-6420/ac99fa.\n\n\nIglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013.\n“Ensemble Kalman Methods for Inverse\nProblems.” Inverse Problems 29 (4): 045001. https://doi.org/10.1088/0266-5611/29/4/045001.\n\n\nLaw, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. Data\nAssimilation: A Mathematical\nIntroduction. Vol. 62. Texts in Applied\nMathematics. Cham: Springer International Publishing. https://doi.org/10.1007/978-3-319-20325-6.\n\n\nSanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and\nJean-Marie Beckers. 2018. “State-of-the-Art Stochastic Data\nAssimilation Methods for High-Dimensional Non-Gaussian Problems.”\nTellus A: Dynamic Meteorology and Oceanography 70 (1): 1–43. https://doi.org/10.1080/16000870.2018.1445364.\n\n\nSärkkä, S., and L. Svensson. 2023. Bayesian Filtering and\nSmoothing. 2nd ed. Institute of Mathematical Statistics Textbooks.\nCambridge University Press. https://doi.org/10.1017/9781108917407.",
     "crumbs": [
-      "Welcome to _\"Kalman Filters: from Bayes to Inverse Problems\"_"
+      "Welcome"
     ]
   },
   {
