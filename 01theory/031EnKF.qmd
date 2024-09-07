@@ -18,25 +18,21 @@ Here are the steps for the so-called **stochastic EnKF**, where we add an artifi
 
 ### Prediction/Forecast
 
-$$
 \begin{align}
  \hat{v}_{k+1}^{n} &= \Psi ( {v}_{k}^{n} ) +  \xi_{k}^{n} , \quad n=1, \ldots, N, \\
- \hat{m}_{k+1} & =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n}  \\
- \hat{C}_{k+1} & = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
-                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}
+ \hat{m}_{k+1}     & =  \frac{1}{N} \sum_{i=1}^{N}   \hat{v}_{k+1}^{n} , \\
+ \hat{C}_{k+1}     & = \frac{1}{N-1} \sum_{i=1}^{N} \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)
+                     \left( \hat{v}_{k+1}^{n} - \hat{m}_{k+1}  \right)^{\mathrm{T}}.
 \end{align}
-$$
 
 ### Correction/Analysis
 
-$$
 \begin{align}
   {S}_{k+1} &= H \hat{C}_{k+1} H^{\mathrm{T}} + \Gamma ,\\
   {K}_{k+1} &= \hat{C}_{k+1} H^{\mathrm{T}} {S}_{k+1}^{-1} , \\
   {y}_{k+1}^{n} &= {y}_{k+1} + \eta^n_{k+1} , \quad n=1, \ldots, N, \\ 
   {v}_{k+1}^{n} &= (I - K_{k+1}H )\hat{v}_{k+1}^{n} + K_{k+1} y^n_{k+1} , \quad n=1, \ldots, N.
 \end{align}
-$$
 
 Alternatively, defining the innovation $d = {y}_{k+1}^{n} - H \hat{v}_{k+1}^{n},$ we can write the state update more simply as
 
@@ -48,7 +44,7 @@ $$
 In words:
 
 1. For a given $N_e \in  \mathbb{N}$ generate i.i.d. ensemble of states random variables
-from the distribution of $X(0).$
+   from the distribution of $X(0).$
 2. For $t \in  \mathbb{N}$ recursively repeat the following steps:
 
  - Advance each ensemble member in time, using the nonlinear state equation
@@ -65,45 +61,46 @@ covariance and the analysis sample covariance
 is analogous to the relation between the forecast and analysis covariances in the
 standard KF.
 
-## Full nonlinear formulation of the ensemble Kalman filter
+## Full nonlinear formulation of the ensemble Kalman filter {#sec-EnKFNonLin}
 
 There are many ways to formulate the EnKF. Following Vetra-Carvalho, et al (Tellus A, 2018), we express the filter in terms of the anomalies of state and observations. This is indispensable for fully nonlinear state and measurement models,
 
-$$
 \begin{align}
  x_{k+1}^{n} &= \Psi ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
-{y}_{k+1}    &=  \mathcal{H} (x_{k+1}) +  v_{k+1}.  \\
+{y}_{k+1}    &=  \mathcal{H} (x_{k+1}) +  v_{k+1}. 
 \end{align}
-$$
-
 
 To fix notation: 
 
-- state forecast $X^f,$ dimension $(N_t \times N_x)$
-- *ensemble* state forecast $\mathbf{X}^f,$ dimension $(N_t \times N_x \times N_e)$
+- state forecast $X^{\mathrm{f}},$ dimension $(N_t \times N_x)$
+- *ensemble* state forecast $\mathbf{X}^{\mathrm{f}},$ dimension $(N_t \times N_x \times N_e)$
 - observation, $Y,$ dimension $(N_t \times N_y)$
-- ensemble state anomaly, $\mathbf{X}' = \mathbf{X} - \overline{\mathbf{X}},$ dimension $(N_t \times N_x \times N_e)$ with $\overline{\mathbf{X}} = (1/N_e) \sum_{e=1}^{N_e} \mathbf{X}_e$
-- ensemble observation anomaly,  $\mathbf{Y}' = \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) },$ dimension $(N_t \times N_y \times N_e)$ with  $\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}(\mathbf{X}_e).$
+- ensemble state _anomaly_, 
+  $$\mathbf{X}' = \frac{1}{\sqrt{N_e - 1}} \left(\mathbf{X} - \overline{{X}}\right),$$
+   dimension $(N_t \times N_x \times N_e)$ with $\overline{{X}} = (1/N_e) \sum_{e=1}^{N_e} {X}_e$
+- ensemble observation _anomaly_,  
+  $$\mathbf{Y}' = \frac{1}{\sqrt{N_e - 1}} \left( \mathcal{H}(\mathbf{X}) - \overline{ \mathcal{H}(\mathbf{X} ) } \right),$$
+   dimension $(N_t \times N_y \times N_e)$ with  $\overline{ \mathcal{H}( \mathbf{X} )} = (1/N_e)\sum_{e=1}^{N_e} \mathcal{H}({X}_e).$
 
 Then, the Kalman analysis update is
 
 $$ 
- \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
+ \mathbf{X}^\mathrm{a} = \mathbf{X}^\mathrm{f} + \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1} D,
 $$
 
 with
 
-$$  \begin{align}
- S &= \frac{1}{N_e - 1} \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R\quad \text{(observation covariance)} \\
- D &= (Y + y) - \mathcal{H}(\mathbf{X}) \quad \text{(innovation)},
-\end{align} $$
+\begin{align}
+   S &=  \mathbf{Y}'(\mathbf{Y}')^\mathrm{T} + R & \quad \text{(observation covariance)}, \\
+   D &= ( \mathbf{Y} +  \mathbf{y}) - \mathcal{H}(\mathbf{X}) & \quad \text{(innovation)},
+\end{align} 
 
 where $y \sim \mathcal{N}(0,R)$ is the stochastic perturbation, and $R$ is the measurement noise covariance matrix.
 
 Or, defining the Kalman gain matrix as
 
 $$
-   K = \frac{1}{N_e - 1} \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
+   K = \mathbf{X}'(\mathbf{Y}')^\mathrm{T} S^{-1},
 $$
 
 we obtain the classical KF update,

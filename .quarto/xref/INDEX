@@ -76,5 +76,11 @@
   },
   "02examples/EKI/one_dim_EKI.ipynb": {
     "one_dim_EKI.html": "fd498625"
+  },
+  "01theory/032EnSRF.qmd": {
+    "032EnSRF.html": "4dab91bc"
+  },
+  "02examples/EnKF/032EnKFExample4.ipynb": {
+    "032EnKFExample4.html": "08f1a990"
   }
 }

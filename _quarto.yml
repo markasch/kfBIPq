@@ -5,7 +5,7 @@ project:
 book:
   title: "Kalman Filters: from Bayes to Inverse Problems"
   author: "Mark Asch"
-  date: "April 2024"
+  date: last-modified
   sidebar: 
     background: "#EAECEE"
     logo: kf.png
@@ -35,7 +35,8 @@ book:
         - 02examples/EnKF/032EnKFExample1.ipynb
         - 02examples/EnKF/032EnKFExample2.ipynb
         - 02examples/EnKF/032EnKFExample3.ipynb
-        - 01theory/032EnSRF.ipynb
+        - 01theory/032EnSRF.qmd
+        - 02examples/EnKF/032EnKFExample4.ipynb
     - part: Inverse Problems
       chapters:
          - 01theory/041BIP.qmd
@@ -44,6 +45,9 @@ book:
 
 bibliography: references.bib
 
+nocite: |
+  @*
+
 format:
   html:
     theme: cosmo
@@ -51,6 +55,7 @@ format:
 
   pdf:
     documentclass: scrreprt
+    pdf-engine: pdflatex
 
 
 

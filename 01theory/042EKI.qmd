@@ -30,22 +30,22 @@ state plus parameters, for a given number of iterations, to invert for $\theta.$
  employ techniques from filtering to estimate the parameter given the data.
 
 The system for EKI is written as,
-$$
+
 \begin{align*}
     \theta_{n+1} &=  \theta_n\\
     y_{n+1} &=  \mathcal{G}(\theta_{n+1}) + \eta_{n+1},
 \end{align*}
-$$
+
 where the operator $\mathcal{G}$ contains both the system dynamics and the observation function.
 
 Consider the stochastic dynamical system
 
-$$
+
 \begin{align}
   &\textrm{evolution:}    && \theta_{n+1} = \theta_{n}  +  \omega_{n+1}, &&\omega_{n+1} \sim \mathcal{N}(0,\Sigma_{\omega}),\\
   &\textrm{observation:}  && x_{n+1} = \mathcal{F}(\theta_{n+1}) + \nu_{n+1}, &&\nu_{n+1} \sim \mathcal{N}(0,\Sigma_{\nu}).
 \end{align}
-$$
+
 
 
 We seek the *best* Gaussian approximation of the posterior distribution of $\theta$ for ill-posed 
@@ -70,19 +70,19 @@ In the linear setting,
 $$ \mathcal{G}(\theta) = G\cdot \theta \qquad F = \begin{bmatrix} G \\ I  \end{bmatrix} $$
 
 The update equations become
-$$
+
 \begin{align*}
     \hat{m}_{n+1} &=  m_n\\
     \hat{C}_{n+1} &=  \frac{1}{1 - \Delta t} C_{n}
 \end{align*}
-$$
+
 and
-$$
+
 \begin{align*}
         m_{n+1} &= m_{n} + \hat{C}_{n+1} F^T (F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} (x_{n+1} - F m_{n}) \\
          C_{n+1}&= \hat{C}_{n+1} - \hat{C}_{n+1} F^T(F  \hat{C}_{n+1} F^T + \Sigma_{\nu,n+1})^{-1} F \hat{C}_{n+1}, 
 \end{align*}
-$$
+
 
 We have the following theorem about the convergence of the 
 algorithm in the setting of the linear forward model:
@@ -93,7 +93,7 @@ Assume that the prior covariance matrix $\Sigma_{0} \succ 0$ and initial covaria
 $C_{0} \succ 0.$
 The iteration for the conditional mean $m_n$ and covariance matrix $C_{n}$ characterizing 
 the distribution of $\theta_n|Y_n$ converges exponentially fast to the posterior mean, 
-$m_{\rm post},$ and covariance, $C_{\rm post}.$
+$m_{\mathrm{post}},$ and covariance, $C_{\mathrm{post}}.$
 :::        
          
 **Reference**    
@@ -103,8 +103,7 @@ Please see  [Efficient Derivative-free Bayesian Inference for Large-Scale Invers
 
  **Note**
 
- This result has been recently extended to near-Gaussian, nonlinear cases in [@carrillo2024statistical] and  
- [@carrillo2024mean]. 
+ This result has been recently extended to near-Gaussian, nonlinear cases in [@carrillo2024statistical] and [@carrillo2024mean]. 
 
 ## Algorithms: EKI, ETKI
 
@@ -118,7 +117,7 @@ We will formulate the inversion for the stochastic ensemble filter (EKI) and the
   \hat{\theta}^j_{n+1} = \hat{m}_{n+1} + \sqrt{\frac{1}{1-\Delta \tau}} \left(  \theta_n^j - m_n \right)
   $$
 - Analysis step:
-  $$
+  
 \begin{align*}
 &\hat{x}_{n+1}^{j} = \mathcal{F}(\hat{\theta}_{n+1}^{j}) , \qquad \hat{x}_{n+1} = \frac{1}{J}\sum_{j=1}^{J}\hat{x}_{n+1}^{j},\\
 &\hat{C}_{n+1}^{\theta x} = \frac{1}{J-1}\sum_{j=1}^{J}(\hat{\theta}_{n+1}^{j} - \hat{m}_{n+1})(\hat{x}_{n+1}^{j} - \hat{x}_{n+1})^\mathrm{T} , \\
@@ -126,7 +125,7 @@ We will formulate the inversion for the stochastic ensemble filter (EKI) and the
 &\theta_{n+1}^{j} = \hat{\theta}_{n+1}^{j} + \hat{C}_{n+1}^{\theta x}\left(\hat{C}_{n+1}^{xx}\right)^{-1}(x - \hat{x}_{n+1}^{j} - \nu_{n+1}^{j}),\\
 &m_{n+1} = \frac{1}{J} \sum_{j=1}^{J} \theta_{n+1}^{j} ,
 \end{align*}
-$$
+
 where $\nu_{n+1}^{j} \sim \mathcal{N}(0,\Sigma_{\nu,n+1}).$
 
 :::
@@ -135,7 +134,7 @@ A few remarks.
 
 1. The covariance update equation,
     $$
-    C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) {\hat{C}_{n+1}^{\theta x}}^\mathrm{T}
+    C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
 $$
     does not hold here. This will be remedied by the ETKF.
 2. The factor $\sqrt{1/(1-\Delta \tau)}$ produces *covariance inflation* and prevents filter collapse.
@@ -147,52 +146,52 @@ and $\hat{C}_{n+1}^{\theta x},$ as follows. We denote the matrix square roots
 $\hat{Z}_{n+1},\, Z_{n+1} \in \mathbb{R}^{N_{\theta}\times J}$ of 
 $\hat{C}_{n+1}^{\theta x},\,C_{n+1}^{\theta x}$ and $\hat{\mathcal{Y}}_{n+1}$ of $\hat{C}_{n+1}^{x x},$ and define,
 
-$$
+
 \begin{align*}
     \hat{Z}_{n+1} &= \frac{1}{\sqrt{J-1}}\Big(\hat{\theta}_{n+1}^{1} - \hat{m}_{n+1}\quad \hat{\theta}_{n+1}^{2} - \hat{m}_{n+1}\quad...\quad\hat{\theta}_{n+1}^{J} - \hat{m}_{n+1} \Big),\\
     Z_{n+1} &= \frac{1}{\sqrt{J-1}}\Big(\theta_{n+1}^{1} - m_{n+1}\quad \theta_{n+1}^{2} - m_{n+1}\quad...\quad\theta_{n+1}^{J} - m_{n+1} \Big),\\
     \hat{\mathcal{Y}}_{n+1} &= \frac{1}{\sqrt{J-1}}\Big(\hat{x}_{n+1}^{1} - \hat{x}_{n+1}\quad \hat{x}_{n+1}^{2} - \hat{x}_{n+1}\quad...\quad\hat{x}_{n+1}^{J} - \hat{x}_{n+1} \Big).
 \end{align*}
-$$
+
 
 
 ::: {.callout-tip title="ETKI" icon="false"}
 
 - Prediction step :
 
-$$
+
 \begin{align*}
 \hat{\theta}_{n+1}^{j} &= \theta_{n}^{j}  + \omega_{n+1}^{j},\\ 
 \hat{m}_{n+1} &= \frac{1}{J}\sum_{j=1}^{J}\hat{\theta}_{n+1}^{j}
 \end{align*}
-$$
+
     
     
 - Analysis step :
     
-$$
+
 \begin{align*}
 &m_{n+1} = \hat{m}_{n+1} + \hat{C}_{n+1}^{\theta x}\left(\hat{C}_{n+1}^{xx}\right)^{-1}(x - \hat{x}_{n+1})\\
 &Z_{n+1} = \hat{Z}_{n+1} T
 \end{align*}
-$$
+
 where $T = P(\Gamma + I)^{-\frac{1}{2}}P^\mathrm{T}$, with 
-$$
+
 \begin{align*}
 \textrm{SVD:} \quad \hat{\mathcal{Y}}_{n+1} \Sigma_{\nu,n+1}^{-1} \hat{\mathcal{Y}}_{n+1} = P\Gamma P^\mathrm{T}
 \end{align*}
-$$
+
 
 **Remark** 
 
 When $\Sigma_{\omega} = \gamma C_n$, the prediction step can be treated deterministically, as follows,
 
-$$
+
 \begin{align*}
 \hat{m}_{n+1} &= m_n \\
 \hat{\theta}_{n+1}^{j} &= \hat{m}_{n+1} + \sqrt{1 + \gamma} \; (\theta_n^{j} - m_n)\\ 
 \end{align*}
-$$
+
 
 :::
 

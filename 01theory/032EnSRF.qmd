@@ -1,0 +1,182 @@
+# Deterministic Ensemble Kalman Filters
+
+
+We have seen the stochastic ensemble Kalman filter in the previous section. It has the advantage of great simplicity, but is known to have unreliable statistical behaviour and can suffer from sampling errors. In particular, it does not converge in the ensemble Kalman inversion (EKI) context - see next section. Filters that do not use (stochastically) perturbed observations are called _deterministic_ filters. The family of _ensemble square root filters_ are deterministic, in this sense. These filters exhibit exponential convergence in the EKI context.
+
+## The filtering problem.
+
+Nonlinear state equation and observations are given by,
+
+
+\begin{align}
+ x_{k+1}^{n} &=  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n} , \quad n=1, \ldots, N_e, \\
+{y}_{k+1}    &=  \mathcal{H} (x_{k+1}) +  v_{k+1},
+\end{align}
+
+where the noise/error terms
+
+$$
+ w_k \sim  \mathcal{N}(0, Q), \quad  v_k \sim  \mathcal{N}(0, R).
+$$
+
+::: {.callout-note title="Filtering problem"}
+Predict the optimal state from the noisy measurements.
+:::
+
+
+## Recall: Ensemble Kalman Filter (EnKF)
+
+Just to recall the notation, here are the two steps (forecast-analysis, or predict-correct) of the EnKF.
+
+*Prediction/Forecast Step*
+
+- evolve each ensemble member forward
+   $$ x_{k+1}^{n} =  \mathcal{M}  ( {x}_{k}^{n} ) +  w_{k}^{n}, \quad n=1,
+   \ldots, N_e$$
+- compute ensemble mean
+  $$ \bar{x} = \frac{1}{N_e} \sum_{n=1}^{N_e}  x_{n}^{\mathrm{f}} $$
+- compute covariance
+  $$ P^{\mathrm{f}} = \frac{1}{N_e - 1} X'^{\mathrm{f}} ( X'^{\mathrm{f}} )^{\mathrm{T}} , $$
+  
+  where $X'^{\mathrm{f}} = x^{\mathrm{f}} - \bar{x}$ is the ensemble state perturbation/anomaly matrix.
+
+*Correction/Analysis Step*
+
+- compute the optimal Kalman gain
+  $$ K = P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}  $$
+- update the ensemble using perturbed observations
+  $$  x_n^{\mathrm{a}} =  x_n^{\mathrm{f}}  + K( y_n + \epsilon_y - H  x_n^{\mathrm{f}}), \quad n=1,
+   \ldots, N_e,
+  $$
+  where $\epsilon_n$ is the stochastic perturbation of the observations $y.$
+
+## Ensemble Square Root Filters (EnSRF) {#sec-ensrf}
+
+::: {.callout-tip title="Idea"}
+Update the ensemble to preserve a covariance that is consistent with the KF _theoretical_ covariance
+$$ P_n^{\mathrm{a}} = (I - K_n H) P_n^{\mathrm{f}}. 
+$$
+:::
+
+Recall the fully nonlinear formulation of the Kalman gain in terms of the state and observation anomalies described in @sec-EnKFNonLin,
+
+$$ K =  \mathbf{X}'^{\mathrm{f}}(\mathbf{Y}'^{\mathrm{f}})^\mathrm{T} S^{-1}, 
+$$
+where
+$$ S = \mathbf{Y}'^{\mathrm{f}} ( \mathbf{Y}'^{\mathrm{f}} )^{\mathrm{T}} +  R.
+$$
+
+Then, to compute the posterior variance, we need to evaluate
+$$ P_n^{\mathrm{a}} =   \mathbf{X}'^{\mathrm{a}} (  \mathbf{X}'^{\mathrm{a}} )^{\mathrm{T}}.
+$$
+
+So supposing there is a transform matrix, $T,$ such that
+$$   \mathbf{X}'^{\mathrm{a}} =   \mathbf{X}'^{\mathrm{f}} T,
+$$
+we can substitute in the definition of  $P_n^{\mathrm{a}}$ to obtain
+\begin{align}
+P_n^{\mathrm{a}} &=  \mathbf{X}'^{\mathrm{f}} T (  \mathbf{X}'^{\mathrm{f}} T )^{\mathrm{T}} \\
+                 &=  \mathbf{X}'^{\mathrm{f}} (T T^{\mathrm{T}} ) (  \mathbf{X}'^{\mathrm{f}}  )^{\mathrm{T}}.
+\end{align}
+And, on the other hand, for the consistency, we require
+$$ (I - K_n H) P_n^{\mathrm{f}} =   \mathbf{X}'^{\mathrm{f}} 
+     \left[ I - (  \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}   \mathbf{Y}'^{\mathrm{f}}   \right] (  \mathbf{X}'^{\mathrm{f}}  )^{\mathrm{T}}, 
+$$
+where we have used the relations
+\begin{align}
+  K                &=   P^{\mathrm{f}} H^{\mathrm{T}} (H P^{\mathrm{f}} H^{\mathrm{T}} + R)^{-1}, \\
+  P_n^{\mathrm{f}} &=    \mathbf{X}'^{\mathrm{f}} (  \mathbf{X}'^{\mathrm{f}} )^{\mathrm{T}} \\
+   \mathbf{Y}'^{\mathrm{f}}  &= H  \mathbf{X}'^{\mathrm{f}}. 
+\end{align}
+
+Hence,  $T$ must satisfy the so-called *square root condition*,
+\begin{align}
+T T^{\mathrm{T}}  &= I - (  \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  S^{-1}  \mathbf{Y}'^{\mathrm{f}} \\
+                  &= I - ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}   
+                     \left[ \mathbf{Y}'^{\mathrm{f}} ( \mathbf{Y}'^{\mathrm{f}} )^{\mathrm{T}} +  R  \right]^{-1}  \mathbf{Y}'^{\mathrm{f}} 
+\end{align}
+
+We can replace the inversion of $S$ by the much simpler and more stable inversion of the diagonal measurement error covariance $R$ using the Sherman-Woodbury-Morrison formula,
+$$ 
+(A + UCV^{\mathrm{T}})^{-1} = A^{-1} - A^{-1} V (C^{-1} + V A^{-1} U)^{-1} V A^{-1}.
+$$
+
+Identifying $A=I,$ $C = R^{-1},$ $U = \mathbf{Y}^{\mathrm{T}},$ $V=\mathbf{Y},$ we obtain the simpler form of the square root condition
+$$ 
+T T^{\mathrm{T}}  = \left[I +  ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  \mathbf{Y}'^{\mathrm{f}} \right]^{-1}. 
+$$ {#eq-sqrt-condition}
+This form is the basis of the ETKF, or *transform filter.*
+
+Finally, the square root $T$ can be obtained from the eigenvalue factorization,
+$$  
+T T^{\mathrm{T}}  = (U \Sigma U^{\mathrm{T}})^{-1}
+$$ {#eq-sqrt-factor}
+and thus
+$$ 
+T = U \Sigma^{-1/2} U^{\mathrm{T}}.
+$$
+
+Note that $T$ is not unique, since for any orthogonal matrix $\tilde{U},$ the product  $T \tilde{U}$ will also satisfy the square root condition. This leads, in principle, to a large number of alternative forms for $T$ and the resulting square root filters.
+
+It can be shown that, in general, this process can yield a biased and overconfident estimator of the posterior covariance. In order to remedy this, it suffices to ensure that $T$ is symmetric, which is the case in the above derivation.
+
+
+## ETKF Algorithm
+
+The ensemble transform Kalman filter is one possible implementation of a square root filter. For greater generality, we will use the consistent formulation of [@vetra2018]. The analysis update is given by the general, linear transformation
+$$
+   \mathbf{X}^{\mathrm{a}} = \overline{\mathbf{X}}^{\mathrm{f}} + \mathbf{X}'^{\mathrm{f}} (\overline{W} + W'),
+$$
+where the anomaly weight matrix, $W',$ is computed from the square root condition (@eq-sqrt-condition), and the weight matrix, $\overline{W},$ is obtained from the formula for the Kalman gain matrix expressed in terms of the square root factorization (@eq-sqrt-factor). Each square root filter will just have different forms of these two matrices---all the rest will be the same.
+
+The steps of the ETKF algorithm are as follows.
+
+1. Forecast the state.
+2. Compute the means and anomalies of the state forecast and the observations.
+3. Setup the square root condition matrix and compute it's eigenvalue decomposition.
+4. Compute the two weight matrices.
+5. Update the state analysis.
+
+**Steps 3 and 4:**
+
+$$
+  U \Sigma U^{\mathrm{T}} =  I +  ( \mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  \mathbf{Y}'^{\mathrm{f}},
+$$
+
+
+$$ 
+   W' =  U \Sigma^{-1/2} U^{\mathrm{T}}
+$$
+
+and
+
+$$
+  \overline{W} =  U \Sigma^{-1} U^{\mathrm{T}}  (\mathbf{Y}'^{\mathrm{f}})^{\mathrm{T}}  R^{-1}  D, 
+$$ 
+
+where the innovation (observations - average)
+
+$$
+   D \doteq Y - \overline{\mathbf{Y}},
+$$
+
+with
+
+$$
+   \overline{\mathbf{Y}} \doteq \overline{ \mathcal{H}( \mathbf{X} )} .
+$$
+
+## ETKF in practice
+
+There are a number of possible modifications that render the filter
+
+- unbiased,
+- non-collapsing,
+- computationally more stable,
+- computationally cheaper.
+
+One pathway is to scale the forecast observation ensemble perturbation matrix $Y^{\mathrm{f}}$ so as to normalize the standard deviation---which then equals one---and thus reduce loss of accuracy due to roundoff errors.
+
+A second path is to avoid the eigenvalue decompostion of $T T^{\mathrm{T}}$ and replace it by an SVD of $T$ alone. This is particularly advantageous in high dimensions and in the presence of bad conditioning. 
+
+
