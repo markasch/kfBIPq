@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Kalman Filters: from Bayes to Inverse Problems - 3&nbsp; Kalman Filters</title>
+<title>Kalman Filters: from Bayes to Inverse Problems - 20&nbsp; Example 2: Ensemble Kalman inversion for Lorenz 63 model</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -43,24 +77,23 @@ div.csl-indent {
 }</style>
 
 
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../02examples/KF/021KFExample1.html" rel="next">
-<link href="../01theory/012BayesFilters.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../02examples/EKI/one_dim_EKI.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -130,7 +163,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/021BasicKF.html">Kalman Filters</a></li><li class="breadcrumb-item"><a href="../01theory/021BasicKF.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/L63_EKI.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -144,11 +177,11 @@ window.Quarto = {
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
-      <a href="../index.html" class="sidebar-logo-link">
-      <img src="../kf.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../kf.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Kalman Filters: from Bayes to Inverse Problems</a> 
+      <a href="../../">Kalman Filters: from Bayes to Inverse Problems</a> 
     </div>
       </div>
         <div class="mt-2 flex-shrink-0 align-items-center">
@@ -160,7 +193,7 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
@@ -175,13 +208,13 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/011BayesTheory.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/011BayesTheory.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bayes’ Theorem</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/012BayesFilters.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/012BayesFilters.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian Filters</span></span></a>
   </div>
 </li>
@@ -198,31 +231,31 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/021BasicKF.html" class="sidebar-item-text sidebar-link active">
+  <a href="../../01theory/021BasicKF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/KF/021KFExample1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/KF/021KFExample1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Example 1 - estimating a constant</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/KF/021KFExample2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/KF/021KFExample2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Example 2 - scalar, Gaussian random walk</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/KF/021KFExample3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/KF/021KFExample3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Example 3 - constant-velocity 1D position tracking</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/KF/021KFExample4.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/KF/021KFExample4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example 4 - constant-velocity 2D motion tracking</span></span></a>
   </div>
 </li>
@@ -239,19 +272,19 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/022NlinKF.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/022NlinKF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonlinear Kalman Filters</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EKF/022EKFExample1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EKF/022EKFExample1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Example 1 - tracking a random sinusoidal signal</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EKF/022EKFExample2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EKF/022EKFExample2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Example 2 - tracking a noisy pendulum</span></span></a>
   </div>
 </li>
@@ -268,37 +301,37 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EnKF/032EnKFExample1.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EnKF/032EnKFExample1.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example 1: noisy pendulum</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EnKF/032EnKFExample2.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EnKF/032EnKFExample2.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Example 2: Lorenz63 system</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EnKF/032EnKFExample3.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EnKF/032EnKFExample3.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example 3: SIR Model</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/032EnSRF.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/032EnSRF.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Example 4: ETKF for Lorenz63 system</span></span></a>
   </div>
 </li>
@@ -315,25 +348,25 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
+  <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../02examples/EKI/L63_EKI.html" class="sidebar-item-text sidebar-link">
+  <a href="../../02examples/EKI/L63_EKI.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
   </div>
 </li>
@@ -349,24 +382,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3.1</span> Introduction</a></li>
-  <li><a href="#kalman-filter-problem---general-formulation" id="toc-kalman-filter-problem---general-formulation" class="nav-link" data-scroll-target="#kalman-filter-problem---general-formulation"><span class="header-section-number">3.2</span> Kalman filter problem - General formulation</a>
+  <li><a href="#ensemble-kalman-inversion" id="toc-ensemble-kalman-inversion" class="nav-link active" data-scroll-target="#ensemble-kalman-inversion"><span class="header-section-number">20.1</span> Ensemble Kalman Inversion</a>
   <ul class="collapse">
-  <li><a href="#predictionforecast" id="toc-predictionforecast" class="nav-link" data-scroll-target="#predictionforecast"><span class="header-section-number">3.2.1</span> Prediction/Forecast</a></li>
-  <li><a href="#correctionanalysis" id="toc-correctionanalysis" class="nav-link" data-scroll-target="#correctionanalysis"><span class="header-section-number">3.2.2</span> Correction/Analysis</a></li>
-  <li><a href="#loop-over-time" id="toc-loop-over-time" class="nav-link" data-scroll-target="#loop-over-time"><span class="header-section-number">3.2.3</span> Loop over time</a></li>
+  <li><a href="#simulation-parameters" id="toc-simulation-parameters" class="nav-link" data-scroll-target="#simulation-parameters"><span class="header-section-number">20.1.1</span> Simulation parameters</a></li>
   </ul></li>
-  <li><a href="#state-space-formulation" id="toc-state-space-formulation" class="nav-link" data-scroll-target="#state-space-formulation"><span class="header-section-number">3.3</span> State-space formulation</a></li>
-  <li><a href="#passage-from-continuous-to-discrete-for-random-dynamic-systems" id="toc-passage-from-continuous-to-discrete-for-random-dynamic-systems" class="nav-link" data-scroll-target="#passage-from-continuous-to-discrete-for-random-dynamic-systems"><span class="header-section-number">3.4</span> Passage from Continuous to Discrete for Random Dynamic Systems</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../01theory/021BasicKF.html">Kalman Filters</a></li><li class="breadcrumb-item"><a href="../01theory/021BasicKF.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/L63_EKI.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></h1>
+<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></h1>
 </div>
 
 
@@ -383,171 +411,192 @@ window.Quarto = {
 </header>
 
 
-<section id="introduction" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.1</span> Introduction</h2>
-<p>The Kalman filter can be used for</p>
-<ul>
-<li>state estimation—this is the direct filtering (or smoothing) problem</li>
-<li>parameter estimation—this is the inverse problem based on filtering with a pseudo-time</li>
-</ul>
-<p>Kalman filters are linear (and Gaussian) or nonlinear. Among the nonlinear approaches, the Ensemble Kalman filter (EnKF) provides a <em>derivative-free</em> approach to the solution of inverse problems.</p>
-<div class="callout callout-style-default callout-note no-icon callout-titled" title="Definition: filtering problem">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Definition: filtering problem
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Filtering is the sequential updating of the probability distribution of the state of a (possibly stochastic) dynamical system, given partial (or sparse), noisy observations.</p>
-<p>The KF provides an explicit, optimal solution to this problem in the setting of linear dynamical systems, linear observations, and additive Gaussian noise. In this case, we obtain explicit update formulas for the mean and covariance of the resulting posterior Gaussian probability distribution.</p>
-</div>
-</div>
-</section>
-<section id="kalman-filter-problem---general-formulation" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="kalman-filter-problem---general-formulation"><span class="header-section-number">3.2</span> Kalman filter problem - General formulation</h2>
-<p>We present a very general formulation that will later be convenient for joint state and parameter estimation problems.</p>
-<p>We consider a discrete-time dynamical system with noisy state transitions and noisy observations.</p>
-<ul>
-<li><p>Dynamics:</p>
-<p><span class="math display">\[v_{j+1} = \Psi(v_j) + \xi_j, \quad j \in \mathbb{Z}^+\]</span></p></li>
-<li><p>Observations:</p>
-<p><span class="math display">\[y_{j+1} = h (v_{j+1}) + \eta_{j+1}, \quad j \in \mathbb{Z}^+\]</span></p></li>
-<li><p>Probability (densities):</p>
-<p><span class="math display">\[v_0 \sim \mathcal{N}(m_0,C_0), \quad \xi_j \sim \mathcal{N}(0,\Sigma), \quad \eta_j \sim \mathcal{N}(0,\Gamma)\]</span></p></li>
-<li><p>Probability (independence):</p>
-<p><span class="math display">\[v_0 \perp {\xi_j} \perp {\eta_j}\]</span></p></li>
-<li><p>Operators:</p>
-<p><span class="math display">\[\begin{eqnarray}
-    \Psi \colon \mathcal{H}_s &amp;\mapsto \mathcal{H}_s, \\
-    h  \colon \mathcal{H}_s &amp;\mapsto \mathcal{H}_o,
-   \end{eqnarray}\]</span> where <span class="math inline">\(v_j \in \mathcal{H}_s,\)</span> <span class="math inline">\(y_j \in \mathcal{H}_o\)</span> and <span class="math inline">\(\mathcal{H}\)</span> is a finite-dimensional Hilbert space.</p></li>
-</ul>
-<p><strong>Filtering problem</strong>: estimate (optimally) the state <span class="math inline">\(v_j\)</span> of the dynamical system at time <span class="math inline">\(j,\)</span> given the data <span class="math inline">\(Y_j = \{y_i\}_{i=1}^{j}\)</span> up to time <span class="math inline">\(j.\)</span> This is achieved by using a two-step <em>predictor-corrector</em> method. We will use the more general notation of <span class="citation" data-cites="LSZ2015">(<a href="../index.html#ref-LSZ2015" role="doc-biblioref">Law, Stuart, and Zygalakis 2015</a>)</span> instead of the usual, classical state-space formulation that is used in <span class="citation" data-cites="Asch2016">(<a href="../index.html#ref-Asch2016" role="doc-biblioref">Asch, Bocquet, and Nodet 2016</a>)</span> and <span class="citation" data-cites="Asch2022">(<a href="../index.html#ref-Asch2022" role="doc-biblioref">Asch 2022</a>)</span>.</p>
-<p>The objective is to update the filtering distribution <span class="math inline">\(\mathbb{P}(v_j \vert Y_j),\)</span> from time <span class="math inline">\(j\)</span> to time <span class="math inline">\(j+1,\)</span> in the linear, Gaussian case, where - <span class="math inline">\(\Psi\)</span> and <span class="math inline">\(h\)</span> are linear maps - all distributions are Gaussian.</p>
-<p>Suppose <span class="math display">\[\begin{eqnarray}
-   \Psi(v) &amp;= Mv \\
-   h(v) &amp;= Hv,
-\end{eqnarray}\]</span> where the matrices <span class="math inline">\(M \in \mathbb{R}^{n \times n},\)</span> <span class="math inline">\(H \in \mathbb{R}^{m \times n},\)</span> with <span class="math inline">\(m \le n\)</span> and <span class="math inline">\(\mathrm{rank}(H)=m.\)</span></p>
-<ol type="1">
-<li>Let <span class="math inline">\((m_j, C_j)\)</span> denote the mean and covariance of <span class="math inline">\(v_j \vert Y_j\)</span> and note that these entirely characterize the random variable since it is Gaussian.</li>
-<li>Let <span class="math inline">\((\hat{m}_{j+1}, \hat{C}_{j+1})\)</span> denote the mean and covariance of <span class="math inline">\(v_{j+1} \vert Y_j\)</span> and note that these entirely characterize the random variable since it is Gaussian.</li>
-<li>Derive the map <span class="math inline">\((m_j, C_j) \mapsto (m_{j+1}, C_{j+1})\)</span> using the previous step.</li>
-</ol>
-<section id="predictionforecast" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="predictionforecast"><span class="header-section-number">3.2.1</span> Prediction/Forecast</h3>
-<p><span class="math display">\[ \mathbb{P}(v_n \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) \]</span></p>
-<ul>
-<li><p>P0: initialize <span class="math inline">\((m_0, C_0)\)</span> and compute <span class="math inline">\(v_0\)</span></p></li>
-<li><p>P1: predict the state, measurement</p>
-<p><span class="math display">\[\begin{align}
-   v_{j+1} &amp;= M v_j + \xi_j \\
-   y_{j+1} &amp;= H v_{j+1} + \eta_{j+1}
-   \end{align}\]</span></p></li>
-<li><p>P2: predict the mean and covariance</p>
-<p><span class="math display">\[\begin{align}
-   \hat{m}_{j+1}  &amp;= M m_j \\
-   \hat{C}_{j+1}  &amp;= M C_j M^{\mathrm{T}} + \Sigma
-   \end{align}\]</span></p></li>
-</ul>
-</section>
-<section id="correctionanalysis" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="correctionanalysis"><span class="header-section-number">3.2.2</span> Correction/Analysis</h3>
-<p><span class="math display">\[ \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_n) \mapsto \mathbb{P}(v_{n+1} \vert y_1, \ldots, y_{n+1}) \]</span></p>
-<ul>
-<li><p>C1: compute the innovation</p>
-<p><span class="math display">\[ d_{j+1} = y_{j+1} - H \hat{m}_{j+1} \]</span></p></li>
-<li><p>C2: compute the measurement covariance</p>
-<p><span class="math display">\[ S_{j+1} = H \hat{C}_{j+1}  H^{\mathrm{T}} + \Gamma \]</span></p></li>
-<li><p>C3: compute the (optimal) Kalman gain</p>
-<p><span class="math display">\[ K_{j+1} = \hat{C}_{j+1} H^{\mathrm{T}}  S_{j+1}^{-1} \]</span></p></li>
-<li><p>C4: update/correct the mean and covariance</p>
-<p><span class="math display">\[\begin{align}
-   {m}_{j+1}  &amp;= \hat{m}_{j+1} + K_{j+1} d_{j+1}, \\
-   {C}_{j+1}  &amp;= \hat{C}_{j+1} - K_{j+1}  S_{j+1}  K_{j+1}^{\mathrm{T}}.
-   \end{align}\]</span></p></li>
-</ul>
-</section>
-<section id="loop-over-time" class="level3" data-number="3.2.3">
-<h3 data-number="3.2.3" class="anchored" data-anchor-id="loop-over-time"><span class="header-section-number">3.2.3</span> Loop over time</h3>
-<ul>
-<li>set <span class="math inline">\(j = j+1\)</span></li>
-<li>go to step P1</li>
-</ul>
-</section>
-</section>
-<section id="state-space-formulation" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="state-space-formulation"><span class="header-section-number">3.3</span> State-space formulation</h2>
-<p>In classical (linear) filter theory, a state space formulation is usually used.</p>
-<p><span class="math display">\[\begin{eqnarray}
-&amp;&amp; x_{k+1}  = F x_k + B u_k + w_k \\
-&amp;&amp; y_{k+1}  = H x_k + v_k,
-\end{eqnarray}\]</span> where <span class="math inline">\(u\)</span> is a control input, and <span class="math inline">\(w_k \sim \mathcal{N}(0,Q),\)</span> <span class="math inline">\(v_k \sim \mathcal{N}(0,R).\)</span> Moreover, <span class="math inline">\(A\)</span> is the dynamics and <span class="math inline">\(H\)</span> the observation operator.</p>
-<p>The 2-step filter:</p>
-<p><strong>Initialization</strong></p>
-<p><span class="math display">\[ x_0, \quad P_0 \]</span></p>
-<p><strong>1. Prediction</strong></p>
-<p><span class="math display">\[\begin{eqnarray}
-&amp;&amp; x_{k+1}^- = F x_k \\
-&amp;&amp; P_{k+1}^- = F P_k F^{\mathrm{T}} + Q
-\end{eqnarray}\]</span></p>
-<p><strong>2. Correction</strong></p>
-<p><span class="math display">\[\begin{eqnarray}
-  K_{k+1} &amp;&amp; = P_{k+1}^{-} H^{\mathrm{T}} ( H  P_{k+1}^{-} H^{\mathrm{T}} + R )^{-1}
-               \quad (= P_{k+1}^- H^{\mathrm{T}} S^{-1})\\
-  x_{k+1} &amp;&amp;= x_{k+1}^{-} + K_{k+1} (y_{k+1} - H x_{k+1}^- ) \\
-  P_{k+1} &amp;&amp;= (I -  K_{k+1} H ) P_{k+1}^-
-              \quad (= P_{k+1}^- - K_{k+1} S K^{\mathrm{T}}_{k+1})
-\end{eqnarray}\]</span></p>
-<p><strong>Loop</strong></p>
-<p>Set <span class="math inline">\(k = k+1\)</span> and go to step 1.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Tip
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>In some cases, the superscripts <code>f</code> and <code>a</code> are used to denote the forecast/prediction, and analysis/correction variables, respectively. We avoid this, for clarity of notation.</p>
-</div>
-</div>
-</section>
-<section id="passage-from-continuous-to-discrete-for-random-dynamic-systems" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="passage-from-continuous-to-discrete-for-random-dynamic-systems"><span class="header-section-number">3.4</span> Passage from Continuous to Discrete for Random Dynamic Systems</h2>
-<p>Most often, in the use of Kalman filtering, we deal with a continuous dynamic system that is modelled by a system of ODEs, with some random process noise. The passage from the continuous to a discrete-time formulation, which is needed for the KF, requires some attention. Following <span class="citation" data-cites="Sarkka2023">(<a href="../index.html#ref-Sarkka2023" role="doc-biblioref">Särkkä and Svensson 2023</a>)</span>, we will derive the associated discretization of the process matrix and the process noise covariance matrix.</p>
-<p>Suppose we have a linear, time invariant (LTI) system of ODEs with an additive random noise term (this is the engineering approach that avoids the use of SDEs and Itô calculus—see <span class="citation" data-cites="Asch2022">(<a href="../index.html#ref-Asch2022" role="doc-biblioref">Asch 2022</a>)</span></p>
+<p>Here, we consider the discrete L63 system, with a forward Euler rule</p>
+<p><span class="math display">\[ \begin{align*}
+  z^{n+1} &amp;= z^n + \Delta t f(z^n), \quad z \in \mathbb{R}^3, \quad n=0, 1, \ldots, \quad t = n \Delta t , \\
+  z^0     &amp;= z_0,
+\end{align*}  \]</span></p>
+<p>where</p>
+<p><span class="math display">\[ \begin{align*}
+   f(z)   &amp;=\left[\begin{array}{c}
+       \lambda(y-x)\\
+x(\beta-z)-y\\
+xy-\gamma z
+\end{array}\right]
+\end{align*} \]</span></p>
+<p>and for chaotic behavior, we set</p>
 <p><span class="math display">\[
-  \frac{\mathrm{d}\mathbf{x}}{\mathrm{d}t} = F \mathbf{x}(t) + L \mathbf{w}(t) , \quad \mathbf{x}(0) = \mathbf{x}_0,
+  \lambda = 10, \quad \beta = 28, \quad \gamma = 8/3.
 \]</span></p>
-<p>where <span class="math inline">\(\mathbf{w}(t)\)</span> is a white, Gaussian noise process with expectation and covariance</p>
-<p><span class="math display">\[\begin{align}
-&amp; \mathrm{E}[\mathbf{w}(t)] = 0, \\
-&amp; \mathrm{Cov}[\mathbf{w}(\tau_1)\mathbf{w}(\tau_2)] = \delta(\tau_1 - \tau_2) Q^c
-\end{align}\]</span></p>
-<p>with <span class="math inline">\(Q^c\)</span> the spectral density matrix of the white noise process, which is the continuous-time analogue of a covariance matrix, and in the scalar case is just the noise variance. Usually</p>
-<p><span class="math display">\[
-  Q^c = \mathrm{diag}(q^c_1, \ldots, q^c_n),
-\]</span></p>
-<p>where <span class="math inline">\(q^c_1, \ldots, q^c_n\)</span> are the spectral densities of <span class="math inline">\(w_1(t), \ldots, w_n(t),\)</span> the components of <span class="math inline">\(\mathbf{w}(t).\)</span></p>
-<p>We now proceed to convert this continous LTI system into its discrete counterpart, needed for the KF algorithm,</p>
-<p><span class="math display">\[
-\mathbf{x}_{k+1 } = A_k  \mathbf{x}_{k} + \mathbf{q}_{k},
-\]</span></p>
-<p>where <span class="math inline">\(A_k\)</span> is the discretized process/dynamics transition matrix, and <span class="math inline">\(\mathbf{q}_{k} \sim \mathcal{N} (0, Q)\)</span> is the Gaussian process noise.</p>
-<p>To obtain expressions for <span class="math inline">\(A\)</span> and <span class="math inline">\(Q,\)</span> we need to solve the random ODE system. Doing this, we can show that</p>
-<p><span class="math display">\[
-  A_k = \exp (F \Delta t_{k}) = \sum_{n=0}^{\infty} \frac{(F \Delta t_{k})^n}{n !}
-\]</span></p>
-<p>and</p>
-<p><span class="math display">\[
-  Q_k = \int_0^{\Delta t_{k}}  \exp (F s) L Q^c L^{\mathrm{T}} \exp (F s)^{\mathrm{T}} \mathrm{d}s.
-\]</span></p>
-<p>Usually, <span class="math inline">\(F\)</span> is nilpotent to some low order, so the computation of the matrix exponential is relatively easy to do. This will be illustrated in the examples.</p>
+<section id="ensemble-kalman-inversion" class="level2" data-number="20.1">
+<h2 data-number="20.1" class="anchored" data-anchor-id="ensemble-kalman-inversion"><span class="header-section-number">20.1</span> Ensemble Kalman Inversion</h2>
+<p>We use the ensemble Kalman filter for parameter estimation by adding a trivial dynamics for the inversion parameter, say <span class="math inline">\(\lambda.\)</span> The system to be solved by the ensemble filter becomes</p>
+<p><span class="math display">\[ \begin{align*}
+  z_i^{n+1}    &amp;= z_i^n + \Delta t f(z_i^n, \lambda_i^n),\quad i= 1, \ldots, M,\\
+  \lambda^{n+1} &amp;= \lambda^{n} + \sqrt{\Delta t} \; \varepsilon_i^n ,
+\end{align*}  \]</span> where <span class="math inline">\(M\)</span> is the number of ensemble members and <span class="math inline">\(\varepsilon_i \sim \mathcal{N}(0,\sigma^{2}_{\varepsilon} )\)</span>. The role of the stochastic pertubation term is to spread out the ensemble, but this requires careful tuning of the noise variance <span class="math inline">\(\sigma^2.\)</span> An alternative, with better performance, is to use ensemble <em>inflation</em> on the foreacast state, defined as <span class="math display">\[
+z_i^f = \bar{z}_M^f + \alpha \Delta z_i^f,  
+\]</span> where <span class="math inline">\(\alpha &gt; 1\)</span> is the inflation factor, <span class="math inline">\(\bar{z}_M^f\)</span> is the ensemble mean of <span class="math inline">\(z_i^f\)</span> and the anomaly is defined as <span class="math display">\[
+   \Delta z_i^f = z_i^f  - \bar{z}_M^f.
+\]</span> We thus obtain multiplicative noise.</p>
+<p>We will use an ensemble square root filter for the assimilation/inversion.</p>
+<section id="simulation-parameters" class="level3" data-number="20.1.1">
+<h3 data-number="20.1.1" class="anchored" data-anchor-id="simulation-parameters"><span class="header-section-number">20.1.1</span> Simulation parameters</h3>
+<p>We set the following parameter values for the simulations.</p>
+<ul>
+<li><span class="math inline">\(M=20\)</span></li>
+<li><span class="math inline">\(\bar{z}^0 = (-0.587276, -0.563678, 16.8708)^{\mathrm{T}},\)</span> <span class="math inline">\(\lambda^0 = 9.\)</span></li>
+<li><span class="math inline">\(\Delta t = 0.001\)</span> and <span class="math inline">\(\Delta t_{\mathrm{obs}} = 0.1\)</span></li>
+<li>measurement error variance <span class="math inline">\(R=8\)</span></li>
+<li>inflation factors <span class="math inline">\(\alpha = 1.005\)</span> and <span class="math inline">\(\alpha = 1.02\)</span></li>
+</ul>
+<div id="7a3e07c7-2418-4829-a84d-721b4d1bc33e" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.font_manager <span class="im">as</span> font_manager</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>font_dir <span class="op">=</span> [<span class="st">"/System/Library/Fonts/Supplemental/Skia"</span>]</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> font <span class="kw">in</span> font_manager.findSystemFonts(font_dir):</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    font_manager.fontManager.addfont(font)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.family"</span>: <span class="st">"Skia"</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.figsize"</span>: (<span class="dv">9</span>, <span class="dv">6</span>),</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.top"</span>: <span class="va">False</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.spines.right"</span>: <span class="va">False</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">14</span>,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"figure.titlesize"</span>: <span class="st">"xx-large"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xtick.labelsize"</span>: <span class="st">"medium"</span>,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ytick.labelsize"</span>: <span class="st">"medium"</span>,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.axisbelow"</span>: <span class="va">True</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="81edd15a-7632-4f2f-9b12-c064c256ca45" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>Nout <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dtobs <span class="op">=</span> <span class="fl">0.10</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> dtobs <span class="op">/</span> Nout</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>STEPS <span class="op">=</span> <span class="dv">20000</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>CAL <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>R <span class="op">=</span> <span class="fl">8.0</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensemble inflation</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="co">#inflation = 1.005</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>inflation <span class="op">=</span> <span class="fl">1.02</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensemble size</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>M <span class="op">=</span> <span class="dv">20</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>sigma <span class="op">=</span> np.zeros(STEPS <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial value for state variable and parameter</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>u <span class="op">=</span> np.array([<span class="op">-</span><span class="fl">0.587276</span>, <span class="op">-</span><span class="fl">0.563678</span>, <span class="fl">16.8708</span>, <span class="dv">9</span>])</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>uinit <span class="op">=</span> u.copy()</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>time <span class="op">=</span> np.zeros(STEPS <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>yobs <span class="op">=</span> np.zeros((<span class="dv">3</span>, STEPS <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>time[<span class="dv">0</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>yobs[:, <span class="dv">0</span>] <span class="op">=</span> u[:<span class="dv">3</span>] <span class="op">+</span> np.sqrt(R) <span class="op">*</span> np.random.randn(<span class="dv">3</span>)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>ur <span class="op">=</span> np.zeros((<span class="dv">4</span>, STEPS <span class="op">+</span> <span class="dv">1</span>))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ur[:, <span class="dv">0</span>] <span class="op">=</span> u</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial ensemble in state and parameter</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> np.zeros((<span class="dv">4</span>, M))</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>X[:<span class="dv">3</span>, :] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">*</span> np.random.randn(<span class="dv">3</span>, M)</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>X[<span class="dv">3</span>, :] <span class="op">=</span> <span class="dv">4</span> <span class="op">*</span> (np.random.rand(M) <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> <span class="dv">2</span>)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> X <span class="op">-</span> X <span class="op">@</span> np.ones((M, M)) <span class="op">/</span> M <span class="op">+</span> u[:, <span class="va">None</span>]</span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>sigma[<span class="dv">0</span>] <span class="op">=</span> u[<span class="dv">3</span>]</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensemble square root Kalman filter</span></span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>w <span class="op">=</span> np.ones(M) <span class="op">/</span> M</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>e <span class="op">=</span> np.ones(M)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>PP <span class="op">=</span> np.eye(M) <span class="op">-</span> np.outer(w, e)</span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>xmean <span class="op">=</span> X <span class="op">@</span> w</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>errorEnKF <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(STEPS):</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ii <span class="kw">in</span> <span class="bu">range</span>(Nout):</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        u0 <span class="op">=</span> u.copy()</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        u1 <span class="op">=</span> u.copy()</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implicit midpoint rule</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>            um <span class="op">=</span> (u1 <span class="op">+</span> u0) <span class="op">/</span> <span class="dv">2</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a>            F <span class="op">=</span> np.array([<span class="dv">10</span> <span class="op">*</span> (um[<span class="dv">1</span>] <span class="op">-</span> um[<span class="dv">0</span>]), (<span class="dv">28</span> <span class="op">-</span> um[<span class="dv">2</span>]) <span class="op">*</span> um[<span class="dv">0</span>] <span class="op">-</span> um[<span class="dv">1</span>], um[<span class="dv">0</span>] <span class="op">*</span> um[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">8</span> <span class="op">/</span> <span class="dv">3</span> <span class="op">*</span> um[<span class="dv">2</span>], <span class="dv">0</span>])</span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>            u <span class="op">=</span> u0 <span class="op">+</span> dt <span class="op">*</span> F</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a>            u1 <span class="op">=</span> u.copy()</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    time[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> dt <span class="op">*</span> Nout <span class="op">*</span> (i <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    yobs[:, i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> u[:<span class="dv">3</span>] <span class="op">+</span> np.sqrt(R) <span class="op">*</span> np.random.randn(<span class="dv">3</span>)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    ur[:, i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> u</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ii <span class="kw">in</span> <span class="bu">range</span>(Nout):</span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        X0 <span class="op">=</span> X.copy()</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        X1 <span class="op">=</span> X.copy()</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Implicit midpoint rule</span></span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">4</span>):</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>            Xm <span class="op">=</span> <span class="dv">1</span> <span class="op">/</span> <span class="dv">2</span> <span class="op">*</span> (X1 <span class="op">+</span> X0)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>            FX <span class="op">=</span> np.array([Xm[<span class="dv">3</span>, :] <span class="op">*</span> (Xm[<span class="dv">1</span>, :] <span class="op">-</span> Xm[<span class="dv">0</span>, :]), (<span class="dv">28</span> <span class="op">-</span> Xm[<span class="dv">2</span>, :]) <span class="op">*</span> Xm[<span class="dv">0</span>, :] <span class="op">-</span> Xm[<span class="dv">1</span>, :], </span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>                           Xm[<span class="dv">0</span>, :] <span class="op">*</span> Xm[<span class="dv">1</span>, :] <span class="op">-</span> <span class="dv">8</span> <span class="op">/</span> <span class="dv">3</span> <span class="op">*</span> Xm[<span class="dv">2</span>, :], np.zeros(M)])</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>            X <span class="op">=</span> X0 <span class="op">+</span> dt <span class="op">*</span> FX</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a>            X1 <span class="op">=</span> X.copy()</span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>    xmean <span class="op">=</span> X <span class="op">@</span> w</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>    dX <span class="op">=</span> inflation <span class="op">*</span> X <span class="op">@</span> PP</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>    Psi <span class="op">=</span> (<span class="dv">1</span> <span class="op">/</span> (M <span class="op">-</span> <span class="dv">1</span>)) <span class="op">*</span> dX <span class="op">@</span> dX.T</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> xmean[:, <span class="va">None</span>] <span class="op">@</span> e[<span class="va">None</span>, :] <span class="op">+</span> dX</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> np.eye(M) <span class="op">-</span> dX[:<span class="dv">3</span>, :].T <span class="op">@</span> np.linalg.inv(Psi[:<span class="dv">3</span>, :<span class="dv">3</span>] <span class="op">+</span> R <span class="op">*</span> np.eye(<span class="dv">3</span>)) <span class="op">@</span> dX[:<span class="dv">3</span>, :] <span class="op">/</span> (M <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    U, D, V <span class="op">=</span> np.linalg.svd(T)</span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> U <span class="op">@</span> np.sqrt(np.diag(D)) <span class="op">@</span> V</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>    dX <span class="op">=</span> dX <span class="op">@</span> T</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>    xmean <span class="op">=</span> xmean <span class="op">-</span> Psi[:, :<span class="dv">3</span>] <span class="op">@</span> np.linalg.inv(Psi[:<span class="dv">3</span>, :<span class="dv">3</span>] <span class="op">+</span> R <span class="op">*</span> np.eye(<span class="dv">3</span>)) <span class="op">@</span> (xmean[:<span class="dv">3</span>] <span class="op">-</span> yobs[:, i <span class="op">+</span> <span class="dv">1</span>])</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> xmean[:, <span class="va">None</span>] <span class="op">@</span> e[<span class="va">None</span>, :] <span class="op">+</span> dX</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    sigma[i <span class="op">+</span> <span class="dv">1</span>] <span class="op">=</span> xmean[<span class="dv">3</span>]</span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> i <span class="op">&gt;=</span> CAL:</span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        errorEnKF <span class="op">+=</span> np.linalg.norm((xmean <span class="op">-</span> ur[:, i <span class="op">+</span> <span class="dv">1</span>]) <span class="op">/</span> np.sqrt(<span class="dv">3</span>)) <span class="op">**</span> <span class="dv">2</span></span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>errorEnKF <span class="op">=</span> np.sqrt(errorEnKF <span class="op">/</span> (STEPS <span class="op">-</span> CAL))</span>
+<span id="cb2-99"><a href="#cb2-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-100"><a href="#cb2-100" aria-hidden="true" tabindex="-1"></a>plt.figure()</span>
+<span id="cb2-101"><a href="#cb2-101" aria-hidden="true" tabindex="-1"></a>plt.plot(time, sigma, <span class="st">'-'</span>, linewidth<span class="op">=</span><span class="fl">2.0</span>)</span>
+<span id="cb2-102"><a href="#cb2-102" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'time'</span>)</span>
+<span id="cb2-103"><a href="#cb2-103" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="vs">r'$\lambda$'</span>)</span>
+<span id="cb2-104"><a href="#cb2-104" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.title(r'Estimated parameter value with inflation $\alpha = 1.005$')</span></span>
+<span id="cb2-105"><a href="#cb2-105" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="vs">r'Estimated parameter value with inflation $\alpha = 1.02$'</span>)</span>
+<span id="cb2-106"><a href="#cb2-106" aria-hidden="true" tabindex="-1"></a>plt.grid()</span>
+<span id="cb2-107"><a href="#cb2-107" aria-hidden="true" tabindex="-1"></a><span class="co">#plt.savefig("estLambda_1p005.png")</span></span>
+<span id="cb2-108"><a href="#cb2-108" aria-hidden="true" tabindex="-1"></a>plt.savefig(<span class="st">"estLambda_1p02.png"</span>)</span>
+<span id="cb2-109"><a href="#cb2-109" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb2-110"><a href="#cb2-110" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-111"><a href="#cb2-111" aria-hidden="true" tabindex="-1"></a>parameter_value <span class="op">=</span> np.mean(sigma)</span>
+<span id="cb2-112"><a href="#cb2-112" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Estimated parameter value: </span><span class="sc">%7.4f</span><span class="st">"</span> <span class="op">%</span> parameter_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="L63_EKI_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Estimated parameter value:  9.9075</code></pre>
+</div>
+</div>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
@@ -575,9 +624,6 @@ Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M Stuart. 202
 <div id="ref-Stuart2013" class="csl-entry" role="listitem">
 Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
 </div>
-<div id="ref-James2021" class="csl-entry" role="listitem">
-James, G., D. Witten, T. Hastie, and R. Tibshirani. 2021. <em>An Introduction to Statistical Learning with Applications in <span>R</span></em>. Second. Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-0716-1418-1">https://doi.org/10.1007/978-1-0716-1418-1</a>.
-</div>
 <div id="ref-LSZ2015" class="csl-entry" role="listitem">
 Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
 </div>
@@ -591,6 +637,7 @@ Sanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and Jean-Marie Becker
 Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 2nd ed. Institute of Mathematical Statistics Textbooks. Cambridge University Press. <a href="https://doi.org/10.1017/9781108917407">https://doi.org/10.1017/9781108917407</a>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -1005,14 +1052,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../01theory/012BayesFilters.html" class="pagination-link" aria-label="Bayesian Filters">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian Filters</span></span>
+      <a href="../../02examples/EKI/one_dim_EKI.html" class="pagination-link" aria-label="Example 1: One-dimensional EKI">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../02examples/KF/021KFExample1.html" class="pagination-link" aria-label="Example 1 - estimating a constant">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Example 1 - estimating a constant</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
   </div>
 </nav>
 </div> <!-- /content -->

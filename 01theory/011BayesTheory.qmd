@@ -52,11 +52,11 @@ if we are dealing with a parameter-identification inverse problem.
 
 We recall the classical linear regression models. We present a  general formulation that will prepare  the terrain for the Bayesian approach. 
 
-Recall that in a regression problem we want to model the relationship between a dependent variable, $y,$ that is observed and independent variables, ${x_1,x_2, \ldots, x_p},$ that represent the properties of a process. We have at our disposal $n$ data samples
+Recall that in a regression problem we want to model the relationship between a dependent variable, $y,$ that is observed and independent variables, ${x_1,x_2, \ldots, x_p},$ that represent the properties of a process [@James2021]. We have at our disposal $n$ data samples
 \begin{equation}\label{eq:linreg_data}
  {\cal D}=\{ (\mathbf {x}_i,\,y_i),\; i=1,\dots, n \} ,
 \end{equation}
-from which we can estimate the relationship between $y$ and $x,$ where $\mathbf {x}_i = [x_{i1}, x_{i2}, \ldots, x_{ip}]$.
+from which we can estimate the relationship between $y$ and $x,$ where $\mathbf {x}_i = [x_{i1}, x_{i2}, \ldots, x_{ip}] \in \mathbb{R}^p .$
 
 The data pairs come from observations, and we postulate a linear relationship between them of the form
 \begin{align*}
@@ -117,7 +117,7 @@ $$
 $$
 Then classical least squares regression consists of finding $(\beta_{0},\beta_{1})$ that minimizes the sum of the squared errors
 $$
-E=\sum_{i=1}^{m}\epsilon_{i}^{2},
+E=\sum_{i=1}^{n}\epsilon_{i}^{2},
 $$
 where 
 $$
@@ -129,8 +129,8 @@ $$
 $$
 We find the two equations
 \begin{eqnarray*}
-	\left(\sum_{i=1}^{m}1\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}\right)\beta_1 & = & \sum_{i=1}^{m}y_{i},\\
-	\left(\sum_{i=1}^{m}x_{i}\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}^{2}\right)\beta_1 & = & \sum_{i=1}^{m}x_{i}y_{i}.
+	\left(\sum_{i=1}^{n}1\right)\beta_0+\left(\sum_{i=1}^{n}x_{i}\right)\beta_1 & = & \sum_{i=1}^{n}y_{i},\\
+	\left(\sum_{i=1}^{n}x_{i}\right)\beta_0+\left(\sum_{i=1}^{n}x_{i}^{2}\right)\beta_1 & = & \sum_{i=1}^{n}x_{i}y_{i}.
 \end{eqnarray*}
 This can be rewritten as the following matrix system,
 $$

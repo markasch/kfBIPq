@@ -331,6 +331,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02examples/EKI/L63_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -412,9 +418,9 @@ P(b \vert a) = \frac{P(a\vert b) P(b)}{P(a)},
 <section id="classical-linear-regression" class="level3" data-number="1.2.1">
 <h3 data-number="1.2.1" class="anchored" data-anchor-id="classical-linear-regression"><span class="header-section-number">1.2.1</span> Classical Linear Regression</h3>
 <p>We recall the classical linear regression models. We present a general formulation that will prepare the terrain for the Bayesian approach.</p>
-<p>Recall that in a regression problem we want to model the relationship between a dependent variable, <span class="math inline">\(y,\)</span> that is observed and independent variables, <span class="math inline">\({x_1,x_2, \ldots, x_p},\)</span> that represent the properties of a process. We have at our disposal <span class="math inline">\(n\)</span> data samples <span class="math display">\[\begin{equation}\label{eq:linreg_data}
+<p>Recall that in a regression problem we want to model the relationship between a dependent variable, <span class="math inline">\(y,\)</span> that is observed and independent variables, <span class="math inline">\({x_1,x_2, \ldots, x_p},\)</span> that represent the properties of a process <span class="citation" data-cites="James2021">(<a href="../index.html#ref-James2021" role="doc-biblioref">James et al. 2021</a>)</span>. We have at our disposal <span class="math inline">\(n\)</span> data samples <span class="math display">\[\begin{equation}\label{eq:linreg_data}
 {\cal D}=\{ (\mathbf {x}_i,\,y_i),\; i=1,\dots, n \} ,
-\end{equation}\]</span> from which we can estimate the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x,\)</span> where <span class="math inline">\(\mathbf {x}_i = [x_{i1}, x_{i2}, \ldots, x_{ip}]\)</span>.</p>
+\end{equation}\]</span> from which we can estimate the relationship between <span class="math inline">\(y\)</span> and <span class="math inline">\(x,\)</span> where <span class="math inline">\(\mathbf {x}_i = [x_{i1}, x_{i2}, \ldots, x_{ip}] \in \mathbb{R}^p .\)</span></p>
 <p>The data pairs come from observations, and we postulate a linear relationship between them of the form <span class="math display">\[\begin{align*}
 y_{i} &amp; =\mathbf{x}_{i} \boldsymbol{\beta}+\epsilon_{i}, \quad i=1,\ldots,n,\\
 &amp; =\beta_{0}+\beta_{1}x_{i1}+\beta_{2}x_{i2}+\cdots+\beta_{p}x_{ip}+\epsilon_{i},
@@ -453,14 +459,14 @@ y_{i} \sim \mathcal{N}(\mathbf{x}_{i} \boldsymbol{\beta},\sigma^{2}),
 <p>For simplicity, let us consider the special case of a straight line regression for a single covariate, <span class="math inline">\(x,\)</span> <span class="math display">\[
   y_i = \beta_{0}+\beta_{1}x_{i},\quad i=1,\ldots,n.
 \]</span> Then classical least squares regression consists of finding <span class="math inline">\((\beta_{0},\beta_{1})\)</span> that minimizes the sum of the squared errors <span class="math display">\[
-E=\sum_{i=1}^{m}\epsilon_{i}^{2},
+E=\sum_{i=1}^{n}\epsilon_{i}^{2},
 \]</span> where <span class="math display">\[
 \epsilon_{i} = \left|\beta_0+ \beta_1 x_{i}-y_{i}\right|.
 \]</span> The minimum was found by solving the equations for the optimum, <span class="math display">\[
 \frac{\partial E}{\partial\beta_0}=0\,,\quad\frac{\partial E}{\partial\beta_1}=0.
 \]</span> We find the two equations <span class="math display">\[\begin{eqnarray*}
-    \left(\sum_{i=1}^{m}1\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{m}y_{i},\\
-    \left(\sum_{i=1}^{m}x_{i}\right)\beta_0+\left(\sum_{i=1}^{m}x_{i}^{2}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{m}x_{i}y_{i}.
+    \left(\sum_{i=1}^{n}1\right)\beta_0+\left(\sum_{i=1}^{n}x_{i}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{n}y_{i},\\
+    \left(\sum_{i=1}^{n}x_{i}\right)\beta_0+\left(\sum_{i=1}^{n}x_{i}^{2}\right)\beta_1 &amp; = &amp; \sum_{i=1}^{n}x_{i}y_{i}.
 \end{eqnarray*}\]</span> This can be rewritten as the following matrix system, <span id="eq-normeq"><span class="math display">\[
 X^{\mathrm{T}} X \boldsymbol{\beta} = X^{\mathrm{T}}  \mathbf{y} ,
 \tag{1.2}\]</span></span> with <span class="math display">\[
@@ -613,8 +619,14 @@ Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M Stuart. 202
 <div id="ref-Stuart2013" class="csl-entry" role="listitem">
 Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
 </div>
+<div id="ref-James2021" class="csl-entry" role="listitem">
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2021. <em>An Introduction to Statistical Learning with Applications in <span>R</span></em>. Second. Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-0716-1418-1">https://doi.org/10.1007/978-1-0716-1418-1</a>.
+</div>
 <div id="ref-LSZ2015" class="csl-entry" role="listitem">
 Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+<div id="ref-ReichCotter2015" class="csl-entry" role="listitem">
+Reich, Sebastian, and Colin Cotter. 2015. <em>Probabilistic Forecasting and Bayesian Data Assimilation</em>. Cambridge University Press.
 </div>
 <div id="ref-vetra2018" class="csl-entry" role="listitem">
 Sanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and Jean-Marie Beckers. 2018. <span>“State-of-the-Art Stochastic Data Assimilation Methods for High-Dimensional Non-Gaussian Problems.”</span> <em>Tellus A: Dynamic Meteorology and Oceanography</em> 70 (1): 1–43. <a href="https://doi.org/10.1080/16000870.2018.1445364">https://doi.org/10.1080/16000870.2018.1445364</a>.
