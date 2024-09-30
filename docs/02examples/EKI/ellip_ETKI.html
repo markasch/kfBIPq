@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.551">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Kalman Filters: from Bayes to Inverse Problems - 21&nbsp; Kalman Inversion with an Ensemble Transform Filter</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../02examples/EKI/L63_EKI.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/ellip_ETKI.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="../../index.html" class="sidebar-logo-link">
+      <img src="../../kf.png" alt="" class="sidebar-logo py-0 d-lg-inline d-none">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../../">Kalman Filters: from Bayes to Inverse Problems</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Bayes’ Theory</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/011BayesTheory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Bayes’ Theorem</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/012BayesFilters.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Bayesian Filters</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Kalman Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/021BasicKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Kalman Filters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/KF/021KFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Example 1 - estimating a constant</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/KF/021KFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Example 2 - scalar, Gaussian random walk</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/KF/021KFExample3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Example 3 - constant-velocity 1D position tracking</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/KF/021KFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Example 4 - constant-velocity 2D motion tracking</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Nonlinear Kalman Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/022NlinKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonlinear Kalman Filters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKF/022EKFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Example 1 - tracking a random sinusoidal signal</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKF/022EKFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Example 2 - tracking a noisy pendulum</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Ensemble Filters</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/031EnKF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Ensemble Kalman Filter</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EnKF/032EnKFExample1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Example 1: noisy pendulum</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EnKF/032EnKFExample2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Example 2: Lorenz63 system</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EnKF/032EnKFExample3.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Example 3: SIR Model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/032EnSRF.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Deterministic Ensemble Kalman Filters</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EnKF/032EnKFExample4.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Example 4: ETKF for Lorenz63 system</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Inverse Problems</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/041BIP.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Bayesian Inversion</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../01theory/042EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Ensemble Kalman Inversion (EKI)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/one_dim_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Example 1: One-dimensional EKI</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/L63_EKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../02examples/EKI/ellip_ETKI.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#parameter-elliptic-equation-probabilistic-approach" id="toc-parameter-elliptic-equation-probabilistic-approach" class="nav-link active" data-scroll-target="#parameter-elliptic-equation-probabilistic-approach"><span class="header-section-number">21.1</span> 2-Parameter Elliptic Equation : Probabilistic Approach</a></li>
+  <li><a href="#inverse-problem" id="toc-inverse-problem" class="nav-link" data-scroll-target="#inverse-problem"><span class="header-section-number">21.2</span> Inverse Problem</a></li>
+  <li><a href="#kalman-inversion-by-the-mean-field-method" id="toc-kalman-inversion-by-the-mean-field-method" class="nav-link" data-scroll-target="#kalman-inversion-by-the-mean-field-method"><span class="header-section-number">21.3</span> Kalman Inversion by the Mean Field Method</a>
+  <ul class="collapse">
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">21.3.1</span> Prediction</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis"><span class="header-section-number">21.3.2</span> Analysis</a></li>
+  </ul></li>
+  <li><a href="#ensemble-kalman-inversion" id="toc-ensemble-kalman-inversion" class="nav-link" data-scroll-target="#ensemble-kalman-inversion"><span class="header-section-number">21.4</span> Ensemble Kalman Inversion</a></li>
+  <li><a href="#random-walk-mcmc" id="toc-random-walk-mcmc" class="nav-link" data-scroll-target="#random-walk-mcmc"><span class="header-section-number">21.5</span> Random Walk MCMC</a></li>
+  <li><a href="#simulations" id="toc-simulations" class="nav-link" data-scroll-target="#simulations"><span class="header-section-number">21.6</span> Simulations</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../01theory/041BIP.html">Inverse Problems</a></li><li class="breadcrumb-item"><a href="../../02examples/EKI/ellip_ETKI.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We solve a nonlinear, two-parameter inverse problem for a 1-D elliptic equation using mean-field ensemble Kalman inversion based on a square-root filter.</p>
+<p><strong>NOTE</strong></p>
+<p>This version uses the mean-field approach.</p>
+<section id="parameter-elliptic-equation-probabilistic-approach" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="parameter-elliptic-equation-probabilistic-approach"><span class="header-section-number">21.1</span> 2-Parameter Elliptic Equation : Probabilistic Approach</h2>
+<p>Consider the one-dimensional elliptic boundary-value problem</p>
+<p><span class="math display">\[
+    -\frac{d}{dx}\Big(\exp(\theta_{(1)}) \frac{d}{dx}p(x)\Big) = 1, \qquad x\in[0,1]
+\]</span></p>
+<p>with boundary conditions <span class="math display">\[p(0) = 0, \qquad p(1) = \theta_{(2)}.\]</span></p>
+<p>The exact solution for this problem is given by</p>
+<p><span class="math display">\[
+    p(x) = \theta_{(2)} x + \exp(-\theta_{(1)})\Big(-\frac{x^2}{2} + \frac{x}{2}\Big).
+\]</span></p>
+</section>
+<section id="inverse-problem" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="inverse-problem"><span class="header-section-number">21.2</span> Inverse Problem</h2>
+<p>The inverse problem: given the observations <span class="math inline">\(y = (p(x_1),\,p(x_2))^T\)</span> at <span class="math inline">\(x_1=0.25\)</span> and <span class="math inline">\(x_2=0.75,\)</span> solve for <span class="math inline">\(\theta = (\theta_{(1)},\, \theta_{(2)})^T.\)</span></p>
+<p>The Bayesian inverse problem, “given observations <span class="math inline">\(y,\)</span> find the parameter <span class="math inline">\(\theta\)</span>”, is formulated as</p>
+<p><span class="math display">\[
+    y = \mathcal{G}(\theta) + \eta \qquad \textrm{and} \qquad
+    \mathcal{G}(\theta) = \begin{bmatrix}
+    p(x_1, \theta)\\
+    p(x_2, \theta)
+    \end{bmatrix},
+\]</span> where <span class="math inline">\(\mathcal{G}(\theta)\)</span> is the forward model operator, and the prior is <span class="math inline">\(\mathcal{N}([0, 100]^T,  I)\)</span>. We consider two scenarios</p>
+<ul>
+<li>Well-posed case：the observation is <span class="math inline">\(y=[27.5, 79.7]^T\)</span> with observation error <span class="math inline">\(\eta\sim\mathcal{N}(0, 0.1^2 I)\)</span>.</li>
+<li>Ill-posed case：the observation is <span class="math inline">\(y=[27.5]\)</span> with observation error <span class="math inline">\(\eta\sim\mathcal{N}(0, 0.1^2 I)\)</span>.</li>
+</ul>
+</section>
+<section id="kalman-inversion-by-the-mean-field-method" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="kalman-inversion-by-the-mean-field-method"><span class="header-section-number">21.3</span> Kalman Inversion by the Mean Field Method</h2>
+<p>In the code below (see <code>update_ensemble</code>), the following mean-field formulation is used.</p>
+<section id="prediction" class="level3" data-number="21.3.1">
+<h3 data-number="21.3.1" class="anchored" data-anchor-id="prediction"><span class="header-section-number">21.3.1</span> Prediction</h3>
+<p><span class="math display">\[
+  \hat{\theta}^j_{n+1} = {m}_{n} + \sqrt{\frac{1}{1-\Delta \tau}} \left(  \theta_n^j - m_n \right),
+\]</span></p>
+<p>where <span class="math inline">\(m_n\)</span> is the mean of <span class="math inline">\(\theta_n,\)</span> the analyzed update (or initial condition, if <span class="math inline">\(n=0\)</span>), <span class="math inline">\(\Delta \tau = 0.5,\)</span> and <span class="math inline">\(j=1, \ldots, J\)</span> is the ensemble member index.</p>
+</section>
+<section id="analysis" class="level3" data-number="21.3.2">
+<h3 data-number="21.3.2" class="anchored" data-anchor-id="analysis"><span class="header-section-number">21.3.2</span> Analysis</h3>
+<p>TBC</p>
+<div id="6b7d179c-693b-43c8-ba96-227feddaa621" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> Callable, Any</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># This function can, in princiople, be parallelized... see original "KI.ipynb"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> ensemble(s_param: Any, θ_ens: np.ndarray, forward: Callable) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    N_ens, N_θ <span class="op">=</span> θ_ens.shape</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    N_y <span class="op">=</span> s_param.N_y</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    g_ens <span class="op">=</span> np.zeros((N_ens, N_y))</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_ens):</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        θ <span class="op">=</span> θ_ens[i, :]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        g_ens[i, :] <span class="op">=</span> forward(s_param, θ)   </span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> g_ens</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="ensemble-kalman-inversion" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="ensemble-kalman-inversion"><span class="header-section-number">21.4</span> Ensemble Kalman Inversion</h2>
+<p>Define the <code>EKI</code> class. Can be applied to three types of ensemble filters:</p>
+<ul>
+<li>EKI</li>
+<li>EAKI</li>
+<li>ETKI</li>
+</ul>
+<p>This one is for an ensemble transform filter, of square-root type, the ETKI. It uses the mean-field approach.</p>
+<div id="1e2d224a-88d2-412b-942c-8b17c05ad94d" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> linalg</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> EKIObj:</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, theta_names, N_ens, theta0_mean, theta_theta0_cov_sqrt,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                 y, Sigma_eta, delta_t):</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.theta_names <span class="op">=</span> theta_names</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.theta <span class="op">=</span> [theta0_mean]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y_pred <span class="op">=</span> []</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y <span class="op">=</span> y</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.Sigma_eta <span class="op">=</span> Sigma_eta</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N_ens <span class="op">=</span> N_ens</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N_theta <span class="op">=</span> <span class="bu">len</span>(theta0_mean)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N_y <span class="op">=</span> <span class="bu">len</span>(y)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.delta_t <span class="op">=</span> delta_t</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">iter</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Start ETKI on the mean-field stochastic dynamical system for Bayesian inference"</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Generate initial ensemble</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.theta <span class="op">=</span> [<span class="va">self</span>.MvNormal_sqrt(N_ens, theta0_mean, theta_theta0_cov_sqrt)]</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> MvNormal_sqrt(<span class="va">self</span>, N_ens, theta_mean, theta_theta_cov_sqrt):</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        N_theta, N_r <span class="op">=</span> theta_theta_cov_sqrt.shape</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> np.zeros((N_ens, N_theta))</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_ens):</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>            theta[i, :] <span class="op">=</span> theta_mean <span class="op">+</span> theta_theta_cov_sqrt <span class="op">@</span> norm.rvs(size<span class="op">=</span>N_r)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> theta</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> update_ensemble(<span class="va">self</span>, ens_func):</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">iter</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> <span class="va">self</span>.theta[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>        Sigma_nu <span class="op">=</span> (<span class="dv">1</span><span class="op">/</span><span class="va">self</span>.delta_t) <span class="op">*</span> <span class="va">self</span>.Sigma_eta</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Prediction step</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>        <span class="co">#################</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>        theta_p      <span class="op">=</span> np.zeros_like(theta)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>        theta_mean   <span class="op">=</span> np.mean(theta, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>        theta_p_mean <span class="op">=</span> theta_mean</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.N_ens):</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>            theta_p[j] <span class="op">=</span> theta_p_mean <span class="op">+</span> np.sqrt( <span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span> <span class="op">-</span> <span class="va">self</span>.delta_t) ) <span class="op">*</span> (theta[j] <span class="op">-</span> theta_mean)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>        theta_p_mean <span class="op">=</span> np.mean(theta_p, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Analysis step</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>        <span class="co">###############</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>        g <span class="op">=</span> ens_func(theta_p)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>        g_mean <span class="op">=</span> np.mean(g, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>        <span class="co"># define anomalies:</span></span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>        Z_p_t <span class="op">=</span> theta_p <span class="op">-</span> theta_p_mean</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>        Z_p_t <span class="op">/=</span> np.sqrt(<span class="va">self</span>.N_ens <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a>        Y_p_t <span class="op">=</span> g <span class="op">-</span> g_mean</span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a>        Y_p_t <span class="op">/=</span> np.sqrt(<span class="va">self</span>.N_ens <span class="op">-</span> <span class="dv">1</span>)</span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a>        X <span class="op">=</span> Y_p_t <span class="op">@</span> np.linalg.inv(<span class="va">self</span>.Sigma_eta) <span class="op">@</span> Y_p_t.T</span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a>        U, S, Vt <span class="op">=</span> np.linalg.svd(X)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>        P, Gamma <span class="op">=</span> U, S</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>        theta_mean <span class="op">=</span> theta_p_mean <span class="op">+</span> Z_p_t.T <span class="op">@</span> (P <span class="op">@</span> (np.linalg.inv(np.diag(Gamma) <span class="op">+</span> np.eye(<span class="bu">len</span>(Gamma))) <span class="op">@</span> (P.T <span class="op">@</span> (Y_p_t <span class="op">@</span> (np.linalg.inv(<span class="va">self</span>.Sigma_eta) <span class="op">@</span> (<span class="va">self</span>.y <span class="op">-</span> g_mean))))))</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a>        <span class="co"># filter_type == "ETKI":</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a>        T <span class="op">=</span> P <span class="op">@</span> np.diag(<span class="dv">1</span> <span class="op">/</span> np.sqrt(Gamma <span class="op">+</span> <span class="dv">1</span>)) <span class="op">@</span> P.T</span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> np.array([theta_p[j] <span class="op">-</span> theta_p_mean <span class="cf">for</span> j <span class="kw">in</span> <span class="bu">range</span>(<span class="va">self</span>.N_ens)])</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">=</span> T.T <span class="op">@</span> theta</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>        theta <span class="op">+=</span> theta_mean</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.theta.append(theta)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.y_pred.append(g_mean)</span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> EKI_Run(s_param, forward, </span>
+<span id="cb2-77"><a href="#cb2-77" aria-hidden="true" tabindex="-1"></a>            theta0_mean, theta_theta0_cov_sqrt,</span>
+<span id="cb2-78"><a href="#cb2-78" aria-hidden="true" tabindex="-1"></a>            N_ens,</span>
+<span id="cb2-79"><a href="#cb2-79" aria-hidden="true" tabindex="-1"></a>            y, Sigma_eta,</span>
+<span id="cb2-80"><a href="#cb2-80" aria-hidden="true" tabindex="-1"></a>            Delta_t,</span>
+<span id="cb2-81"><a href="#cb2-81" aria-hidden="true" tabindex="-1"></a>            N_iter):</span>
+<span id="cb2-82"><a href="#cb2-82" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-83"><a href="#cb2-83" aria-hidden="true" tabindex="-1"></a>    theta_names <span class="op">=</span> s_param.θ_names <span class="co">##s_param.theta_names</span></span>
+<span id="cb2-84"><a href="#cb2-84" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-85"><a href="#cb2-85" aria-hidden="true" tabindex="-1"></a>    ekiobj <span class="op">=</span> EKIObj(theta_names,</span>
+<span id="cb2-86"><a href="#cb2-86" aria-hidden="true" tabindex="-1"></a>                    N_ens,</span>
+<span id="cb2-87"><a href="#cb2-87" aria-hidden="true" tabindex="-1"></a>                    theta0_mean, theta_theta0_cov_sqrt,</span>
+<span id="cb2-88"><a href="#cb2-88" aria-hidden="true" tabindex="-1"></a>                    y, Sigma_eta,</span>
+<span id="cb2-89"><a href="#cb2-89" aria-hidden="true" tabindex="-1"></a>                    Delta_t)</span>
+<span id="cb2-90"><a href="#cb2-90" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-91"><a href="#cb2-91" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> ens_func(theta_ens):</span>
+<span id="cb2-92"><a href="#cb2-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> ensemble(s_param, theta_ens, forward)</span>
+<span id="cb2-93"><a href="#cb2-93" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-94"><a href="#cb2-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_iter):</span>
+<span id="cb2-95"><a href="#cb2-95" aria-hidden="true" tabindex="-1"></a>        <span class="co">##update_ensemble(ekiobj, ens_func)</span></span>
+<span id="cb2-96"><a href="#cb2-96" aria-hidden="true" tabindex="-1"></a>        ekiobj.update_ensemble(ens_func)</span>
+<span id="cb2-97"><a href="#cb2-97" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb2-98"><a href="#cb2-98" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ekiobj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="59f3fda1-7681-409f-911e-439fe56c3bee" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> typing <span class="im">import</span> List</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Setup_Param:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, θ_names: List[<span class="bu">str</span>], N_θ: <span class="bu">int</span>, N_y: <span class="bu">int</span>):</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.θ_names <span class="op">=</span> θ_names</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N_θ <span class="op">=</span> N_θ</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.N_y <span class="op">=</span> N_y</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> create_setup_param(N_θ: <span class="bu">int</span>, N_y: <span class="bu">int</span>) <span class="op">-&gt;</span> Setup_Param:</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Setup_Param([<span class="st">"θ"</span>], N_θ, N_y)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward(s_param: Setup_Param, θ: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> List[<span class="bu">float</span>]:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    x1, x2 <span class="op">=</span> <span class="fl">0.25</span>, <span class="fl">0.75</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    θ<span class="dv">1</span>, θ<span class="dv">2</span> <span class="op">=</span> θ</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> p(x):</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θ<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> np.exp(<span class="op">-</span>θ<span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span> <span class="op">+</span> x<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [p(x1), p(x2)]</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_aug(s_param: Setup_Param, θ: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> List[<span class="bu">float</span>]:</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    x1, x2 <span class="op">=</span> <span class="fl">0.25</span>, <span class="fl">0.75</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    θ<span class="dv">1</span>, θ<span class="dv">2</span> <span class="op">=</span> θ</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> p(x):</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θ<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> np.exp(<span class="op">-</span>θ<span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span> <span class="op">+</span> x<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [p(x1), p(x2), θ<span class="dv">1</span>, θ<span class="dv">2</span>]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_illposed(s_param: Setup_Param, θ: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> List[<span class="bu">float</span>]:</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    x1 <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    θ<span class="dv">1</span>, θ<span class="dv">2</span> <span class="op">=</span> θ</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> p(x):</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θ<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> np.exp(<span class="op">-</span>θ<span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span> <span class="op">+</span> x<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [p(x1)]</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> forward_illposed_aug(s_param: Setup_Param, θ: List[<span class="bu">float</span>]) <span class="op">-&gt;</span> List[<span class="bu">float</span>]:</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>    x1 <span class="op">=</span> <span class="fl">0.25</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>    θ<span class="dv">1</span>, θ<span class="dv">2</span> <span class="op">=</span> θ</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> p(x):</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> θ<span class="dv">2</span> <span class="op">*</span> x <span class="op">+</span> np.exp(<span class="op">-</span>θ<span class="dv">1</span>) <span class="op">*</span> (<span class="op">-</span>x<span class="op">**</span><span class="dv">2</span><span class="op">/</span><span class="dv">2</span> <span class="op">+</span> x<span class="op">/</span><span class="dv">2</span>)</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [p(x1), θ<span class="dv">1</span>, θ<span class="dv">2</span>]</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> construct_cov(x: np.ndarray) <span class="op">-&gt;</span> np.ndarray:</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    x_mean <span class="op">=</span> np.mean(x, axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    N_ens, N_x <span class="op">=</span> x.shape</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>    x_cov <span class="op">=</span> np.zeros((N_x, N_x))</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_ens):</span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        x_cov <span class="op">+=</span> np.outer(x[i,:] <span class="op">-</span> x_mean, x[i,:] <span class="op">-</span> x_mean)</span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> x_cov <span class="op">/</span> (N_ens <span class="op">-</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="eab5c4e9-3eaf-4f2f-8a91-361df93c4658" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import numpy as np</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> multivariate_normal</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> Elliptic_Posterior_Plot(problem_type<span class="op">=</span><span class="st">"under-determined"</span>, μ<span class="dv">0</span><span class="op">=</span>np.array([<span class="fl">0.0</span>, <span class="fl">100.0</span>]), </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                            Σ<span class="dv">0</span><span class="op">=</span>np.array([[<span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>]]), Nt<span class="op">=</span><span class="dv">30</span>, N_ens<span class="op">=</span><span class="dv">100</span>, file_name<span class="op">=</span><span class="st">""</span>):</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"start Elliptic_Posterior_Plot"</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    np.random.seed(<span class="dv">128</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    N_θ <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    FT <span class="op">=</span> <span class="bu">float</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># observation and observation error covariance</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> problem_type <span class="op">==</span> <span class="st">"under-determined"</span>:</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.array([<span class="fl">27.5</span>])</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        Σ_η <span class="op">=</span> np.array([[<span class="fl">0.1</span><span class="op">**</span><span class="dv">2</span>]])</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        forward_func <span class="op">=</span> forward_illposed</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        forward_func_aug <span class="op">=</span> forward_illposed_aug</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> np.array([<span class="fl">27.5</span>, <span class="fl">79.7</span>])</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        Σ_η <span class="op">=</span> np.diag([<span class="fl">0.1</span><span class="op">**</span><span class="dv">2</span>] <span class="op">*</span> <span class="dv">2</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>        forward_func <span class="op">=</span> forward</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        forward_func_aug <span class="op">=</span> forward_aug</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    N_y <span class="op">=</span> <span class="bu">len</span>(y)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="co">##s_param = Setup_Param(N_θ, N_y)</span></span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    s_param <span class="op">=</span> Setup_Param(<span class="st">"θ"</span>,N_θ, N_y)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># compute posterior distribution by MCMC</span></span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> logρ(θ):</span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> log_bayesian_posterior(s_param, θ, forward_func, y, Σ_η, μ<span class="dv">0</span>, Σ<span class="dv">0</span>)</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    step_length <span class="op">=</span> <span class="fl">1.0</span></span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    <span class="co">##N_iter_MCMC, n_burn_in = 5000000, 1000000</span></span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    N_iter_MCMC, n_burn_in <span class="op">=</span> <span class="dv">1000000</span>, <span class="dv">200000</span></span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"start RWMCMC"</span>)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a>    us <span class="op">=</span> RWMCMC_Run(logρ, μ<span class="dv">0</span>, step_length, N_iter_MCMC)</span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a>    θ_post <span class="op">=</span> np.mean(us[n_burn_in:], axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    Σ_post <span class="op">=</span> np.cov( us[n_burn_in:].T)</span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    N_iter <span class="op">=</span> Nt</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    s_param_aug <span class="op">=</span> Setup_Param(<span class="st">"θ"</span>, N_θ, N_y <span class="op">+</span> N_θ)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    θ<span class="dv">0</span><span class="er">_mean</span> <span class="op">=</span> μ<span class="dv">0</span></span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a>    θθ<span class="dv">0</span><span class="er">_cov</span> <span class="op">=</span> Σ<span class="dv">0</span></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>    θθ<span class="dv">0</span><span class="er">_cov_sqrt</span> <span class="op">=</span> np.sqrt(Σ<span class="dv">0</span>)</span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a>    y_aug <span class="op">=</span> np.concatenate([y, μ<span class="dv">0</span>])</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    Σ_η_aug <span class="op">=</span> np.block([[Σ_η, np.zeros((N_y, N_θ))], </span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>                        [np.zeros((N_θ, N_y)), Σ<span class="dv">0</span>]])</span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># mean-field model:</span></span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    Δt <span class="op">=</span> <span class="fl">0.5</span></span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"start ETKI"</span>)  </span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    etki_obj <span class="op">=</span> EKI_Run(s_param_aug, forward_func_aug, θ<span class="dv">0</span><span class="er">_mean</span>, θθ<span class="dv">0</span><span class="er">_cov_sqrt</span>, </span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>                       N_ens, y_aug, Σ_η_aug, Δt, N_iter)</span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a>    etki_errors <span class="op">=</span> np.zeros((N_iter<span class="op">+</span><span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_iter<span class="op">+</span><span class="dv">1</span>):</span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>        etki_errors[i, <span class="dv">0</span>] <span class="op">=</span> np.linalg.norm(np.mean(etki_obj.theta[i], axis<span class="op">=</span><span class="dv">0</span>) <span class="op">-</span> θ_post) <span class="op">/</span> np.linalg.norm(θ_post)</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>        etki_errors[i, <span class="dv">1</span>] <span class="op">=</span> np.linalg.norm(construct_cov(etki_obj.theta[i])   <span class="op">-</span> Σ_post) <span class="op">/</span> np.linalg.norm(Σ_post)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    i <span class="op">=</span> Nt <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    ites <span class="op">=</span> np.arange(Nt <span class="op">+</span> <span class="dv">1</span>)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(nrows<span class="op">=</span><span class="dv">2</span>, ncols<span class="op">=</span><span class="dv">1</span>, sharex<span class="op">=</span><span class="va">False</span>, sharey<span class="op">=</span><span class="st">"row"</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">9</span>))</span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].semilogy(ites, etki_errors[:, <span class="dv">0</span>], <span class="st">"-d"</span>, color<span class="op">=</span><span class="st">"C3"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>, label<span class="op">=</span><span class="ss">f"ETKI (J=</span><span class="sc">{</span>N_ens<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_xlabel(<span class="st">"Iterations"</span>)</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].set_ylabel(<span class="st">"Rel. mean error"</span>)</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].grid(<span class="va">True</span>)</span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">0</span>].legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.0</span>, <span class="fl">1.0</span>))</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].semilogy(ites, etki_errors[:, <span class="dv">1</span>], <span class="st">"-d"</span>, color<span class="op">=</span><span class="st">"C3"</span>, fillstyle<span class="op">=</span><span class="st">"none"</span>, label<span class="op">=</span><span class="ss">f"ETKI (J=</span><span class="sc">{</span>N_ens<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].set_xlabel(<span class="st">"Iterations"</span>)</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].set_ylabel(<span class="st">"Rel. covariance error"</span>)</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].grid(<span class="va">True</span>)</span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    ax[<span class="dv">1</span>].legend(bbox_to_anchor<span class="op">=</span>(<span class="fl">1.0</span>, <span class="fl">1.0</span>))</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a>    <span class="co">#plt.savefig(f"Elliptic-{problem_type}-error_ETKF.pdf")</span></span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot results at the last iteration</span></span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    ncols <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(ncols<span class="op">=</span>ncols, nrows<span class="op">=</span><span class="dv">1</span>, sharex<span class="op">=</span><span class="va">True</span>, sharey<span class="op">=</span><span class="va">True</span>, figsize<span class="op">=</span>(<span class="dv">17</span>, <span class="dv">10</span>))</span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> icol <span class="kw">in</span> <span class="bu">range</span>(ncols):</span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>        <span class="co"># plot MCMC results</span></span>
+<span id="cb4-92"><a href="#cb4-92" aria-hidden="true" tabindex="-1"></a>        everymarker <span class="op">=</span> <span class="dv">10</span></span>
+<span id="cb4-93"><a href="#cb4-93" aria-hidden="true" tabindex="-1"></a>        ax.scatter(us[n_burn_in::everymarker, <span class="dv">0</span>], us[n_burn_in::everymarker, <span class="dv">1</span>], s<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb4-94"><a href="#cb4-94" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-95"><a href="#cb4-95" aria-hidden="true" tabindex="-1"></a>    ites <span class="op">=</span> N_iter <span class="co">##+ 1</span></span>
+<span id="cb4-96"><a href="#cb4-96" aria-hidden="true" tabindex="-1"></a>    <span class="co"># scatter ETKI</span></span>
+<span id="cb4-97"><a href="#cb4-97" aria-hidden="true" tabindex="-1"></a>    ax.scatter(etki_obj.theta[ites][:, <span class="dv">0</span>], etki_obj.theta[ites][:, <span class="dv">1</span>], color<span class="op">=</span><span class="st">"r"</span>)</span>
+<span id="cb4-98"><a href="#cb4-98" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="ss">f"ETKI (J=</span><span class="sc">{</span>N_ens<span class="sc">}</span><span class="ss">)"</span>)</span>
+<span id="cb4-99"><a href="#cb4-99" aria-hidden="true" tabindex="-1"></a>    ax.set_xlabel(<span class="vs">r'$\theta_{(1)}$'</span>)</span>
+<span id="cb4-100"><a href="#cb4-100" aria-hidden="true" tabindex="-1"></a>    ax.set_ylabel(<span class="vs">r'$\theta_{(2)}$'</span>)</span>
+<span id="cb4-101"><a href="#cb4-101" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb4-102"><a href="#cb4-102" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb4-103"><a href="#cb4-103" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="random-walk-mcmc" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="random-walk-mcmc"><span class="header-section-number">21.5</span> Random Walk MCMC</h2>
+<p>Use the <code>emcee</code> approach…</p>
+<div id="05c23d57-ae24-4840-bccb-f3ac81027687" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import numpy as np</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_bayesian_posterior(s_param, θ, forward, y, Σ_η, μ<span class="dv">0</span>, Σ<span class="dv">0</span>):</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    Gu <span class="op">=</span> forward(s_param, θ)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    Φ <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> np.dot(np.dot((y <span class="op">-</span> Gu).T, np.linalg.inv(Σ_η)), (y <span class="op">-</span> Gu)) <span class="op">-</span> <span class="op">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.5</span> <span class="op">*</span> np.dot(np.dot((θ <span class="op">-</span> μ<span class="dv">0</span>).T, np.linalg.inv(Σ<span class="dv">0</span>)), (θ <span class="op">-</span> μ<span class="dv">0</span>))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Φ</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_likelihood(s_param, θ, forward, y, Σ_η):</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    Gu <span class="op">=</span> forward(s_param, θ)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    Φ <span class="op">=</span> <span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> np.dot(np.dot((y <span class="op">-</span> Gu).T, np.linalg.inv(Σ_η)), (y <span class="op">-</span> Gu))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> Φ</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> RWMCMC_Run(log_bayesian_posterior, θ<span class="dv">0</span>, step_length, n_ite, seed<span class="op">=</span><span class="dv">11</span>):</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    np.random.seed(seed)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    N_θ <span class="op">=</span> <span class="bu">len</span>(θ<span class="dv">0</span>)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    θs <span class="op">=</span> np.zeros((n_ite, N_θ))</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> np.zeros(n_ite)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    θs[<span class="dv">0</span>, :] <span class="op">=</span> θ<span class="dv">0</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    fs[<span class="dv">0</span>] <span class="op">=</span> log_bayesian_posterior(θ<span class="dv">0</span>)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_ite):</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        θ_p <span class="op">=</span> θs[i<span class="op">-</span><span class="dv">1</span>, :]</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        θ <span class="op">=</span> θ_p <span class="op">+</span> step_length <span class="op">*</span> np.random.normal(<span class="dv">0</span>, <span class="dv">1</span>, N_θ)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        fs[i] <span class="op">=</span> log_bayesian_posterior(θ)</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>        α <span class="op">=</span> <span class="bu">min</span>(<span class="fl">1.0</span>, np.exp(fs[i] <span class="op">-</span> fs[i<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> α <span class="op">&gt;</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>):</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>            θs[i, :] <span class="op">=</span> θ</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>            θs[i, :] <span class="op">=</span> θ_p</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>            fs[i] <span class="op">=</span> fs[i<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> θs</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> PCN_Run(log_likelihood, θ<span class="dv">0</span>, θθ<span class="dv">0</span><span class="er">_cov</span>, β, n_ite, seed<span class="op">=</span><span class="dv">11</span>):</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    np.random.seed(seed)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    N_θ <span class="op">=</span> <span class="bu">len</span>(θ<span class="dv">0</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    θs <span class="op">=</span> np.zeros((n_ite, N_θ))</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> np.zeros(n_ite)</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    θs[<span class="dv">0</span>, :] <span class="op">=</span> θ<span class="dv">0</span></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    fs[<span class="dv">0</span>] <span class="op">=</span> log_likelihood(θ<span class="dv">0</span>)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_ite):</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>        θ_p <span class="op">=</span> θs[i<span class="op">-</span><span class="dv">1</span>, :]</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        θ <span class="op">=</span> np.sqrt(<span class="dv">1</span> <span class="op">-</span> β<span class="op">**</span><span class="dv">2</span>) <span class="op">*</span> θ_p <span class="op">+</span> β <span class="op">*</span> np.random.multivariate_normal(np.zeros(N_θ), θθ<span class="dv">0</span><span class="er">_cov</span>)</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>        fs[i] <span class="op">=</span> log_likelihood(θ)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>        α <span class="op">=</span> <span class="bu">min</span>(<span class="fl">1.0</span>, np.exp(fs[i] <span class="op">-</span> fs[i<span class="op">-</span><span class="dv">1</span>]))</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> α <span class="op">&gt;</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>):</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>            θs[i, :] <span class="op">=</span> θ</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>            θs[i, :] <span class="op">=</span> θ_p</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>            fs[i] <span class="op">=</span> fs[i<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> θs</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> emcee_Propose(θ_s, θ_c, a<span class="op">=</span><span class="fl">2.0</span>):</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>    Ns, N_θ <span class="op">=</span> θ_s.shape</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    zz <span class="op">=</span> ((a <span class="op">-</span> <span class="fl">1.0</span>) <span class="op">*</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>, Ns) <span class="op">+</span> <span class="dv">1</span>)<span class="op">**</span><span class="fl">2.0</span> <span class="op">/</span> a</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    factors <span class="op">=</span> (N_θ <span class="op">-</span> <span class="fl">1.0</span>) <span class="op">*</span> np.log(zz)</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>    rint <span class="op">=</span> np.random.randint(<span class="dv">0</span>, Ns, Ns)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> θ_c[rint, :] <span class="op">-</span> (θ_c[rint, :] <span class="op">-</span> θ_s) <span class="op">*</span> zz[:, np.newaxis], factors</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> emcee_Run(log_bayesian_posterior, θ<span class="dv">0</span>, n_ite, random_split<span class="op">=</span><span class="va">True</span>, a<span class="op">=</span><span class="fl">2.0</span>, seed<span class="op">=</span><span class="dv">11</span>):</span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a>    np.random.seed(seed)</span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a>    N_ens, N_θ <span class="op">=</span> θ<span class="fl">0.</span><span class="er">shape</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> N_ens <span class="op">&gt;=</span> <span class="dv">2</span><span class="op">*</span>N_θ</span>
+<span id="cb5-75"><a href="#cb5-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> N_ens <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span></span>
+<span id="cb5-76"><a href="#cb5-76" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-77"><a href="#cb5-77" aria-hidden="true" tabindex="-1"></a>    θs <span class="op">=</span> np.zeros((n_ite, N_ens, N_θ))</span>
+<span id="cb5-78"><a href="#cb5-78" aria-hidden="true" tabindex="-1"></a>    fs <span class="op">=</span> np.zeros((n_ite, N_ens))</span>
+<span id="cb5-79"><a href="#cb5-79" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-80"><a href="#cb5-80" aria-hidden="true" tabindex="-1"></a>    θs[<span class="dv">0</span>, :, :] <span class="op">=</span> θ<span class="dv">0</span></span>
+<span id="cb5-81"><a href="#cb5-81" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> k <span class="kw">in</span> <span class="bu">range</span>(N_ens):</span>
+<span id="cb5-82"><a href="#cb5-82" aria-hidden="true" tabindex="-1"></a>        fs[<span class="dv">0</span>, k] <span class="op">=</span> log_bayesian_posterior(θ<span class="dv">0</span>[k, :])</span>
+<span id="cb5-83"><a href="#cb5-83" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-84"><a href="#cb5-84" aria-hidden="true" tabindex="-1"></a>    nsplit <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb5-85"><a href="#cb5-85" aria-hidden="true" tabindex="-1"></a>    N_s <span class="op">=</span> N_ens <span class="op">//</span> <span class="dv">2</span></span>
+<span id="cb5-86"><a href="#cb5-86" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-87"><a href="#cb5-87" aria-hidden="true" tabindex="-1"></a>    all_inds <span class="op">=</span> np.arange(N_ens)</span>
+<span id="cb5-88"><a href="#cb5-88" aria-hidden="true" tabindex="-1"></a>    inds <span class="op">=</span> all_inds <span class="op">%</span> nsplit</span>
+<span id="cb5-89"><a href="#cb5-89" aria-hidden="true" tabindex="-1"></a>    log_probs <span class="op">=</span> np.zeros(N_s)</span>
+<span id="cb5-90"><a href="#cb5-90" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-91"><a href="#cb5-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> i_t <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_ite):</span>
+<span id="cb5-92"><a href="#cb5-92" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> random_split:</span>
+<span id="cb5-93"><a href="#cb5-93" aria-hidden="true" tabindex="-1"></a>            np.random.shuffle(inds)</span>
+<span id="cb5-94"><a href="#cb5-94" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-95"><a href="#cb5-95" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> split <span class="kw">in</span> [<span class="dv">0</span>, <span class="dv">1</span>]:</span>
+<span id="cb5-96"><a href="#cb5-96" aria-hidden="true" tabindex="-1"></a>            s_inds <span class="op">=</span> (inds <span class="op">==</span> split)</span>
+<span id="cb5-97"><a href="#cb5-97" aria-hidden="true" tabindex="-1"></a>            c_inds <span class="op">=</span> (inds <span class="op">!=</span> split)</span>
+<span id="cb5-98"><a href="#cb5-98" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-99"><a href="#cb5-99" aria-hidden="true" tabindex="-1"></a>            s, c <span class="op">=</span> θs[i_t <span class="op">-</span> <span class="dv">1</span>, s_inds, :], θs[i_t <span class="op">-</span> <span class="dv">1</span>, c_inds, :]</span>
+<span id="cb5-100"><a href="#cb5-100" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-101"><a href="#cb5-101" aria-hidden="true" tabindex="-1"></a>            q, factors <span class="op">=</span> emcee_Propose(s, c, a<span class="op">=</span>a)</span>
+<span id="cb5-102"><a href="#cb5-102" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_s):</span>
+<span id="cb5-103"><a href="#cb5-103" aria-hidden="true" tabindex="-1"></a>                log_probs[i] <span class="op">=</span> log_bayesian_posterior(q[i, :])</span>
+<span id="cb5-104"><a href="#cb5-104" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-105"><a href="#cb5-105" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(N_s):</span>
+<span id="cb5-106"><a href="#cb5-106" aria-hidden="true" tabindex="-1"></a>                j <span class="op">=</span> all_inds[s_inds][i]</span>
+<span id="cb5-107"><a href="#cb5-107" aria-hidden="true" tabindex="-1"></a>                </span>
+<span id="cb5-108"><a href="#cb5-108" aria-hidden="true" tabindex="-1"></a>                α <span class="op">=</span> <span class="bu">min</span>(<span class="fl">1.0</span>, np.exp(factors[i] <span class="op">+</span> log_probs[i] <span class="op">-</span> fs[i_t <span class="op">-</span> <span class="dv">1</span>, j]))</span>
+<span id="cb5-109"><a href="#cb5-109" aria-hidden="true" tabindex="-1"></a>                <span class="cf">if</span> α <span class="op">&gt;</span> np.random.uniform(<span class="dv">0</span>, <span class="dv">1</span>):</span>
+<span id="cb5-110"><a href="#cb5-110" aria-hidden="true" tabindex="-1"></a>                    θs[i_t, j, :] <span class="op">=</span> q[i, :]</span>
+<span id="cb5-111"><a href="#cb5-111" aria-hidden="true" tabindex="-1"></a>                    fs[i_t, j] <span class="op">=</span> log_probs[i]</span>
+<span id="cb5-112"><a href="#cb5-112" aria-hidden="true" tabindex="-1"></a>                <span class="cf">else</span>:</span>
+<span id="cb5-113"><a href="#cb5-113" aria-hidden="true" tabindex="-1"></a>                    θs[i_t, j, :] <span class="op">=</span> θs[i_t <span class="op">-</span> <span class="dv">1</span>, j, :]</span>
+<span id="cb5-114"><a href="#cb5-114" aria-hidden="true" tabindex="-1"></a>                    fs[i_t, j] <span class="op">=</span> fs[i_t <span class="op">-</span> <span class="dv">1</span>, j]</span>
+<span id="cb5-115"><a href="#cb5-115" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-116"><a href="#cb5-116" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> θs</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="3b257efd-fb6f-400b-9bfe-cad65abcc72e" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up matplotlib parameters</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.rcParams.update({</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"font.size"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"axes.labelsize"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"xtick.labelsize"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"ytick.labelsize"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"legend.fontsize"</span>: <span class="dv">15</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_1d(theta_mean, theta_theta_cov, nx, theta_min<span class="op">=</span><span class="va">None</span>, theta_max<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1d Gaussian plot</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> theta_min <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>        theta_min <span class="op">=</span> theta_mean <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> theta_max <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        theta_max <span class="op">=</span> theta_mean <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> np.linspace(theta_min, theta_max, nx)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    rho_theta <span class="op">=</span> np.zeros_like(theta)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ix <span class="kw">in</span> <span class="bu">range</span>(nx):</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        delta_theta <span class="op">=</span> theta[ix] <span class="op">-</span> theta_mean</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        rho_theta[ix] <span class="op">=</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> (delta_theta <span class="op">/</span> theta_theta_cov <span class="op">*</span> delta_theta)) <span class="op">/</span> (np.sqrt(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> theta_theta_cov))</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> theta, rho_theta</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gaussian_2d(theta_mean, theta_theta_cov, nx, ny, x_min<span class="op">=</span><span class="va">None</span>, x_max<span class="op">=</span><span class="va">None</span>, y_min<span class="op">=</span><span class="va">None</span>, y_max<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 2d Gaussian plot</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x_min <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>        x_min <span class="op">=</span> theta_mean[<span class="dv">0</span>] <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> x_max <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        x_max <span class="op">=</span> theta_mean[<span class="dv">0</span>] <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov[<span class="dv">0</span>, <span class="dv">0</span>])</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y_min <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        y_min <span class="op">=</span> theta_mean[<span class="dv">1</span>] <span class="op">-</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y_max <span class="kw">is</span> <span class="va">None</span>:</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        y_max <span class="op">=</span> theta_mean[<span class="dv">1</span>] <span class="op">+</span> <span class="dv">5</span> <span class="op">*</span> np.sqrt(theta_theta_cov[<span class="dv">1</span>, <span class="dv">1</span>])</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    xx <span class="op">=</span> np.linspace(x_min, x_max, nx)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    yy <span class="op">=</span> np.linspace(y_min, y_max, ny)</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    X, Y <span class="op">=</span> np.meshgrid(xx, yy)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    Z <span class="op">=</span> np.zeros((nx, ny))</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    det_theta_theta_cov <span class="op">=</span> np.linalg.det(theta_theta_cov)</span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> ix <span class="kw">in</span> <span class="bu">range</span>(nx):</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> iy <span class="kw">in</span> <span class="bu">range</span>(ny):</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>            delta_xy <span class="op">=</span> np.array([xx[ix] <span class="op">-</span> theta_mean[<span class="dv">0</span>], yy[iy] <span class="op">-</span> theta_mean[<span class="dv">1</span>]])</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>            Z[ix, iy] <span class="op">=</span> np.exp(<span class="op">-</span><span class="fl">0.5</span> <span class="op">*</span> (delta_xy.T <span class="op">@</span> np.linalg.inv(theta_theta_cov) <span class="op">@</span> delta_xy)) <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> np.sqrt(det_theta_theta_cov))</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> X, Y, Z</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="simulations" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="simulations"><span class="header-section-number">21.6</span> Simulations</h2>
+<p>We are ready to run simulations…</p>
+<div id="37b6b54f-1993-4b7a-a29b-43556df5eded" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>problem_type <span class="op">=</span> <span class="st">"under-determined"</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>μ<span class="dv">0</span> <span class="op">=</span> np.array([<span class="fl">0.0</span>, <span class="fl">100.0</span>])</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Σ<span class="dv">0</span> <span class="op">=</span> np.array([[<span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>]])</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>Nt, N_ens <span class="op">=</span> <span class="dv">30</span>, <span class="dv">50</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>Elliptic_Posterior_Plot(problem_type, μ<span class="dv">0</span>, Σ<span class="dv">0</span>, Nt, N_ens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>start Elliptic_Posterior_Plot
+start RWMCMC
+start ETKI
+Start ETKI on the mean-field stochastic dynamical system for Bayesian inference</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ellip_ETKI_files/figure-html/cell-8-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ellip_ETKI_files/figure-html/cell-8-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="c4db15ba-31c1-4955-8cce-0824dbac8a37" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>problem_type <span class="op">=</span> <span class="st">"well-determined"</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>μ<span class="dv">0</span> <span class="op">=</span> np.array([<span class="fl">0.0</span>, <span class="fl">100.0</span>])</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>Σ<span class="dv">0</span> <span class="op">=</span> np.array([[<span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>, <span class="fl">0.0</span>], [<span class="fl">0.0</span>, <span class="fl">1.0</span><span class="op">**</span><span class="dv">2</span>]])</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>Nt, N_ens <span class="op">=</span> <span class="dv">30</span>, <span class="dv">50</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>Elliptic_Posterior_Plot(problem_type, μ<span class="dv">0</span>, Σ<span class="dv">0</span>, Nt, N_ens)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>start Elliptic_Posterior_Plot
+start RWMCMC
+start ETKI
+Start ETKI on the mean-field stochastic dynamical system for Bayesian inference</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ellip_ETKI_files/figure-html/cell-9-output-2.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="ellip_ETKI_files/figure-html/cell-9-output-3.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-Asch2022" class="csl-entry" role="listitem">
+Asch, Mark. 2022. <em>A <span>Toolbox</span> for <span>Digital</span> <span>Twins</span>: <span>From</span> <span>Model</span>-<span>Based</span> to <span>Data</span>-<span>Driven</span></em>. Philadelphia, PA: Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611976977">https://doi.org/10.1137/1.9781611976977</a>.
+</div>
+<div id="ref-Asch2016" class="csl-entry" role="listitem">
+Asch, Mark, Marc Bocquet, and Maëlle Nodet. 2016. <em>Data <span>Assimilation</span>: <span>Methods</span>, <span>Algorithms</span>, and <span>Applications</span></em>. Philadelphia, PA: Society for Industrial; Applied Mathematics. <a href="https://doi.org/10.1137/1.9781611974546">https://doi.org/10.1137/1.9781611974546</a>.
+</div>
+<div id="ref-Stuart2022" class="csl-entry" role="listitem">
+Calvello, Edoardo, Sebastian Reich, and Andrew M. Stuart. 2022. <span>“Ensemble <span>Kalman</span> <span>Methods</span>: <span>A</span> <span>Mean</span> <span>Field</span> <span>Perspective</span>.”</span> arXiv (to appear in Acta Numerica 2025). <a href="http://arxiv.org/abs/2209.11371">http://arxiv.org/abs/2209.11371</a>.
+</div>
+<div id="ref-carrillo2024statistical" class="csl-entry" role="listitem">
+Carrillo, J. A., F. Hoffmann, A. M. Stuart, and U. Vaes. 2024a. <span>“Statistical Accuracy of Approximate Filtering Methods.”</span> <a href="https://arxiv.org/abs/2402.01593">https://arxiv.org/abs/2402.01593</a>.
+</div>
+<div id="ref-carrillo2024mean" class="csl-entry" role="listitem">
+———. 2024b. <span>“The Mean Field Ensemble Kalman Filter: Near-Gaussian Setting.”</span> <a href="https://arxiv.org/abs/2212.13239">https://arxiv.org/abs/2212.13239</a>.
+</div>
+<div id="ref-Stuart2015" class="csl-entry" role="listitem">
+Dashti, Masoumeh, and Andrew M. Stuart. 2015. <span>“The <span>Bayesian</span> <span>Approach</span> to <span>Inverse</span> <span>Problems</span>.”</span> In <em>Handbook of <span>Uncertainty</span> <span>Quantification</span></em>, edited by Roger Ghanem, David Higdon, and Houman Owhadi, 1–118. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-11259-6_7-1">https://doi.org/10.1007/978-3-319-11259-6_7-1</a>.
+</div>
+<div id="ref-Huang2022" class="csl-entry" role="listitem">
+Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M Stuart. 2022. <span>“Efficient Derivative-Free Bayesian Inference for Large-Scale Inverse Problems.”</span> <em>Inverse Problems</em> 38 (12): 125006. <a href="https://doi.org/10.1088/1361-6420/ac99fa">https://doi.org/10.1088/1361-6420/ac99fa</a>.
+</div>
+<div id="ref-Stuart2013" class="csl-entry" role="listitem">
+Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
+</div>
+<div id="ref-James2021" class="csl-entry" role="listitem">
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2021. <em>An Introduction to Statistical Learning with Applications in <span>R</span></em>. Second Edition. Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-0716-1418-1">https://doi.org/10.1007/978-1-0716-1418-1</a>.
+</div>
+<div id="ref-LSZ2015" class="csl-entry" role="listitem">
+Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.
+</div>
+<div id="ref-ReichCotter2015" class="csl-entry" role="listitem">
+Reich, Sebastian, and Colin Cotter. 2015. <em>Probabilistic Forecasting and Bayesian Data Assimilation</em>. Cambridge University Press.
+</div>
+<div id="ref-vetra2018" class="csl-entry" role="listitem">
+Sanita Vetra-Carvalho, Lars Nerger, Peter Jan van Leeuwen, and Jean-Marie Beckers. 2018. <span>“State-of-the-Art Stochastic Data Assimilation Methods for High-Dimensional Non-Gaussian Problems.”</span> <em>Tellus A: Dynamic Meteorology and Oceanography</em> 70 (1): 1–43. <a href="https://doi.org/10.1080/16000870.2018.1445364">https://doi.org/10.1080/16000870.2018.1445364</a>.
+</div>
+<div id="ref-Sarkka2023" class="csl-entry" role="listitem">
+Särkkä, S., and L. Svensson. 2023. <em>Bayesian Filtering and Smoothing</em>. 2nd ed. Institute of Mathematical Statistics Textbooks. Cambridge University Press. <a href="https://doi.org/10.1017/9781108917407">https://doi.org/10.1017/9781108917407</a>.
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../02examples/EKI/L63_EKI.html" class="pagination-link" aria-label="Example 2: Ensemble Kalman inversion for Lorenz 63 model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

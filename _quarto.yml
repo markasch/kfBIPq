@@ -43,6 +43,7 @@ book:
          - 01theory/042EKI.qmd
          - 02examples/EKI/one_dim_EKI.ipynb
          - 02examples/EKI/L63_EKI.ipynb
+         - 02examples/EKI/ellip_ETKI.ipynb
 
 bibliography: references.bib
 

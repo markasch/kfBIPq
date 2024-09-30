@@ -334,7 +334,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../02examples/EKI/L63_EKI.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02examples/EKI/ellip_ETKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></span></a>
   </div>
 </li>
       </ul>
@@ -483,7 +489,7 @@ EKI
 <p>A few remarks.</p>
 <ol type="1">
 <li>The covariance update equation, <span class="math display">\[
-C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
+C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right)^{-1} \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
 \]</span> does not hold here. This will be remedied by the ETKF.</li>
 <li>The factor <span class="math inline">\(\sqrt{1/(1-\Delta \tau)}\)</span> produces <em>covariance inflation</em> and prevents filter collapse.</li>
 <li>In the analysis step, noise is added in the <span class="math inline">\(\theta\)</span> update instead of in the <span class="math inline">\(\hat{x}\)</span> step to ensure symmetry and positive-definiteness of <span class="math inline">\(\hat{C}_{n+1}^{xx}.\)</span></li>
@@ -565,6 +571,9 @@ Huang, Daniel Zhengyu, Jiaoyang Huang, Sebastian Reich, and Andrew M Stuart. 202
 </div>
 <div id="ref-Stuart2013" class="csl-entry" role="listitem">
 Iglesias, Marco A, Kody J H Law, and Andrew M Stuart. 2013. <span>“Ensemble <span>Kalman</span> Methods for Inverse Problems.”</span> <em>Inverse Problems</em> 29 (4): 045001. <a href="https://doi.org/10.1088/0266-5611/29/4/045001">https://doi.org/10.1088/0266-5611/29/4/045001</a>.
+</div>
+<div id="ref-James2021" class="csl-entry" role="listitem">
+James, G., D. Witten, T. Hastie, and R. Tibshirani. 2021. <em>An Introduction to Statistical Learning with Applications in <span>R</span></em>. Second Edition. Springer-Verlag New York. <a href="https://doi.org/10.1007/978-1-0716-1418-1">https://doi.org/10.1007/978-1-0716-1418-1</a>.
 </div>
 <div id="ref-LSZ2015" class="csl-entry" role="listitem">
 Law, Kody, Andrew Stuart, and Konstantinos Zygalakis. 2015. <em>Data <span>Assimilation</span>: <span>A</span> <span>Mathematical</span> <span>Introduction</span></em>. Vol. 62. Texts in <span>Applied</span> <span>Mathematics</span>. Cham: Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-20325-6">https://doi.org/10.1007/978-3-319-20325-6</a>.

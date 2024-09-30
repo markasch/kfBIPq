@@ -134,7 +134,7 @@ A few remarks.
 
 1. The covariance update equation,
     $$
-    C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right) \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
+    C_{n+1} = \hat{C}_{n+1} + \hat{C}_{n+1}^{\theta x} \left( \hat{C}_{n+1}^{x x}  \right)^{-1} \left(\hat{C}_{n+1}^{\theta x}\right)^\mathrm{T}
 $$
     does not hold here. This will be remedied by the ETKF.
 2. The factor $\sqrt{1/(1-\Delta \tau)}$ produces *covariance inflation* and prevents filter collapse.
