@@ -337,6 +337,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Example 2: Ensemble Kalman inversion for Lorenz 63 model</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../02examples/EKI/ellip_ETKI.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Kalman Inversion with an Ensemble Transform Filter</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -350,7 +356,7 @@ window.Quarto = {
    
   <ul>
   <li><a href="#the-filtering-problem." id="toc-the-filtering-problem." class="nav-link active" data-scroll-target="#the-filtering-problem."><span class="header-section-number">15.1</span> The filtering problem.</a></li>
-  <li><a href="#recall-ensemble-kalman-filter-enkf" id="toc-recall-ensemble-kalman-filter-enkf" class="nav-link" data-scroll-target="#recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</a></li>
+  <li><a href="#sec-enkf" id="toc-sec-enkf" class="nav-link" data-scroll-target="#sec-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</a></li>
   <li><a href="#sec-ensrf" id="toc-sec-ensrf" class="nav-link" data-scroll-target="#sec-ensrf"><span class="header-section-number">15.3</span> Ensemble Square Root Filters (EnSRF)</a></li>
   <li><a href="#etkf-algorithm" id="toc-etkf-algorithm" class="nav-link" data-scroll-target="#etkf-algorithm"><span class="header-section-number">15.4</span> ETKF Algorithm</a></li>
   <li><a href="#etkf-in-practice" id="toc-etkf-in-practice" class="nav-link" data-scroll-target="#etkf-in-practice"><span class="header-section-number">15.5</span> ETKF in practice</a></li>
@@ -405,8 +411,8 @@ Filtering problem
 </div>
 </div>
 </section>
-<section id="recall-ensemble-kalman-filter-enkf" class="level2" data-number="15.2">
-<h2 data-number="15.2" class="anchored" data-anchor-id="recall-ensemble-kalman-filter-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</h2>
+<section id="sec-enkf" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="sec-enkf"><span class="header-section-number">15.2</span> Recall: Ensemble Kalman Filter (EnKF)</h2>
 <p>Just to recall the notation, here are the two steps (forecast-analysis, or predict-correct) of the EnKF.</p>
 <p><em>Prediction/Forecast Step</em></p>
 <ul>

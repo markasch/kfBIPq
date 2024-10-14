@@ -1,4 +1,4 @@
-# Ensemble Kalman Filter
+# Ensemble Kalman Filter {#sec-EnKF}
 
 The idea behind the EnKF is
 

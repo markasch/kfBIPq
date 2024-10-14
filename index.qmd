@@ -8,7 +8,7 @@ This book is based upon a number of sources.
 The original Bayesian formulation for inverse problems [@Stuart2015] 
 was the basis for the later ensemble Kalman inversion, presented in a 
 series of papers [@Stuart2013; @Stuart2022; @Huang2022]. Bayesian data assimilation
-is presented in detail in [@ReichCotter2015] and a general appraoch to Bayesian filtering can
+is presented in detail in [@ReichCotter2015] and a general approach to Bayesian filtering can
 be found in [@Sarkka2023].
 
 
@@ -22,6 +22,7 @@ quantification, inverse problems and their use for digital twins.
 Mark Asch is Emeritus Professor at the Université de Picardie Jules Verne in the mathematics department.
 
 <https://markasch.github.io/DT-tbx-v1/>, 
+
 <http://masch.perso.math.cnrs.fr/>
 
 ## Citation {.unnumbered}

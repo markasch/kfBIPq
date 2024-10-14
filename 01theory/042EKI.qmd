@@ -107,7 +107,7 @@ Please see  [Efficient Derivative-free Bayesian Inference for Large-Scale Invers
 
 ## Algorithms: EKI, ETKI
 
-We will formulate the inversion for the stochastic ensemble filter (EKI) and then for the ensemble transfer filter (ETKI), the latter having a better convergence behavior.
+We will formulate the inversion for the stochastic ensemble filter (EKI, see @sec-EnKF and @sec-enkf) and then for the ensemble transfer filter (ETKI, see @sec-ensrf), the latter having a better convergence behavior.
 
 ::: {.callout-note title="EKI" icon="false"}
 

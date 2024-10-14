@@ -24,7 +24,7 @@ Predict the optimal state from the noisy measurements.
 :::
 
 
-## Recall: Ensemble Kalman Filter (EnKF)
+## Recall: Ensemble Kalman Filter (EnKF) {#sec-enkf}
 
 Just to recall the notation, here are the two steps (forecast-analysis, or predict-correct) of the EnKF.
 
